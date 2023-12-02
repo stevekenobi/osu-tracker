@@ -21,6 +21,9 @@ export class SheetClient {
     await doc.loadInfo();
 
     const sheet = doc.sheetsByTitle[sheetId];
+
+    if (!sheet) return [];
+
     const result = await sheet.getRows<T>();
     return result.map((x) => x.toObject());
   }

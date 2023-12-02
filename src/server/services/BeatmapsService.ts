@@ -43,7 +43,7 @@ export default class BeatmapsService extends AbstractService {
     const sheetClient = this.sheetClient;
 
     async function updateBeatmaps() {
-      const years: {
+      let years: {
         [key: string]: AppBeatmap[];
       } = {};
       console.log(req.body);
@@ -56,16 +56,31 @@ export default class BeatmapsService extends AbstractService {
         console.log(`${i} is ${beatmapset.status}`);
 
         if (beatmapset.status === 'ranked' || beatmapset.status === 'approved' || beatmapset.status === 'loved') {
+          const beatmaps = createAppBeatmapsFromBeatmapset(beatmapset);
           if (years[beatmapset.ranked_date.substring(0, 4)]) {
-            years[beatmapset.ranked_date.substring(0, 4)].push(...createAppBeatmapsFromBeatmapset(beatmapset));
+            years[beatmapset.ranked_date.substring(0, 4)].push(...beatmaps);
           } else {
-            years[beatmapset.ranked_date.substring(0, 4)] = createAppBeatmapsFromBeatmapset(beatmapset);
+            years[beatmapset.ranked_date.substring(0, 4)] = beatmaps;
           }
+        }
+
+        if (i % 100 === 0) {
+          for (const year of Object.keys(years)) {
+            const beatmapsFromSheet = await sheetClient.getRows<AppBeatmap>('19yENPaqMxN41X7bU9QpAylYc3RZfctt9a1oVE6lUqI0', year);
+            const beatmapsToAdd = years[year].filter((b) => !beatmapsFromSheet.some((x) => x.Link === b.Link));
+            await sheetClient.addRows('19yENPaqMxN41X7bU9QpAylYc3RZfctt9a1oVE6lUqI0', year, beatmapsToAdd);
+
+            console.log(`Added ${beatmapsToAdd.length} new beatmaps in ${year}`);
+          }
+
+          years = {};
         }
       }
 
       for (const year of Object.keys(years)) {
-        await sheetClient.addRows('19yENPaqMxN41X7bU9QpAylYc3RZfctt9a1oVE6lUqI0', year, years[year]);
+        const beatmapsFromSheet = await sheetClient.getRows<AppBeatmap>('19yENPaqMxN41X7bU9QpAylYc3RZfctt9a1oVE6lUqI0', year);
+        const beatmapsToAdd = years[year].filter((b) => !beatmapsFromSheet.some((x) => x.Link === b.Link));
+        await sheetClient.addRows('19yENPaqMxN41X7bU9QpAylYc3RZfctt9a1oVE6lUqI0', year, beatmapsToAdd);
       }
     }
 
