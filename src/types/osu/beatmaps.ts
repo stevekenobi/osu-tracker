@@ -1,0 +1,25 @@
+import { RankStatus, Ruleset } from './enums';
+
+export type Beatmapset = {
+  artist: string;
+  creator: string;
+  status: RankStatus;
+  title: string;
+  bpm: number;
+  ranked_date: string;
+  beatmaps: Beatmap[];
+};
+
+export type Beatmap = {
+  beatmapset_id: number;
+  difficulty_rating: number;
+  id: number;
+  mode: Ruleset;
+  status: RankStatus;
+  version: string;
+  accuracy: number;
+  ar: number;
+  bpm: number;
+  cs: number;
+  drain: number;
+};

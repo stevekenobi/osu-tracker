@@ -1,28 +1,33 @@
-import { AuthDetails } from '@/types';
+import { AuthDetails, Beatmapset } from '@/types';
+import { delay } from '../utils';
 import axios, { AxiosError } from 'axios';
 const baseUrl = 'https://osu.ppy.sh/api/v2';
 const authUrl = ' https://osu.ppy.sh/oauth/token';
 
-export default class OsuClient {
+export class OsuClient {
   private authToken = '';
   constructor(private readonly authDetails: AuthDetails) {}
 
-  private async getRequest(requestUrl: string): Promise<unknown> {
+  private async getRequest<T>(requestUrl: string): Promise<T | null> {
     try {
-      const response = await axios.get(`${baseUrl}/${requestUrl}`, {
+      const response = await axios.get<T>(`${baseUrl}/${requestUrl}`, {
         headers: {
           Authorization: `Bearer ${this.authToken}`,
         },
       });
       console.log(response.status);
-      console.log(response.data);
       return response.data;
     } catch (err: unknown) {
       const error = err as AxiosError;
       console.log(error.response?.status);
       if (error.response?.status === 401) {
         await this.authenticate();
-        return await this.getRequest(requestUrl);
+        return await this.getRequest<T>(requestUrl);
+      } else if (error.response?.status === 404) {
+        return null;
+      } else if (error.response?.status === 429) {
+        await delay(60000);
+        return await this.getRequest<T>(requestUrl);
       }
     }
     throw new Error('Unexpected error');
@@ -49,7 +54,11 @@ export default class OsuClient {
     this.authToken = response.data.access_token;
   }
 
-  public async getUserById(id: string) {
+  public async getUserById(id: number) {
     return await this.getRequest(`users/${id}`);
+  }
+
+  public async getBeatmapsetById(id: number): Promise<Beatmapset | null> {
+    return await this.getRequest<Beatmapset>(`beatmapsets/${id}`);
   }
 }

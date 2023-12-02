@@ -5,13 +5,16 @@ import express from 'express';
 import http from 'http';
 
 import type AbstractService from './AbstractService';
-import OsuClient from '../client/OsuClient';
+import { OsuClient, SheetClient } from '../client';
+
+import creds from '../../google_service_account.json';
 
 export default class Server {
   private server: HttpServer | undefined = undefined;
   private app: Express | undefined = undefined;
   private router: Router | undefined = undefined;
   private osuClient: OsuClient | undefined = undefined;
+  private sheetClient: SheetClient | undefined = undefined;
   private services: AbstractService[] = [];
 
   constructor() {
@@ -66,6 +69,8 @@ export default class Server {
       clientId: 27949,
       clientSecret: 'tPp9TKXZCa2AU8e5uQp8vOK2caWqrmqIamQ8544B',
     });
+
+    this.sheetClient = new SheetClient(creds);
   }
 
   private _initServices(): void {
@@ -106,9 +111,16 @@ export default class Server {
 
   public getOsuClient(): OsuClient {
     if (!this.osuClient) {
-      throw new Error('Tournament was not initialized correctly');
+      throw new Error('osu client was not initialized correctly');
     }
     return this.osuClient;
+  }
+
+  public getSheetClient(): SheetClient {
+    if (!this.sheetClient) {
+      throw new Error('Sheet client was not initialized correctly');
+    }
+    return this.sheetClient;
   }
 }
 

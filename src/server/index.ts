@@ -1,8 +1,10 @@
 import Server from './server';
+import BeatmapsService from './services/BeatmapsService';
 import UserService from './services/UserService';
 
 export const server = new Server();
 
+server.registerService(BeatmapsService);
 server.registerService(UserService);
 
 function shutDownServer(): void {
