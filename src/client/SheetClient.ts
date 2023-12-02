@@ -1,4 +1,4 @@
-import { GoogleSpreadsheet } from 'google-spreadsheet';
+import { GoogleSpreadsheet, GoogleSpreadsheetWorksheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
 
 export class SheetClient {
@@ -12,7 +12,7 @@ export class SheetClient {
     const doc = new GoogleSpreadsheet(docId, this.serviceAccountAuth);
     await doc.loadInfo();
 
-    const addedSheet = await doc.addSheet({ title });
+    const addedSheet = await doc.addSheet({ title, headerValues: ['Link', 'Artist', 'Title', 'Creator', 'Version', 'Difficulty', 'Status', 'BPM', 'AR', 'CS', 'HP', 'OD'] });
     return addedSheet;
   }
 
@@ -26,10 +26,14 @@ export class SheetClient {
   }
 
   public async addRows(docId: string, sheetId: string, rows: Record<string, number | string>[]) {
+    let sheet: GoogleSpreadsheetWorksheet | undefined = undefined;
     const doc = new GoogleSpreadsheet(docId, this.serviceAccountAuth);
     await doc.loadInfo();
 
-    const sheet = doc.sheetsByTitle[sheetId];
+    sheet = doc.sheetsByTitle[sheetId];
+    if (!sheet) {
+      sheet = await this.createSheet(docId, sheetId);
+    }
     await sheet.addRows(rows);
   }
 }

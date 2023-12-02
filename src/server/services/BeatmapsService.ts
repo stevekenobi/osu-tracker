@@ -4,6 +4,7 @@ import { OsuClient, SheetClient } from '@/client';
 import AbstractService from '../AbstractService';
 import Server from '../server';
 import { AppBeatmap, Beatmapset } from '@/types';
+import { range } from '../../utils';
 
 export default class BeatmapsService extends AbstractService {
   private osuClient: OsuClient;
@@ -42,15 +43,30 @@ export default class BeatmapsService extends AbstractService {
     const sheetClient = this.sheetClient;
 
     async function updateBeatmaps() {
-      const beatmaps: AppBeatmap[] = [];
-
-      for (const i of Array(500).keys()) {
+      const years: {
+        [key: string]: AppBeatmap[];
+      } = {};
+      console.log(req.body);
+      for (const i of range(parseInt(req.body.start), parseInt(req.body.end))) {
         const beatmapset = await osuClient.getBeatmapsetById(i);
-        if (!beatmapset) continue;
-        beatmaps.push(...createAppBeatmapsFromBeatmapset(beatmapset));
+        if (!beatmapset) {
+          console.log(`${i} not found`);
+          continue;
+        }
+        console.log(`${i} is ${beatmapset.status}`);
+
+        if (beatmapset.status === 'ranked' || beatmapset.status === 'approved' || beatmapset.status === 'loved') {
+          if (years[beatmapset.ranked_date.substring(0, 4)]) {
+            years[beatmapset.ranked_date.substring(0, 4)].push(...createAppBeatmapsFromBeatmapset(beatmapset));
+          } else {
+            years[beatmapset.ranked_date.substring(0, 4)] = createAppBeatmapsFromBeatmapset(beatmapset);
+          }
+        }
       }
 
-      await sheetClient.addRows('19yENPaqMxN41X7bU9QpAylYc3RZfctt9a1oVE6lUqI0', '2007', beatmaps);
+      for (const year of Object.keys(years)) {
+        await sheetClient.addRows('19yENPaqMxN41X7bU9QpAylYc3RZfctt9a1oVE6lUqI0', year, years[year]);
+      }
     }
 
     updateBeatmaps();
@@ -62,9 +78,10 @@ export default class BeatmapsService extends AbstractService {
     });
   }
 }
+
 function createAppBeatmapsFromBeatmapset(beatmapset: Beatmapset): AppBeatmap[] {
   return beatmapset.beatmaps.map((b) => ({
-    Link: `https://osu.ppy.sh/beatmaps${b.id}`,
+    Link: `https://osu.ppy.sh/beatmaps/${b.id}`,
     Artist: beatmapset.artist,
     Title: beatmapset.title,
     Creator: beatmapset.creator,

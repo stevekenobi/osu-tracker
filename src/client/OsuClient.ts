@@ -15,11 +15,10 @@ export class OsuClient {
           Authorization: `Bearer ${this.authToken}`,
         },
       });
-      console.log(response.status);
       return response.data;
     } catch (err: unknown) {
       const error = err as AxiosError;
-      console.log(error.response?.status);
+
       if (error.response?.status === 401) {
         await this.authenticate();
         return await this.getRequest<T>(requestUrl);

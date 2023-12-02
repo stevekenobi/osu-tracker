@@ -30,6 +30,7 @@ export default class Server {
     this.app = express();
     this.router = express.Router();
     this.app.use(cors());
+    this.app.use(express.json());
   }
 
   public start(): void {
