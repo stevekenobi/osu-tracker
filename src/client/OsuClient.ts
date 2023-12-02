@@ -1,5 +1,5 @@
-import { AuthDetails, Beatmapset } from '@/types';
-import { delay } from '../utils';
+import { AuthDetails, Beatmapset, BeatmapsetSearch, RequestQuery } from '@/types';
+import { createQuery, delay } from '../utils';
 import axios, { AxiosError } from 'axios';
 const baseUrl = 'https://osu.ppy.sh/api/v2';
 const authUrl = ' https://osu.ppy.sh/oauth/token';
@@ -59,5 +59,9 @@ export class OsuClient {
 
   public async getBeatmapsetById(id: number): Promise<Beatmapset | null> {
     return await this.getRequest<Beatmapset>(`beatmapsets/${id}`);
+  }
+
+  public async getBeatmapsetSearch(query: Partial<RequestQuery>): Promise<BeatmapsetSearch | null> {
+    return await this.getRequest<BeatmapsetSearch>(`beatmapsets/search${createQuery(query)}`);
   }
 }

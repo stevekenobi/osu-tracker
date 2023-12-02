@@ -4,7 +4,8 @@ import { OsuClient, SheetClient } from '@/client';
 import AbstractService from '../AbstractService';
 import Server from '../server';
 import { AppBeatmap, Beatmapset } from '@/types';
-import { range } from '../../utils';
+import { AxiosError } from 'axios';
+import { delay } from '../../utils';
 
 export default class BeatmapsService extends AbstractService {
   private osuClient: OsuClient;
@@ -46,42 +47,32 @@ export default class BeatmapsService extends AbstractService {
       let years: {
         [key: string]: AppBeatmap[];
       } = {};
-      console.log(req.body);
-      for (const i of range(parseInt(req.body.start), parseInt(req.body.end))) {
-        const beatmapset = await osuClient.getBeatmapsetById(i);
-        if (!beatmapset) {
-          console.log(`${i} not found`);
-          continue;
-        }
-        console.log(`${i} is ${beatmapset.status}`);
+      let cursor_string = '';
+      do {
+        const beatmapsetResult = await osuClient.getBeatmapsetSearch(cursor_string === '' ? {} : { cursor_string });
 
-        if (beatmapset.status === 'ranked' || beatmapset.status === 'approved' || beatmapset.status === 'loved') {
-          const beatmaps = createAppBeatmapsFromBeatmapset(beatmapset);
-          if (years[beatmapset.ranked_date.substring(0, 4)]) {
-            years[beatmapset.ranked_date.substring(0, 4)].push(...beatmaps);
+        if (!beatmapsetResult) break;
+
+        const beatmapsets = beatmapsetResult.beatmapsets.filter((beatmapset) => beatmapset.status === 'ranked' || beatmapset.status === 'approved' || beatmapset.status === 'loved');
+        cursor_string = beatmapsetResult.cursor_string;
+
+        beatmapsets.forEach((b) => {
+          const beatmaps = createAppBeatmapsFromBeatmapset(b);
+          if (years[b.ranked_date.substring(0, 4)]) {
+            years[b.ranked_date.substring(0, 4)].push(...beatmaps);
           } else {
-            years[beatmapset.ranked_date.substring(0, 4)] = beatmaps;
+            years[b.ranked_date.substring(0, 4)] = beatmaps;
           }
+        });
+
+        for (const year of Object.keys(years)) {
+          if (years[year].length === 0) continue;
+
+          await addRowsToSheet(sheetClient, years, year);
         }
 
-        if (i % 100 === 0) {
-          for (const year of Object.keys(years)) {
-            const beatmapsFromSheet = await sheetClient.getRows<AppBeatmap>('19yENPaqMxN41X7bU9QpAylYc3RZfctt9a1oVE6lUqI0', year);
-            const beatmapsToAdd = years[year].filter((b) => !beatmapsFromSheet.some((x) => x.Link === b.Link));
-            await sheetClient.addRows('19yENPaqMxN41X7bU9QpAylYc3RZfctt9a1oVE6lUqI0', year, beatmapsToAdd);
-
-            console.log(`Added ${beatmapsToAdd.length} new beatmaps in ${year}`);
-          }
-
-          years = {};
-        }
-      }
-
-      for (const year of Object.keys(years)) {
-        const beatmapsFromSheet = await sheetClient.getRows<AppBeatmap>('19yENPaqMxN41X7bU9QpAylYc3RZfctt9a1oVE6lUqI0', year);
-        const beatmapsToAdd = years[year].filter((b) => !beatmapsFromSheet.some((x) => x.Link === b.Link));
-        await sheetClient.addRows('19yENPaqMxN41X7bU9QpAylYc3RZfctt9a1oVE6lUqI0', year, beatmapsToAdd);
-      }
+        years = {};
+      } while (cursor_string);
     }
 
     updateBeatmaps();
@@ -94,19 +85,48 @@ export default class BeatmapsService extends AbstractService {
   }
 }
 
+async function addRowsToSheet(
+  sheetClient: SheetClient,
+  years: {
+    [key: string]: AppBeatmap[];
+  },
+  year: string,
+) {
+  try {
+    const beatmapsFromSheet = await sheetClient.getRows<AppBeatmap>('19yENPaqMxN41X7bU9QpAylYc3RZfctt9a1oVE6lUqI0', year);
+    const beatmapsToAdd = years[year].filter((b) => !beatmapsFromSheet.some((x) => x.Link === b.Link));
+
+    if (beatmapsToAdd.length === 0) return;
+    await sheetClient.addRows('19yENPaqMxN41X7bU9QpAylYc3RZfctt9a1oVE6lUqI0', year, beatmapsToAdd);
+
+    console.log(`Added ${beatmapsToAdd.length} new beatmaps in ${year}`);
+  } catch (err: unknown) {
+    const error = err as AxiosError;
+    if (error.response?.status === 429) {
+      console.log(error.response.status);
+      await delay(10000);
+
+      await addRowsToSheet(sheetClient, years, year);
+    }
+  }
+}
+
 function createAppBeatmapsFromBeatmapset(beatmapset: Beatmapset): AppBeatmap[] {
-  return beatmapset.beatmaps.map((b) => ({
-    Link: `https://osu.ppy.sh/beatmaps/${b.id}`,
-    Artist: beatmapset.artist,
-    Title: beatmapset.title,
-    Creator: beatmapset.creator,
-    Version: b.version,
-    Status: b.status,
-    Difficulty: b.difficulty_rating,
-    BPM: b.bpm,
-    AR: b.ar,
-    CS: b.cs,
-    HP: b.drain,
-    OD: b.accuracy,
-  }));
+  return beatmapset.beatmaps
+    .filter((b) => b.mode === 'osu')
+    .sort((a, b) => (a.difficulty_rating > b.difficulty_rating ? 1 : -1))
+    .map((b) => ({
+      Link: `https://osu.ppy.sh/beatmaps/${b.id}`,
+      Artist: beatmapset.artist,
+      Title: beatmapset.title,
+      Creator: beatmapset.creator,
+      Version: b.version,
+      Status: b.status,
+      Difficulty: b.difficulty_rating,
+      BPM: b.bpm,
+      AR: b.ar,
+      CS: b.cs,
+      HP: b.drain,
+      OD: b.accuracy,
+    }));
 }

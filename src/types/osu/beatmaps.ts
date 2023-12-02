@@ -1,5 +1,10 @@
 import { RankStatus, Ruleset } from './enums';
 
+export type BeatmapsetSearch = {
+  beatmapsets: Beatmapset[];
+  cursor_string: string;
+};
+
 export type Beatmapset = {
   artist: string;
   creator: string;
