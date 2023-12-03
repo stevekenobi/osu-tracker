@@ -13,4 +13,5 @@ export type AppBeatmap = {
   CS: number;
   HP: number;
   OD: number;
+  Date: string;
 };

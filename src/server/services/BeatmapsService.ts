@@ -73,6 +73,8 @@ export default class BeatmapsService extends AbstractService {
 
         years = {};
       } while (cursor_string);
+
+      console.log('Background work finished');
     }
 
     updateBeatmaps();
@@ -114,7 +116,6 @@ async function addRowsToSheet(
 function createAppBeatmapsFromBeatmapset(beatmapset: Beatmapset): AppBeatmap[] {
   return beatmapset.beatmaps
     .filter((b) => b.mode === 'osu')
-    .sort((a, b) => (a.difficulty_rating > b.difficulty_rating ? 1 : -1))
     .map((b) => ({
       Link: `https://osu.ppy.sh/beatmaps/${b.id}`,
       Artist: beatmapset.artist,
@@ -128,5 +129,6 @@ function createAppBeatmapsFromBeatmapset(beatmapset: Beatmapset): AppBeatmap[] {
       CS: b.cs,
       HP: b.drain,
       OD: b.accuracy,
+      Date: beatmapset.ranked_date,
     }));
 }
