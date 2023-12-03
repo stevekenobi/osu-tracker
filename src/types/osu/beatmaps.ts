@@ -6,6 +6,7 @@ export type BeatmapsetSearch = {
 };
 
 export type Beatmapset = {
+  id: number;
   artist: string;
   creator: string;
   status: RankStatus;

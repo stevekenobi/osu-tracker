@@ -1,5 +1,16 @@
 import { RankStatus } from '../osu/enums';
 
+export type AppBeatmapset = {
+  id: string;
+  artist: string;
+  title: string;
+  link: string;
+  creator: string;
+  date: Date;
+  status: RankStatus;
+  beatmaps: AppBeatmap[];
+};
+
 export type AppBeatmap = {
   Link: string;
   Artist: string;
@@ -14,4 +25,5 @@ export type AppBeatmap = {
   HP: number;
   OD: number;
   Date: string;
+  BeatmapsetId: string;
 };

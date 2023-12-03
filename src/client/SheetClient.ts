@@ -12,7 +12,7 @@ export class SheetClient {
     const doc = new GoogleSpreadsheet(docId, this.serviceAccountAuth);
     await doc.loadInfo();
 
-    const addedSheet = await doc.addSheet({ title, headerValues: ['Link', 'Artist', 'Title', 'Creator', 'Version', 'Difficulty', 'Status', 'BPM', 'AR', 'CS', 'HP', 'OD', 'Date'] });
+    const addedSheet = await doc.addSheet({ title, headerValues: ['Link', 'Artist', 'Title', 'Creator', 'Version', 'Difficulty', 'Status', 'BPM', 'AR', 'CS', 'HP', 'OD', 'Date', 'BeatmapsetId'] });
     return addedSheet;
   }
 
