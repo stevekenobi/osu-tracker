@@ -5,7 +5,7 @@ import express from 'express';
 import http from 'http';
 
 import type AbstractService from './AbstractService';
-import { OsuClient, SheetClient } from '../client';
+import { DatabaseClient, OsuClient, SheetClient } from '../client';
 
 import creds from '../../google_service_account.json';
 
@@ -15,6 +15,7 @@ export default class Server {
   private router: Router | undefined = undefined;
   private osuClient: OsuClient | undefined = undefined;
   private sheetClient: SheetClient | undefined = undefined;
+  private databaseClient: DatabaseClient | undefined = undefined;
   private services: AbstractService[] = [];
 
   constructor() {
@@ -72,6 +73,9 @@ export default class Server {
     });
 
     this.sheetClient = new SheetClient(creds);
+
+    this.databaseClient = new DatabaseClient();
+    this.databaseClient.init();
   }
 
   private _initServices(): void {
