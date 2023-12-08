@@ -1,0 +1,25 @@
+export type AppUser = {
+  id: number;
+  username: string;
+  country_code: string;
+  beatmap_playcounts_count: number;
+  count_100: number;
+  count_300: number;
+  count_50: number;
+  count_miss: number;
+  level_current: number;
+  level_progress: number;
+  pp: number;
+  ranked_score: number;
+  hit_accuracy: number;
+  play_count: number;
+  play_time: number;
+  total_score: number;
+  total_hits: number;
+  maximum_combo: number;
+  ss: number;
+  ssh: number;
+  s: number;
+  sh: number;
+  a: number;
+};

@@ -1,4 +1,4 @@
-import { AuthDetails, Beatmapset, BeatmapsetSearch, RequestQuery } from '@/types';
+import { AuthDetails, Beatmapset, BeatmapsetSearch, RequestQuery, User } from '@/types';
 import { createQuery, delay } from '../utils';
 import axios, { AxiosError } from 'axios';
 const baseUrl = 'https://osu.ppy.sh/api/v2';
@@ -53,7 +53,7 @@ export class OsuClient {
     this.authToken = response.data.access_token;
   }
 
-  public async getUserById(id: number) {
+  public async getUserById(id: number): Promise<User | null> {
     return await this.getRequest(`users/${id}`);
   }
 

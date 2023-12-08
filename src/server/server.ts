@@ -114,6 +114,13 @@ export default class Server {
     return this.app;
   }
 
+  public getDatabaseClient(): DatabaseClient {
+    if (!this.databaseClient) {
+      throw new Error('Database client was not initialized correctly');
+    }
+    return this.databaseClient;
+  }
+
   public getOsuClient(): OsuClient {
     if (!this.osuClient) {
       throw new Error('osu client was not initialized correctly');

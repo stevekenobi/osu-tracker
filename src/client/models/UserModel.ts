@@ -6,24 +6,24 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
   public declare country_code: string;
   public declare beatmap_playcounts_count: number;
   public declare count_100: number;
-  public declare 'count_300': number;
-  public declare 'count_50': number;
-  public declare 'count_miss': number;
-  public declare 'level_current': number;
-  public declare 'level_progress': number;
-  public declare 'pp': number;
-  public declare 'ranked_score': number;
-  public declare 'hit_accuracy': number;
-  public declare 'play_count': number;
-  public declare 'play_time': number;
-  public declare 'total_score': number;
-  public declare 'total_hits': number;
-  public declare 'maximum_combo': number;
-  public declare 'ss': number;
-  public declare 'ssh': number;
-  public declare 's': number;
-  public declare 'sh': number;
-  public declare 'a': number;
+  public declare count_300: number;
+  public declare count_50: number;
+  public declare count_miss: number;
+  public declare level_current: number;
+  public declare level_progress: number;
+  public declare pp: number;
+  public declare ranked_score: number;
+  public declare hit_accuracy: number;
+  public declare play_count: number;
+  public declare play_time: number;
+  public declare total_score: number;
+  public declare total_hits: number;
+  public declare maximum_combo: number;
+  public declare ss: number;
+  public declare ssh: number;
+  public declare s: number;
+  public declare sh: number;
+  public declare a: number;
 }
 
 export function initUser(sequelize: Sequelize) {

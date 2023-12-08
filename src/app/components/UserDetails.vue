@@ -1,8 +1,47 @@
 <template>
-  <!-- TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com -->
   <div>
-    <span>Some details</span>
+    <span>{{ user }}</span>
+    <app-dialog :show="open">
+      <template #default>
+        <div class="px-4 py-4 flex flex-col space-y-3">
+          <h2>Create Account</h2>
+          <app-text-input v-model="username" placeholder="username" />
+        </div>
+      </template>
+      <template #footer>
+        <div class="flex px-3 py-4 space-x-2">
+          <app-button class="text-sm" type="primary" text="Create" @click="createAccount"></app-button>
+          <app-button class="text-sm" type="negative" text="Cancel" @click="open = false"></app-button>
+        </div>
+      </template>
+    </app-dialog>
+    <button @click="open = !open">Press</button>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import AppButton from '@/app/components/shared/AppButton.vue';
+import AppDialog from '@/app/components/shared/AppDialog.vue';
+import AppTextInput from '@/app/components/shared/AppTextInput.vue';
+import { useUserStore } from '@/app/stores/userStore';
+import { computed, onMounted, ref } from 'vue';
+const userStore = useUserStore();
+
+const open = ref(false);
+const username = ref('');
+
+onMounted(async () => {
+  try {
+    await userStore.fetchUser();
+  } catch (error: unknown) {
+    open.value = true;
+  }
+});
+
+const user = computed(() => userStore.user);
+
+async function createAccount() {
+  await userStore.addSystemUser(username.value);
+  open.value = false;
+}
+</script>

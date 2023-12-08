@@ -42,9 +42,11 @@
     "jsdom": "^22.1.0",
     "pg": "^8.11.3",
     "pg-hstore": "^2.3.4",
+    "pinia": "^2.1.7",
     "postcss": "^8.4.31",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.7",
+    "sass": "^1.69.5",
     "sequelize": "^6.35.1",
     "tailwindcss": "^3.3.5",
     "ts-node": "^10.9.1",
@@ -52,6 +54,7 @@
     "vite": "^4.4.11",
     "vite-plugin-dts": "^3.6.3",
     "vitest": "^0.34.6",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.5"
   }
 }

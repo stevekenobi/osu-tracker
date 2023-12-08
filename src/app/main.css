@@ -1,3 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  @apply bg-slate-200;
+}
+
 #app {
-  @apply max-w-7xl mt-0 ml-auto mr-auto pt-0 pl-8 pr-8 font-normal;
+  @apply max-w-7xl mt-0 ml-auto mr-auto pt-0 font-normal;
 }
