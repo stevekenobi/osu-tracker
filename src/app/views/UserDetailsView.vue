@@ -1,6 +1,5 @@
 <template>
   <div>
-    <span>{{ user }}</span>
     <app-dialog :show="open">
       <template #default>
         <div class="px-4 py-4 flex flex-col space-y-3">
@@ -10,12 +9,15 @@
       </template>
       <template #footer>
         <div class="flex px-3 py-4 space-x-2">
-          <app-button class="text-sm" type="primary" text="Create" @click="createAccount"></app-button>
-          <app-button class="text-sm" type="negative" text="Cancel" @click="open = false"></app-button>
+          <app-button class="text-sm" type="primary" text="Create" @click="createAccount" />
+          <app-button class="text-sm" type="negative" text="Cancel" @click="open = false" />
         </div>
       </template>
     </app-dialog>
-    <button @click="open = !open">Press</button>
+    <div v-if="user">
+      <span class="text-2xl">{{ welcomeMessage }}</span>
+      <user-leaderboard-details :user="user" />
+    </div>
   </div>
 </template>
 
@@ -23,6 +25,8 @@
 import AppButton from '@/app/components/shared/AppButton.vue';
 import AppDialog from '@/app/components/shared/AppDialog.vue';
 import AppTextInput from '@/app/components/shared/AppTextInput.vue';
+
+import UserLeaderboardDetails from '@/app/components/user/UserLeaderboardDetails.vue';
 import { useUserStore } from '@/app/stores/userStore';
 import { computed, onMounted, ref } from 'vue';
 const userStore = useUserStore();
@@ -39,6 +43,8 @@ onMounted(async () => {
 });
 
 const user = computed(() => userStore.user);
+
+const welcomeMessage = computed(() => `Welcome, ${user.value?.username}`);
 
 async function createAccount() {
   await userStore.addSystemUser(username.value);

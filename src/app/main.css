@@ -7,5 +7,5 @@
 }
 
 #app {
-  @apply max-w-7xl mt-0 ml-auto mr-auto pt-0 font-normal;
+  @apply max-w-7xl mt-4 ml-auto mr-auto pt-0 font-normal;
 }

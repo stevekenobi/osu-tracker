@@ -29,7 +29,7 @@ const buttonClass = computed(() => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 button {
   @apply border-0 rounded px-3 py-1;
 }

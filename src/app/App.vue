@@ -1,11 +1,5 @@
 <template>
-  <header>Hello</header>
-
   <main>
-    <user-details />
+    <router-view />
   </main>
 </template>
-
-<script setup lang="ts">
-import UserDetails from './components/UserDetails.vue';
-</script>

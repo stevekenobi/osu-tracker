@@ -17,7 +17,7 @@ defineProps({
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .overlay {
   --tw-bg-opacity: 1;
   background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
