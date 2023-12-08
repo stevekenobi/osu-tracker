@@ -3,15 +3,15 @@ import { Model, InferAttributes, InferCreationAttributes, Sequelize, DataTypes }
 export class Leaderboard extends Model<InferAttributes<Leaderboard>, InferCreationAttributes<Leaderboard>> {
   public declare id: number;
   public declare username: string;
-  public declare 'ranked_score': number;
-  public declare 'total_score': number;
-  public declare 'hit_accuracy': number;
-  public declare 'play_count': number;
-  public declare 'ss': number;
-  public declare 'ssh': number;
-  public declare 'sh': number;
-  public declare 's': number;
-  public declare 'a': number;
+  public declare ranked_score: number;
+  public declare total_score: number;
+  public declare hit_accuracy: number;
+  public declare play_count: number;
+  public declare ss: number;
+  public declare ssh: number;
+  public declare sh: number;
+  public declare s: number;
+  public declare a: number;
 }
 
 export function initLeaderboard(sequelize: Sequelize) {

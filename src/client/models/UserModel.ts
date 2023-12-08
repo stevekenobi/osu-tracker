@@ -24,6 +24,7 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
   public declare s: number;
   public declare sh: number;
   public declare a: number;
+  public declare leaderboard_position: number;
 }
 
 export function initUser(sequelize: Sequelize) {
@@ -119,6 +120,10 @@ export function initUser(sequelize: Sequelize) {
         allowNull: false,
       },
       a: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      leaderboard_position: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },

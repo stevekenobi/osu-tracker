@@ -1,4 +1,4 @@
-import { AuthDetails, Beatmapset, BeatmapsetSearch, RequestQuery, User } from '@/types';
+import { AuthDetails, Beatmapset, BeatmapsetSearch, LeaderboardSearch, RequestQuery, User } from '@/types';
 import { createQuery, delay } from '../utils';
 import axios, { AxiosError } from 'axios';
 const baseUrl = 'https://osu.ppy.sh/api/v2';
@@ -63,5 +63,9 @@ export class OsuClient {
 
   public async getBeatmapsetSearch(query: Partial<RequestQuery>): Promise<BeatmapsetSearch | null> {
     return await this.getRequest<BeatmapsetSearch>(`beatmapsets/search${createQuery(query)}`);
+  }
+
+  public async getCountryLeaderboard(query: Partial<RequestQuery>): Promise<LeaderboardSearch | null> {
+    return await this.getRequest<LeaderboardSearch>(`rankings/osu/performance${createQuery(query)}`);
   }
 }

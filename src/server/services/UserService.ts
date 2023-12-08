@@ -2,6 +2,7 @@ import type { Request, Response } from 'express';
 import type Server from '../server';
 import AbstractService from '../AbstractService';
 import { DatabaseClient, OsuClient } from '@/client';
+import { LeaderboardUser } from '@/types';
 
 export default class UserService extends AbstractService {
   private databaseClient: DatabaseClient;
@@ -49,7 +50,26 @@ export default class UserService extends AbstractService {
   private async _addSystemUserRequestHandler(req: Request, res: Response): Promise<void> {
     const user = await this.osuClient.getUserById(parseInt(req.body['id']));
     if (user) {
-      const createdUser = await this.databaseClient.updateSystemUser(user);
+      let result: LeaderboardUser[] = [];
+      let i = 1;
+      let leaderboard = await this.osuClient.getCountryLeaderboard({ country: user.country_code, 'cursor[page]': i.toString() });
+      do {
+        i++;
+        console.log(leaderboard?.ranking.map((x) => x.user.username));
+        if (!leaderboard) {
+          i--;
+          continue;
+        }
+        result = result.concat(leaderboard.ranking);
+        leaderboard = await this.osuClient.getCountryLeaderboard({ country: user.country_code, 'cursor[page]': i.toString() });
+      } while (leaderboard?.cursor);
+
+      result.sort((a, b) => (a.ranked_score < b.ranked_score ? 1 : -1));
+
+      const createdUser = await this.databaseClient.updateSystemUser(user, result.findIndex((user) => user.user.id === parseInt(req.body['id'])) + 1);
+
+      await this.databaseClient.updateLeaderboard(result.slice(0, 200));
+
       res.status(200).json({
         meta: {
           status: 200,

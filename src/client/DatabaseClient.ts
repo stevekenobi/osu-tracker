@@ -1,7 +1,7 @@
-import { initLeaderboard } from './models/LeaderboardModel';
+import { Leaderboard, initLeaderboard } from './models/LeaderboardModel';
 import { User, initUser } from './models/UserModel';
 import { getSequelizeSingleton, initModels } from './models/initialize';
-import { User as OsuUser } from '@/types';
+import { LeaderboardUser, User as OsuUser } from '@/types';
 
 export class DatabaseClient {
   constructor() {}
@@ -25,7 +25,7 @@ export class DatabaseClient {
     return user;
   }
 
-  public async updateSystemUser(user: OsuUser): Promise<User> {
+  public async updateSystemUser(user: OsuUser, leaderboard_position: number): Promise<User> {
     const createdUser = await User.create({
       id: user.id,
       username: user.username,
@@ -50,8 +50,27 @@ export class DatabaseClient {
       s: user.statistics.grade_counts.s,
       ssh: user.statistics.grade_counts.ssh,
       ss: user.statistics.grade_counts.ss,
+      leaderboard_position,
     });
 
     return createdUser;
+  }
+
+  public async updateLeaderboard(leaderboard: LeaderboardUser[]) {
+    await Leaderboard.bulkCreate(
+      leaderboard.map((user) => ({
+        id: user.user.id,
+        username: user.user.username,
+        ranked_score: user.ranked_score,
+        total_score: user.total_score,
+        hit_accuracy: user.hit_accuracy,
+        play_count: user.play_count,
+        ss: user.grade_counts.ss,
+        ssh: user.grade_counts.ssh,
+        sh: user.grade_counts.sh,
+        s: user.grade_counts.s,
+        a: user.grade_counts.a,
+      })),
+    );
   }
 }
