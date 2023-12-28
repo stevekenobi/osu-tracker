@@ -1,7 +1,8 @@
 import { Leaderboard, initLeaderboard } from './models/LeaderboardModel';
+import { Scores, initScores } from './models/ScoreModel';
 import { User, initUser } from './models/UserModel';
 import { getSequelizeSingleton, initModels } from './models/initialize';
-import { LeaderboardUser, User as OsuUser } from '@/types';
+import { LeaderboardUser, User as OsuUser, UserScore } from '@/types';
 
 export class DatabaseClient {
   constructor() {}
@@ -13,10 +14,11 @@ export class DatabaseClient {
 
     initUser(getSequelizeSingleton());
     initLeaderboard(getSequelizeSingleton());
+    initScores(getSequelizeSingleton());
 
     // options: {force: true} -> drop and recreate
     // options: {alter: true} -> amend tables
-    await getSequelizeSingleton().sync();
+    await getSequelizeSingleton().sync({ alter: true });
   }
 
   public async getSystemUser() {
@@ -70,6 +72,30 @@ export class DatabaseClient {
         sh: user.grade_counts.sh,
         s: user.grade_counts.s,
         a: user.grade_counts.a,
+      })),
+    );
+  }
+
+  public async updateUserScores(scores: UserScore[]) {
+    await Scores.bulkCreate(
+      scores.map((score) => ({
+        accuracy: Math.round(score.score.accuracy * 10000) / 100,
+        created_at: score.score.created_at,
+        id: score.score.id,
+        beatmap_id: score.score.beatmap.id,
+        max_combo: score.score.max_combo,
+        mode: score.score.mode,
+        mods: score.score.mods.join(','),
+        perfect: score.score.perfect,
+        pp: score.score.pp,
+        rank: score.score.rank,
+        score: score.score.score,
+        count_100: score.score.statistics.count_100,
+        count_300: score.score.statistics.count_300,
+        count_50: score.score.statistics.count_50,
+        count_geki: score.score.statistics.count_geki,
+        count_katu: score.score.statistics.count_katu,
+        count_miss: score.score.statistics.count_miss,
       })),
     );
   }

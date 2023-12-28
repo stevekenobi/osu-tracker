@@ -29,3 +29,10 @@ export type Beatmap = {
   cs: number;
   drain: number;
 };
+
+export type UserPlayedBeatmaps = {
+  beatmap_id: number;
+  count: number;
+  beatmap: Beatmap;
+  beatmapset: Beatmapset;
+};

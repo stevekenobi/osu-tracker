@@ -1,4 +1,4 @@
-import { AuthDetails, Beatmapset, BeatmapsetSearch, LeaderboardSearch, RequestQuery, User } from '@/types';
+import { AuthDetails, Beatmapset, BeatmapsetSearch, LeaderboardSearch, RequestQuery, User, UserPlayedBeatmaps, UserScore } from '@/types';
 import { createQuery, delay } from '../utils';
 import axios, { AxiosError } from 'axios';
 const baseUrl = 'https://osu.ppy.sh/api/v2';
@@ -67,5 +67,13 @@ export class OsuClient {
 
   public async getCountryLeaderboard(query: Partial<RequestQuery>): Promise<LeaderboardSearch | null> {
     return await this.getRequest<LeaderboardSearch>(`rankings/osu/performance${createQuery(query)}`);
+  }
+
+  public async getUserBeamaps(id: number, type: string, query: Partial<RequestQuery>): Promise<UserPlayedBeatmaps[] | null> {
+    return await this.getRequest<UserPlayedBeatmaps[]>(`users/${id}/beatmapsets/${type}${createQuery(query)}`);
+  }
+
+  public async getUserScoreOnBeatmap(beatmap: number, user: number): Promise<UserScore | null> {
+    return await this.getRequest<UserScore>(`beatmaps/${beatmap}/scores/users/${user}`);
   }
 }
