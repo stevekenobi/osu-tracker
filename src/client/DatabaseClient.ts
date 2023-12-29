@@ -1,8 +1,9 @@
 import { Leaderboard, initLeaderboard } from './models/LeaderboardModel';
 import { Scores, initScores } from './models/ScoreModel';
+import { Unfinished, initUnfinished } from './models/UnfinishedModel';
 import { User, initUser } from './models/UserModel';
 import { getSequelizeSingleton, initModels } from './models/initialize';
-import { LeaderboardUser, User as OsuUser, UserScore } from '@/types';
+import { LeaderboardUser, User as OsuUser, UserPlayedBeatmaps, UserScore } from '@/types';
 
 export class DatabaseClient {
   constructor() {}
@@ -15,6 +16,7 @@ export class DatabaseClient {
     initUser(getSequelizeSingleton());
     initLeaderboard(getSequelizeSingleton());
     initScores(getSequelizeSingleton());
+    initUnfinished(getSequelizeSingleton());
 
     // options: {force: true} -> drop and recreate
     // options: {alter: true} -> amend tables
@@ -96,6 +98,21 @@ export class DatabaseClient {
         count_geki: score.score.statistics.count_geki,
         count_katu: score.score.statistics.count_katu,
         count_miss: score.score.statistics.count_miss,
+      })),
+    );
+  }
+
+  public async updateUnfinishedBeatmaps(beatmaps: UserPlayedBeatmaps[]) {
+    await Unfinished.bulkCreate(
+      beatmaps.map((b) => ({
+        beatmapset_id: b.beatmapset.id,
+        difficulty_rating: b.beatmap.difficulty_rating,
+        id: b.beatmap_id,
+        status: b.beatmap.status,
+        version: b.beatmap.version,
+        artist: b.beatmapset.artist,
+        creator: b.beatmapset.creator,
+        title: b.beatmapset.title,
       })),
     );
   }

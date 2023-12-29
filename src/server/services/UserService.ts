@@ -2,7 +2,8 @@ import type { Request, Response } from 'express';
 import type Server from '../server';
 import AbstractService from '../AbstractService';
 import { DatabaseClient, OsuClient } from '@/client';
-import { LeaderboardUser, UserScore } from '@/types';
+import { LeaderboardUser, UserPlayedBeatmaps, UserScore } from '@/types';
+import { delay } from '../../utils';
 
 export default class UserService extends AbstractService {
   private databaseClient: DatabaseClient;
@@ -60,6 +61,7 @@ export default class UserService extends AbstractService {
 
     // create unfinished beatmaps
     const userScores: UserScore[] = [];
+    const unfinished: UserPlayedBeatmaps[] = [];
     let j = 0;
     let playedResponse = await this.osuClient.getUserBeamaps(user.id, 'most_played', { limit: '100', offset: j.toString() });
     do {
@@ -69,18 +71,26 @@ export default class UserService extends AbstractService {
         continue;
       }
 
-      for (const b of playedResponse) {
-        const score = await this.osuClient.getUserScoreOnBeatmap(b.beatmap_id, user.id);
-        console.log(`Score on ${b.beatmap_id} ${score ? 'found' : 'not found'}`);
-        if (score) {
-          userScores.push(score);
-        }
-      }
+      playedResponse
+        .filter((b) => b.beatmap.mode === 'osu' && (b.beatmap.status === 'ranked' || b.beatmap.status === 'approved' || b.beatmap.status === 'loved'))
+        .forEach(async (b) => {
+          const score = await this.osuClient.getUserScoreOnBeatmap(b.beatmap_id, user.id);
+          console.log(`${j}: Score on ${b.beatmap_id} ${score ? 'found' : 'not found'}`);
+          if (score) {
+            userScores.push(score);
+          } else {
+            unfinished.push(b);
+          }
+        });
+
+      await delay(5000);
 
       playedResponse = await this.osuClient.getUserBeamaps(user.id, 'most_played', { limit: '100', offset: j.toString() });
     } while (playedResponse?.length !== 0);
+
     await this.databaseClient.updateUserScores(userScores);
-    console.log('finished unfinished');
+    await this.databaseClient.updateUnfinishedBeatmaps(unfinished);
+    console.log('finished scores and unfinished');
 
     // create leaderboard
     let leaderboard: LeaderboardUser[] = [];

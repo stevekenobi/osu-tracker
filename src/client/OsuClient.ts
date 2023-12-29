@@ -28,8 +28,8 @@ export class OsuClient {
         await delay(60000);
         return await this.getRequest<T>(requestUrl);
       }
+      throw new Error(error.message);
     }
-    throw new Error('Unexpected error');
   }
 
   private async authenticate() {
