@@ -8,6 +8,8 @@ import type AbstractService from './AbstractService';
 import { DatabaseClient, OsuClient, SheetClient } from '../client';
 
 import creds from '../../google_service_account.json';
+import { importLatestBeatmaps } from './helpers/beatmaps';
+import { updateLeaderboard } from './helpers/leaderboard';
 
 export default class Server {
   private server: HttpServer | undefined = undefined;
@@ -36,6 +38,9 @@ export default class Server {
 
   public start(): void {
     this._initServices();
+
+    importLatestBeatmaps(this.getOsuClient(), this.getSheetClient());
+    updateLeaderboard(this.getOsuClient(), this.getDatabaseClient());
 
     this.server = http.createServer(this.getApp()).listen('5173', () => {
       console.log(`⚡️[server]: Server is running at http://localhost:5173`);

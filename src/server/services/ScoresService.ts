@@ -1,24 +1,29 @@
-
+import type { Request, Response } from 'express';
+import { UserScore, UserPlayedBeatmaps } from '@/types';
+import { delay } from '../../utils';
 import AbstractService from '../AbstractService';
+import Server from '../server';
+
 export default class ScoresService extends AbstractService {
-    constructor(serverInstance: Server) {
-      super(serverInstance);
-    }
-  
-    override init(): void {
-      /* empty */
-    }
-    override shutDown(): void {
-      /* empty */
-    }
+  constructor(serverInstance: Server) {
+    super(serverInstance);
+  }
 
-    override registerRoutes(): void {
-        this.app.post('/api/scores', this._updateAllScoresRequestHandler.bind(this));
-      }
+  override init(): void {
+    /* empty */
+  }
+  override shutDown(): void {
+    /* empty */
+  }
 
-    private async _updateAllScoresRequestHandler(req: Request, res: Response): Promise<void> {
-        const userScores: UserScore[] = [];
+  override registerRoutes(): void {
+    this.app.post('/api/scores', this._updateAllScoresRequestHandler.bind(this));
+  }
+
+  private async _updateAllScoresRequestHandler(req: Request, res: Response): Promise<void> {
+    const userScores: UserScore[] = [];
     const unfinished: UserPlayedBeatmaps[] = [];
+    const user = await this.databaseClient.getSystemUser();
     let j = 0;
     let playedResponse = await this.osuClient.getUserBeamaps(user.id, 'most_played', { limit: '100', offset: j.toString() });
     do {
@@ -49,11 +54,10 @@ export default class ScoresService extends AbstractService {
     await this.databaseClient.updateUnfinishedBeatmaps(unfinished);
     console.log('finished scores and unfinished');
     res.status(200).json({
-        meta: {
-          status: 200,
-        },
-        data: 'All done',
-      });
-
-    }
+      meta: {
+        status: 200,
+      },
+      data: 'All done',
+    });
+  }
 }

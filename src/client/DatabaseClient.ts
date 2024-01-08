@@ -29,8 +29,8 @@ export class DatabaseClient {
     return user;
   }
 
-  public async updateSystemUser(user: User, leaderboard_position: number): Promise<User> {
-    const createdUser = await User.create({
+  public async updateSystemUser(user: User, leaderboard_position: number): Promise<void> {
+    await User.upsert({
       id: user.id,
       username: user.username,
       country_code: user.country_code,
@@ -56,11 +56,13 @@ export class DatabaseClient {
       ss: user.ss,
       leaderboard_position,
     });
-
-    return createdUser;
   }
 
   public async updateLeaderboard(leaderboard: LeaderboardUser[]) {
+    await Leaderboard.destroy({
+      where: {},
+      truncate: true,
+    });
     await Leaderboard.bulkCreate(
       leaderboard.map((user) => ({
         id: user.user.id,
