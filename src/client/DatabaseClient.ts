@@ -11,7 +11,7 @@ export class DatabaseClient {
   public async init() {
     console.log('Initializing Database');
 
-    await initModels();
+    initModels();
 
     initUser(getSequelizeSingleton());
     initLeaderboard(getSequelizeSingleton());

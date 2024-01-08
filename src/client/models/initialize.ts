@@ -2,15 +2,13 @@ import { Sequelize } from 'sequelize';
 
 let sequelizeSingleton: Sequelize | undefined = undefined;
 
-export async function initModels() {
+export function initModels() {
   if (sequelizeSingleton) {
     console.log('Already initialized.');
     return;
   }
 
   sequelizeSingleton = new Sequelize('postgres://user:password@localhost:5432/dev');
-
-  await sequelizeSingleton.authenticate();
 }
 
 export function getSequelizeSingleton() {

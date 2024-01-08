@@ -72,15 +72,15 @@ export default class Server {
   }
 
   private _initClients(): void {
+    this.databaseClient = new DatabaseClient();
+    this.databaseClient.init();
+
     this.osuClient = new OsuClient({
       clientId: 27949,
       clientSecret: 'tPp9TKXZCa2AU8e5uQp8vOK2caWqrmqIamQ8544B',
     });
 
     this.sheetClient = new SheetClient(creds);
-
-    this.databaseClient = new DatabaseClient();
-    this.databaseClient.init();
   }
 
   private _initServices(): void {
