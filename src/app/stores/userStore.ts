@@ -20,5 +20,9 @@ export const useUserStore = defineStore('user', {
     async addSystemUser(id: string) {
       await apiRequest<AppUser>('post', 'user', { id });
     },
+
+    async updateUserScores(id: string) {
+      await apiRequest('post', 'scores', { id });
+    },
   },
 });

@@ -8,13 +8,8 @@ import { AxiosError } from 'axios';
 import { delay } from '../../utils';
 
 export default class BeatmapsService extends AbstractService {
-  private osuClient: OsuClient;
-  private sheetClient: SheetClient;
-
   constructor(serverInstance: Server) {
     super(serverInstance);
-    this.osuClient = serverInstance.getOsuClient();
-    this.sheetClient = serverInstance.getSheetClient();
   }
 
   override init(): void {
