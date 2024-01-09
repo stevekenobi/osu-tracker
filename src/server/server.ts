@@ -42,6 +42,11 @@ export default class Server {
     importLatestBeatmaps(this.getOsuClient(), this.getSheetClient());
     updateLeaderboard(this.getOsuClient(), this.getDatabaseClient());
 
+    setInterval(() => {
+      importLatestBeatmaps(this.getOsuClient(), this.getSheetClient());
+      updateLeaderboard(this.getOsuClient(), this.getDatabaseClient());
+    }, 3600 * 1000);
+
     this.server = http.createServer(this.getApp()).listen('5173', () => {
       console.log(`⚡️[server]: Server is running at http://localhost:5173`);
     });
