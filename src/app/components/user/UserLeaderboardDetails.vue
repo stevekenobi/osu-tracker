@@ -1,6 +1,6 @@
 <template>
-  <app-block padding-horizontal="medium" :border="true" radius="small">
-    <div>Hello</div>
+  <app-block padding-horizontal="small" radius="small">
+    <div>Performance: {{ user.pp }} pp</div>
   </app-block>
 </template>
 

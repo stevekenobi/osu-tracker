@@ -147,4 +147,8 @@ export class DatabaseClient {
       })),
     );
   }
+
+  public async findScoreOnBeatmap(beatmap_id: number) {
+    return await Scores.findByPk(beatmap_id);
+  }
 }

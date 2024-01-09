@@ -16,3 +16,13 @@ export function createQuery(query: any): string {
 
   return '';
 }
+
+export function getYearsUntilToday(): string[] {
+  const endDate = new Date().getFullYear();
+  const years: string[] = [];
+
+  for (let i = 2007; i <= endDate; i++) {
+    years.push(i.toString());
+  }
+  return years;
+}

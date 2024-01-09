@@ -2,6 +2,7 @@ export * from './auth';
 
 export * from './app/beatmaps';
 export * from './app/http';
+export * from './app/scores';
 export * from './app/user';
 
 export * from './osu/beatmaps';
