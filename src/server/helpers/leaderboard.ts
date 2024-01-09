@@ -4,6 +4,7 @@ import { LeaderboardUser } from '@/types';
 export async function updateLeaderboard(osuClient: OsuClient, databaseClient: DatabaseClient) {
   let leaderboard: LeaderboardUser[] = [];
   const user = await databaseClient.getSystemUser();
+  if (!user) return;
   let i = 1;
   let leaderboardResponse = await osuClient.getCountryLeaderboard({ country: user.country_code, 'cursor[page]': i.toString() });
   do {

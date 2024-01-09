@@ -1,6 +1,8 @@
 import type { Request, Response } from 'express';
 import type Server from '../server';
 import AbstractService from '../AbstractService';
+import { updateLeaderboard } from '../helpers/leaderboard';
+import { updateAllUserScores } from '../helpers/scores';
 
 export default class UserService extends AbstractService {
   constructor(serverInstance: Server) {
@@ -49,6 +51,10 @@ export default class UserService extends AbstractService {
       });
       return;
     }
+
+    await this.databaseClient.updateSystemUserFromOsu(user);
+    updateLeaderboard(this.osuClient, this.databaseClient);
+    updateAllUserScores(this.osuClient, this.databaseClient);
 
     res.status(200).json({
       meta: {
