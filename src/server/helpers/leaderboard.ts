@@ -2,8 +2,10 @@ import { DatabaseClient, OsuClient } from '@/client';
 import { LeaderboardUser } from '@/types';
 
 export async function updateLeaderboard(osuClient: OsuClient, databaseClient: DatabaseClient) {
+  console.log('starting updating leaderboard');
   let leaderboard: LeaderboardUser[] = [];
   const user = await databaseClient.getSystemUser();
+  console.log(user);
   if (!user) return;
   let i = 1;
   let leaderboardResponse = await osuClient.getCountryLeaderboard({ country: user.country_code, 'cursor[page]': i.toString() });
@@ -22,4 +24,6 @@ export async function updateLeaderboard(osuClient: OsuClient, databaseClient: Da
   await databaseClient.updateSystemUser(user, leaderboard.findIndex((leaderboardUser) => leaderboardUser.user.id === user.id) + 1);
 
   await databaseClient.updateLeaderboard(leaderboard.slice(0, 200));
+
+  console.log('Updated leaderboard');
 }

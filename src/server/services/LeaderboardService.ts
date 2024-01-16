@@ -16,10 +16,22 @@ export default class LeaderboardService extends AbstractService {
   }
 
   override registerRoutes(): void {
-    this.app.post('/api/leaderboard', this._updateCountryLeaderboard.bind(this));
+    this.app.get('/api/leaderboard', this._getCountryLeaderboardRequestHandler.bind(this));
+    this.app.post('/api/leaderboard', this._updateCountryLeaderboardRequestHandler.bind(this));
   }
 
-  private async _updateCountryLeaderboard(req: Request, res: Response): Promise<void> {
+  private async _getCountryLeaderboardRequestHandler(req: Request, res: Response): Promise<void> {
+    const result = await this.databaseClient.getLeaderboard();
+
+    res.status(200).json({
+      meta: {
+        status: 200,
+      },
+      data: result,
+    });
+  }
+
+  private async _updateCountryLeaderboardRequestHandler(req: Request, res: Response): Promise<void> {
     updateLeaderboard(this.osuClient, this.databaseClient);
     res.status(200).json({
       meta: {

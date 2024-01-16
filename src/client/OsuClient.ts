@@ -8,7 +8,7 @@ export class OsuClient {
   private authToken = '';
   constructor(private readonly authDetails: AuthDetails) {}
 
-  private async getRequest<T>(requestUrl: string): Promise<T | null> {
+  private async getRequest<T>(requestUrl: string): Promise<T | undefined> {
     try {
       const response = await axios.get<T>(`${baseUrl}/${requestUrl}`, {
         headers: {
@@ -23,7 +23,7 @@ export class OsuClient {
         await this.authenticate();
         return await this.getRequest<T>(requestUrl);
       } else if (error.response?.status === 404) {
-        return null;
+        return undefined;
       } else if (error.response?.status === 429) {
         await delay(60000);
         return await this.getRequest<T>(requestUrl);
@@ -53,27 +53,27 @@ export class OsuClient {
     this.authToken = response.data.access_token;
   }
 
-  public async getUserById(id: number): Promise<User | null> {
+  public async getUserById(id: number): Promise<User | undefined> {
     return await this.getRequest(`users/${id}`);
   }
 
-  public async getBeatmapsetById(id: number): Promise<Beatmapset | null> {
+  public async getBeatmapsetById(id: number): Promise<Beatmapset | undefined> {
     return await this.getRequest<Beatmapset>(`beatmapsets/${id}`);
   }
 
-  public async getBeatmapsetSearch(query: Partial<RequestQuery>): Promise<BeatmapsetSearch | null> {
+  public async getBeatmapsetSearch(query: Partial<RequestQuery>): Promise<BeatmapsetSearch | undefined> {
     return await this.getRequest<BeatmapsetSearch>(`beatmapsets/search${createQuery(query)}`);
   }
 
-  public async getCountryLeaderboard(query: Partial<RequestQuery>): Promise<LeaderboardSearch | null> {
+  public async getCountryLeaderboard(query: Partial<RequestQuery>): Promise<LeaderboardSearch | undefined> {
     return await this.getRequest<LeaderboardSearch>(`rankings/osu/performance${createQuery(query)}`);
   }
 
-  public async getUserBeamaps(id: number, type: string, query: Partial<RequestQuery>): Promise<UserPlayedBeatmaps[] | null> {
+  public async getUserBeamaps(id: number, type: string, query: Partial<RequestQuery>): Promise<UserPlayedBeatmaps[] | undefined> {
     return await this.getRequest<UserPlayedBeatmaps[]>(`users/${id}/beatmapsets/${type}${createQuery(query)}`);
   }
 
-  public async getUserScoreOnBeatmap(beatmap: number, user: number): Promise<UserScore | null> {
+  public async getUserScoreOnBeatmap(beatmap: number, user: number): Promise<UserScore | undefined> {
     return await this.getRequest<UserScore>(`beatmaps/${beatmap}/scores/users/${user}`);
   }
 }

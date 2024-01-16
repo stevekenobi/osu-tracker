@@ -87,6 +87,10 @@ export class DatabaseClient {
     });
   }
 
+  public async getLeaderboard() {
+    return await Leaderboard.findAll();
+  }
+
   public async updateLeaderboard(leaderboard: LeaderboardUser[]) {
     await Leaderboard.destroy({
       where: {},
