@@ -5,9 +5,8 @@ import express from 'express';
 import http from 'http';
 
 import type AbstractService from './AbstractService';
-import { DatabaseClient, OsuClient, SheetClient } from '../client';
+import { DatabaseClient, OsuClient } from '../client';
 
-import creds from '../../google_service_account.json';
 import { importLatestBeatmaps } from './helpers/beatmaps';
 import { updateLeaderboard } from './helpers/leaderboard';
 import { updateRecentScores } from './helpers/scores';
@@ -17,7 +16,6 @@ export default class Server {
   private app: Express | undefined = undefined;
   private router: Router | undefined = undefined;
   private osuClient: OsuClient | undefined = undefined;
-  private sheetClient: SheetClient | undefined = undefined;
   private databaseClient: DatabaseClient | undefined = undefined;
   private services: AbstractService[] = [];
 
@@ -40,12 +38,12 @@ export default class Server {
   public start(): void {
     this._initServices();
 
-    importLatestBeatmaps(this.getOsuClient(), this.getSheetClient());
+    importLatestBeatmaps(this.getDatabaseClient(), this.getOsuClient());
     updateLeaderboard(this.getOsuClient(), this.getDatabaseClient());
     updateRecentScores(this.getDatabaseClient());
 
     setInterval(() => {
-      importLatestBeatmaps(this.getOsuClient(), this.getSheetClient());
+      importLatestBeatmaps(this.getDatabaseClient(), this.getOsuClient());
       updateLeaderboard(this.getOsuClient(), this.getDatabaseClient());
       updateRecentScores(this.getDatabaseClient());
     }, 3600 * 1000);
@@ -87,8 +85,6 @@ export default class Server {
       clientId: 27949,
       clientSecret: 'tPp9TKXZCa2AU8e5uQp8vOK2caWqrmqIamQ8544B',
     });
-
-    this.sheetClient = new SheetClient(creds);
   }
 
   private _initServices(): void {
@@ -139,13 +135,6 @@ export default class Server {
       throw new Error('osu client was not initialized correctly');
     }
     return this.osuClient;
-  }
-
-  public getSheetClient(): SheetClient {
-    if (!this.sheetClient) {
-      throw new Error('Sheet client was not initialized correctly');
-    }
-    return this.sheetClient;
   }
 }
 

@@ -1,5 +1,5 @@
-import { DatabaseClient, OsuClient, SheetClient } from '@/client';
-import { UserScore, UserPlayedBeatmaps, AppBeatmapScore, AppBeatmap, AppBeatmapsetScore } from '@/types';
+import { DatabaseClient, OsuClient, Beatmaps, Scores } from '../../client';
+import { UserScore, UserPlayedBeatmaps, AppBeatmapScore, AppBeatmapsetScore } from '@/types';
 import { delay } from '../../utils';
 
 export async function updateRecentScores(databaseClient: DatabaseClient) {
@@ -39,18 +39,21 @@ export async function updateAllUserScores(osuClient: OsuClient, databaseClient: 
   } while (playedResponse?.length !== 0);
 
   await databaseClient.updateUserScores(userScores);
-  await databaseClient.updateUnfinishedBeatmaps(unfinished);
+  await databaseClient.updateUnfinishedBeatmaps(user.id, unfinished);
 }
 
-export async function getUserScores(databaseClient: DatabaseClient, sheetClient: SheetClient, year: string): Promise<AppBeatmapsetScore[]> {
+export async function getUserScores(): Promise<AppBeatmapsetScore[]> {
   const result: AppBeatmapScore[] = [];
-  const beatmaps = await sheetClient.getRows<AppBeatmap>('19yENPaqMxN41X7bU9QpAylYc3RZfctt9a1oVE6lUqI0', year);
+  const beatmaps = await Beatmaps.findAll();
   for (const b of beatmaps) {
-    const score = await databaseClient.findScoreOnBeatmap(parseInt((b.Link ?? '').split('/')[4]));
+    const score = await Scores.findByPk();
 
     if (score) {
       result.push({
-        beatmap: b as AppBeatmap,
+        beatmap: {
+          link: `https://osu.ppy.sh/b/${b.id}`,
+          ...b,
+        },
         score: {
           accuracy: score.accuracy,
           created_at: score.created_at,
@@ -72,7 +75,10 @@ export async function getUserScores(databaseClient: DatabaseClient, sheetClient:
       });
     } else {
       result.push({
-        beatmap: b as AppBeatmap,
+        beatmap: {
+          link: `https://osu.ppy.sh/b/${b.id}`,
+          ...b,
+        },
         score: undefined,
       });
     }
@@ -83,18 +89,18 @@ export async function getUserScores(databaseClient: DatabaseClient, sheetClient:
 
 function createAppBeatmapsetFromAppBeatmaps(beatmaps: AppBeatmapScore[]): AppBeatmapsetScore[] {
   const result: AppBeatmapsetScore[] = [];
-  const setIds = Array.from(new Set(beatmaps.map((b) => b.beatmap.BeatmapsetId)));
+  const setIds = Array.from(new Set(beatmaps.map((b) => b.beatmap.beatmapset_id)));
 
   setIds.forEach((id) => {
-    const beatmapsOfSet = beatmaps.filter((b) => b.beatmap.BeatmapsetId === id);
+    const beatmapsOfSet = beatmaps.filter((b) => b.beatmap.beatmapset_id === id);
     result.push({
-      artist: beatmapsOfSet[0].beatmap.Artist,
-      creator: beatmapsOfSet[0].beatmap.Creator,
-      date: new Date(beatmapsOfSet[0].beatmap.Date),
+      artist: beatmapsOfSet[0].beatmap.artist,
+      creator: beatmapsOfSet[0].beatmap.creator,
+      date: new Date(beatmapsOfSet[0].beatmap.ranked_date),
       id,
       link: '',
-      status: beatmapsOfSet[0].beatmap.Status,
-      title: beatmapsOfSet[0].beatmap.Title,
+      status: beatmapsOfSet[0].beatmap.status,
+      title: beatmapsOfSet[0].beatmap.title,
       beatmaps: beatmapsOfSet,
     });
   });

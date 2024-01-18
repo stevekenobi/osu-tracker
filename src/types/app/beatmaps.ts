@@ -1,7 +1,7 @@
 import { RankStatus } from '../osu/enums';
 
 export type AppBeatmapset = {
-  id: string;
+  id: number;
   artist: string;
   title: string;
   link: string;
@@ -12,18 +12,19 @@ export type AppBeatmapset = {
 };
 
 export type AppBeatmap = {
-  Link: string;
-  Artist: string;
-  Title: string;
-  Creator: string;
-  Version: string;
-  Status: RankStatus;
-  Difficulty: number;
-  BPM: number;
-  AR: number;
-  CS: number;
-  HP: number;
-  OD: number;
-  Date: string;
-  BeatmapsetId: string;
+  link: string;
+  artist: string;
+  title: string;
+  creator: string;
+  version: string;
+  status: RankStatus;
+  difficulty_rating: number;
+  bpm: number;
+  ar: number;
+  cs: number;
+  hp: number;
+  od: number;
+  length: number;
+  ranked_date: Date;
+  beatmapset_id: number;
 };

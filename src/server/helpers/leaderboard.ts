@@ -1,4 +1,4 @@
-import { DatabaseClient, OsuClient } from '@/client';
+import { DatabaseClient, OsuClient } from '../../client';
 import { LeaderboardUser } from '@/types';
 
 export async function updateLeaderboard(osuClient: OsuClient, databaseClient: DatabaseClient) {

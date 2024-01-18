@@ -1,9 +1,10 @@
+import { Beatmaps, initBeatmaps } from './models/BeatmapModel';
 import { Leaderboard, initLeaderboard } from './models/LeaderboardModel';
 import { Scores, initScores } from './models/ScoreModel';
 import { Unfinished, initUnfinished } from './models/UnfinishedModel';
 import { User, initUser } from './models/UserModel';
 import { getSequelizeSingleton, initModels } from './models/initialize';
-import { LeaderboardUser, UserPlayedBeatmaps, UserScore, User as OsuUser } from '@/types';
+import { LeaderboardUser, UserPlayedBeatmaps, UserScore, User as OsuUser, AppBeatmap } from '@/types';
 
 export class DatabaseClient {
   constructor() {}
@@ -13,6 +14,7 @@ export class DatabaseClient {
 
     initModels();
 
+    initBeatmaps(getSequelizeSingleton());
     initUser(getSequelizeSingleton());
     initLeaderboard(getSequelizeSingleton());
     initScores(getSequelizeSingleton());
@@ -20,7 +22,7 @@ export class DatabaseClient {
 
     // options: {force: true} -> drop and recreate
     // options: {alter: true} -> amend tables
-    await getSequelizeSingleton().sync({ alter: true });
+    await getSequelizeSingleton().sync({ force: true });
   }
 
   public async getSystemUser() {
@@ -141,26 +143,30 @@ export class DatabaseClient {
     );
   }
 
-  public async updateUnfinishedBeatmaps(beatmaps: UserPlayedBeatmaps[]) {
+  public async updateUnfinishedBeatmaps(userId: number, beatmaps: UserPlayedBeatmaps[]) {
     await Unfinished.bulkCreate(
       beatmaps.map((b) => ({
-        beatmapset_id: b.beatmapset.id,
-        difficulty_rating: b.beatmap.difficulty_rating,
-        id: b.beatmap_id,
-        status: b.beatmap.status,
-        version: b.beatmap.version,
-        artist: b.beatmapset.artist,
-        creator: b.beatmapset.creator,
-        title: b.beatmapset.title,
+        beatmap_id: b.beatmap_id,
+        user_id: userId,
         play_count: b.count,
       })),
       {
-        updateOnDuplicate: ['play_count', 'difficulty_rating'],
+        updateOnDuplicate: ['play_count'],
       },
     );
   }
 
   public async findScoreOnBeatmap(beatmap_id: number) {
     return await Scores.findByPk(beatmap_id);
+  }
+
+  public async updateBeatmaps(beatmaps: AppBeatmap[], options?: any) {
+    await Beatmaps.bulkCreate(
+      beatmaps.map((b) => ({
+        id: parseInt(b.link.split('/').at(-1) ?? ''),
+        ...b,
+      })),
+      { updateOnDuplicate: ['difficulty_rating'], ...options },
+    );
   }
 }

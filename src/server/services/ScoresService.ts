@@ -33,7 +33,7 @@ export default class ScoresService extends AbstractService {
   }
 
   private async _getUserScoresRequestHandler(req: Request, res: Response): Promise<void> {
-    const response = await getUserScores(this.databaseClient, this.sheetClient, req.params.year);
+    const response = await getUserScores();
 
     if (response.length > 0) {
       res.status(200).json({

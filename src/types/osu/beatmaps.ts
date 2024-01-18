@@ -28,6 +28,7 @@ export type Beatmap = {
   bpm: number;
   cs: number;
   drain: number;
+  hit_length: number;
 };
 
 export type UserPlayedBeatmaps = {
