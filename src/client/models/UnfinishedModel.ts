@@ -10,6 +10,7 @@ export class Unfinished extends Model<InferAttributes<Unfinished>, InferCreation
   public declare artist: string;
   public declare creator: string;
   public declare title: string;
+  public declare play_count: number;
 }
 
 export function initUnfinished(sequelize: Sequelize) {
@@ -46,6 +47,10 @@ export function initUnfinished(sequelize: Sequelize) {
       },
       title: {
         type: DataTypes.STRING,
+        allowNull: false,
+      },
+      play_count: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     },

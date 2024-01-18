@@ -21,6 +21,7 @@ export default class BeatmapsService extends AbstractService {
     this.app.get('/api/beatmaps', this._getBeatmapListRequestHandler.bind(this));
     this.app.get('/api/beatmaps/sets/:year', this._getYearBeatmapsetsRequestHandler.bind(this));
     this.app.post('/api/beatmaps', this._postBeatmapUpdateRequestHandler.bind(this));
+    this.app.get('/api/beatmaps/unfinished', this._getUnfinishedBeatmapsRequestHandler.bind(this));
   }
 
   private async _getBeatmapListRequestHandler(req: Request, res: Response): Promise<void> {
@@ -51,6 +52,17 @@ export default class BeatmapsService extends AbstractService {
         status: 200,
       },
       data: 'Job started',
+    });
+  }
+
+  private async _getUnfinishedBeatmapsRequestHandler(req: Request, res: Response): Promise<void> {
+    const result = await this.databaseClient.getUnfinishedBeatmaps();
+
+    res.status(200).json({
+      meta: {
+        status: 200,
+      },
+      data: result,
     });
   }
 }

@@ -113,6 +113,10 @@ export class DatabaseClient {
     );
   }
 
+  public async getUnfinishedBeatmaps() {
+    return await Unfinished.findAll();
+  }
+
   public async updateUserScores(scores: UserScore[]) {
     await Scores.bulkCreate(
       scores.map((score) => ({
@@ -148,7 +152,11 @@ export class DatabaseClient {
         artist: b.beatmapset.artist,
         creator: b.beatmapset.creator,
         title: b.beatmapset.title,
+        play_count: b.count,
       })),
+      {
+        updateOnDuplicate: ['play_count', 'difficulty_rating'],
+      },
     );
   }
 
