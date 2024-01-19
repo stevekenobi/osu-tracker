@@ -5,6 +5,7 @@ export class Scores extends Model<InferAttributes<Scores>, InferCreationAttribut
   public declare created_at: string;
   public declare id: number;
   public declare beatmap_id: number;
+  public declare user_id: number;
   public declare max_combo: number;
   public declare mode: string;
   public declare mods: string;
@@ -32,6 +33,10 @@ export function initScores(sequelize: Sequelize) {
         allowNull: false,
       },
       id: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+      },
+      user_id: {
         type: DataTypes.BIGINT,
         allowNull: false,
       },

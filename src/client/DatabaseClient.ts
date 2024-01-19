@@ -20,9 +20,19 @@ export class DatabaseClient {
     initScores(getSequelizeSingleton());
     initUnfinished(getSequelizeSingleton());
 
+    User.hasMany(Scores, { foreignKey: { name: 'user_id', allowNull: false } });
+    Scores.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+    Beatmaps.hasMany(Scores, { foreignKey: { name: 'beatmap_id', allowNull: false } });
+    Scores.belongsTo(Beatmaps, { foreignKey: 'beatmap_id', as: 'beatmap' });
+
+    User.hasMany(Unfinished, { foreignKey: { name: 'user_id', allowNull: false } });
+    Unfinished.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+    Beatmaps.hasMany(Unfinished, { foreignKey: { name: 'beatmap_id', allowNull: false } });
+    Unfinished.belongsTo(Beatmaps, { foreignKey: 'beatmap_id', as: 'beatmap' });
+
     // options: {force: true} -> drop and recreate
     // options: {alter: true} -> amend tables
-    await getSequelizeSingleton().sync({ force: true });
+    await getSequelizeSingleton().sync({ alter: true });
   }
 
   public async getSystemUser() {
@@ -119,13 +129,14 @@ export class DatabaseClient {
     return await Unfinished.findAll();
   }
 
-  public async updateUserScores(scores: UserScore[]) {
+  public async updateUserScores(scores: UserScore[], user_id: number, options?: any) {
     await Scores.bulkCreate(
       scores.map((score) => ({
         accuracy: Math.round(score.score.accuracy * 10000) / 100,
         created_at: score.score.created_at,
         id: score.score.id,
         beatmap_id: score.score.beatmap.id,
+        user_id,
         max_combo: score.score.max_combo,
         mode: score.score.mode,
         mods: score.score.mods.join(','),
@@ -140,10 +151,11 @@ export class DatabaseClient {
         count_katu: score.score.statistics.count_katu,
         count_miss: score.score.statistics.count_miss,
       })),
+      options,
     );
   }
 
-  public async updateUnfinishedBeatmaps(userId: number, beatmaps: UserPlayedBeatmaps[]) {
+  public async updateUnfinishedBeatmaps(userId: number, beatmaps: UserPlayedBeatmaps[], options?: any) {
     await Unfinished.bulkCreate(
       beatmaps.map((b) => ({
         beatmap_id: b.beatmap_id,
@@ -152,6 +164,7 @@ export class DatabaseClient {
       })),
       {
         updateOnDuplicate: ['play_count'],
+        ...options,
       },
     );
   }

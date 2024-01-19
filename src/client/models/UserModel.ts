@@ -32,7 +32,7 @@ export function initUser(sequelize: Sequelize) {
     {
       id: {
         primaryKey: true,
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         allowNull: false,
       },
       username: {

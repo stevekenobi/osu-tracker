@@ -38,7 +38,7 @@ export async function updateAllUserScores(osuClient: OsuClient, databaseClient: 
     playedResponse = await osuClient.getUserBeamaps(user.id, 'most_played', { limit: '100', offset: j.toString() });
   } while (playedResponse?.length !== 0);
 
-  await databaseClient.updateUserScores(userScores);
+  await databaseClient.updateUserScores(userScores, user.id);
   await databaseClient.updateUnfinishedBeatmaps(user.id, unfinished);
 }
 

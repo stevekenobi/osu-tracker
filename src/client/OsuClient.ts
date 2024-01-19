@@ -28,6 +28,7 @@ export class OsuClient {
         await delay(60000);
         return await this.getRequest<T>(requestUrl);
       }
+      console.log(error);
       throw new Error(error.message);
     }
   }

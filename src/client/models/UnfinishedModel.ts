@@ -10,12 +10,12 @@ export function initUnfinished(sequelize: Sequelize) {
   Unfinished.init(
     {
       user_id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         allowNull: false,
         primaryKey: true,
       },
       beatmap_id: {
-        type: DataTypes.DOUBLE,
+        type: DataTypes.BIGINT,
         allowNull: false,
         primaryKey: true,
       },
