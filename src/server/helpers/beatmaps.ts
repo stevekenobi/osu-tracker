@@ -65,7 +65,7 @@ export function createAppBeatmapsFromBeatmapset(beatmapset: Beatmapset): AppBeat
       difficulty_rating: b.difficulty_rating,
       link: `https://osu.ppy.sh/b/${b.id}`,
       od: b.accuracy,
-      ranked_date: new Date(beatmapset.ranked_date),
+      ranked_date: beatmapset.ranked_date,
       status: b.status,
       version: b.version,
     }));
@@ -88,7 +88,7 @@ export function createAppBeatmapsetFromAppBeatmaps(beatmaps: Beatmaps[]): AppBea
         .sort((a, b) => (a.difficulty_rating > b.difficulty_rating ? 1 : -1))
         .map((m) => ({
           link: `https://osu.ppy.sh/beatmapsets/${m.id}`,
-          ...m,
+          ...m.dataValues,
         })),
       date: new Date(maps[0].ranked_date),
     });

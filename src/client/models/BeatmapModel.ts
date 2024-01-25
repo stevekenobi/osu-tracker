@@ -16,7 +16,7 @@ export class Beatmaps extends Model<InferAttributes<Beatmaps>, InferCreationAttr
   public declare hp: number;
   public declare bpm: number;
   public declare length: number;
-  public declare ranked_date: Date;
+  public declare ranked_date: string;
 }
 
 export function initBeatmaps(sequelize: Sequelize) {
@@ -80,7 +80,7 @@ export function initBeatmaps(sequelize: Sequelize) {
         allowNull: false,
       },
       ranked_date: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: false,
       },
     },

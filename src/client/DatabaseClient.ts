@@ -20,15 +20,11 @@ export class DatabaseClient {
     initScores(getSequelizeSingleton());
     initUnfinished(getSequelizeSingleton());
 
-    User.hasMany(Scores, { foreignKey: { name: 'user_id', allowNull: false } });
-    Scores.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
-    Beatmaps.hasMany(Scores, { foreignKey: { name: 'beatmap_id', allowNull: false } });
-    Scores.belongsTo(Beatmaps, { foreignKey: 'beatmap_id', as: 'beatmap' });
+    Beatmaps.hasOne(Scores, { as: 'score', foreignKey: 'beatmap_id' });
+    Scores.belongsTo(Beatmaps, { foreignKey: 'beatmap_id' });
 
-    User.hasMany(Unfinished, { foreignKey: { name: 'user_id', allowNull: false } });
-    Unfinished.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
-    Beatmaps.hasMany(Unfinished, { foreignKey: { name: 'beatmap_id', allowNull: false } });
-    Unfinished.belongsTo(Beatmaps, { foreignKey: 'beatmap_id', as: 'beatmap' });
+    Beatmaps.hasOne(Unfinished);
+    Unfinished.belongsTo(Beatmaps, { foreignKey: 'beatmap_id' });
 
     // options: {force: true} -> drop and recreate
     // options: {alter: true} -> amend tables
@@ -126,7 +122,7 @@ export class DatabaseClient {
   }
 
   public async getUnfinishedBeatmaps() {
-    return await Unfinished.findAll();
+    return await Unfinished.findAll({ include: Beatmaps });
   }
 
   public async updateUserScores(scores: UserScore[], user_id: number, options?: any) {

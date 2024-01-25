@@ -4,6 +4,7 @@ import AbstractService from '../AbstractService';
 import Server from '../server';
 import { createAppBeatmapsetFromAppBeatmaps, updateBeatmaps } from '../helpers/beatmaps';
 import { Beatmaps } from '../../client';
+import { Op } from 'sequelize';
 
 export default class BeatmapsService extends AbstractService {
   constructor(serverInstance: Server) {
@@ -36,7 +37,7 @@ export default class BeatmapsService extends AbstractService {
   }
 
   private async _getYearBeatmapsetsRequestHandler(req: Request, res: Response) {
-    const beatmaps = await Beatmaps.findAll({ where: { $ranked_date$: { $like: req.params.year } } });
+    const beatmaps = await Beatmaps.findAll({ where: { ranked_date: { [Op.like]: `${req.params.year}%` } }, include: 'score' });
     const response = createAppBeatmapsetFromAppBeatmaps(beatmaps);
     res.status(200).json({
       meta: {
