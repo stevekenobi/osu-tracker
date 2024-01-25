@@ -1,6 +1,7 @@
 import { DatabaseClient, OsuClient, Beatmaps, Scores } from '../../client';
 import { UserScore, UserPlayedBeatmaps, AppBeatmapScore, AppBeatmapsetScore } from '@/types';
 import { delay } from '../../utils';
+import { createAppBeatmapsFromBeatmapset } from './beatmaps';
 
 export async function updateRecentScores(databaseClient: DatabaseClient) {
   const user = await databaseClient.getSystemUser();
@@ -25,6 +26,16 @@ export async function updateAllUserScores(osuClient: OsuClient, databaseClient: 
       .filter((b) => b.beatmap.mode === 'osu' && (b.beatmap.status === 'ranked' || b.beatmap.status === 'approved' || b.beatmap.status === 'loved'))
       .forEach(async (b) => {
         const score = await osuClient.getUserScoreOnBeatmap(b.beatmap_id, user.id);
+        const beatmap = await databaseClient.findBeatmapById(b.beatmap_id);
+        if (!beatmap) {
+          const beatmapsetFromOsu = await osuClient.getBeatmapsetById(b.beatmapset.id);
+
+          if (!beatmapsetFromOsu) {
+            console.log(`Could not find beatmapset ${b.beatmapset.id}`);
+            return;
+          }
+          await databaseClient.updateBeatmaps(createAppBeatmapsFromBeatmapset(beatmapsetFromOsu));
+        }
         console.log(`${j}: Score on ${b.beatmap_id} ${score ? 'found' : 'not found'}`);
         if (score) {
           userScores.push(score);

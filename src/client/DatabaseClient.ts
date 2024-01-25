@@ -151,7 +151,10 @@ export class DatabaseClient {
         count_katu: score.score.statistics.count_katu,
         count_miss: score.score.statistics.count_miss,
       })),
-      options,
+      {
+        updateOnDuplicate: ['accuracy', 'count_100', 'count_300', 'count_50', 'count_miss', 'count_geki', 'count_katu', 'score', 'max_combo', 'mods', 'created_at', 'perfect', 'pp', 'rank'],
+        ...options,
+      },
     );
   }
 
@@ -171,6 +174,10 @@ export class DatabaseClient {
 
   public async findScoreOnBeatmap(beatmap_id: number) {
     return await Scores.findByPk(beatmap_id);
+  }
+
+  public async findBeatmapById(beatmap_id: number): Promise<Beatmaps | null> {
+    return await Beatmaps.findOne({ where: { id: beatmap_id } });
   }
 
   public async updateBeatmaps(beatmaps: AppBeatmap[], options?: any) {

@@ -49,7 +49,7 @@ export async function updateBeatmaps(databaseClient: DatabaseClient, osuClient: 
   }
 }
 
-function createAppBeatmapsFromBeatmapset(beatmapset: Beatmapset): AppBeatmap[] {
+export function createAppBeatmapsFromBeatmapset(beatmapset: Beatmapset): AppBeatmap[] {
   return beatmapset.beatmaps
     .filter((b) => b.mode === 'osu')
     .map((b) => ({
