@@ -26,7 +26,7 @@ export default class BeatmapsService extends AbstractService {
   }
 
   private async _getBeatmapListRequestHandler(req: Request, res: Response): Promise<void> {
-    const beatmaps = await Beatmaps.findAll();
+    const beatmaps = await Beatmaps.findAll({ include: 'score' });
     const response = createAppBeatmapsetFromAppBeatmaps(beatmaps);
     res.status(200).json({
       meta: {

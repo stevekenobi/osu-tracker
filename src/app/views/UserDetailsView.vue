@@ -17,6 +17,7 @@
     <div v-if="user">
       <span class="text-2xl">{{ welcomeMessage }}</span>
       <user-leaderboard-details :user="user" />
+      <yearly-details v-if="userStore.beatmaps" :beatmapsets="userStore.beatmaps" />
     </div>
   </div>
 </template>
@@ -27,6 +28,7 @@ import AppDialog from '@/app/components/shared/AppDialog.vue';
 import AppTextInput from '@/app/components/shared/AppTextInput.vue';
 
 import UserLeaderboardDetails from '@/app/components/user/UserLeaderboardDetails.vue';
+import YearlyDetails from '@/app/components/scores/YearlyDetails.vue';
 import { useUserStore } from '@/app/stores/userStore';
 import { computed, onMounted, ref } from 'vue';
 const userStore = useUserStore();

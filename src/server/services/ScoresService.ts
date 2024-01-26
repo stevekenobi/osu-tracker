@@ -1,7 +1,8 @@
 import type { Request, Response } from 'express';
 import AbstractService from '../AbstractService';
 import Server from '../server';
-import { getUserScores, updateAllUserScores } from '../helpers/scores';
+import { updateAllUserScores } from '../helpers/scores';
+import { Scores } from '../../client';
 
 export default class ScoresService extends AbstractService {
   constructor(serverInstance: Server) {
@@ -33,7 +34,7 @@ export default class ScoresService extends AbstractService {
   }
 
   private async _getUserScoresRequestHandler(req: Request, res: Response): Promise<void> {
-    const response = await getUserScores();
+    const response = await Scores.findAll();
 
     if (response.length > 0) {
       res.status(200).json({

@@ -1,5 +1,5 @@
-import { DatabaseClient, OsuClient, Beatmaps, Scores } from '../../client';
-import { UserScore, UserPlayedBeatmaps, AppBeatmapScore, AppBeatmapsetScore } from '@/types';
+import { DatabaseClient, OsuClient } from '../../client';
+import { UserScore, UserPlayedBeatmaps } from '@/types';
 import { delay } from '../../utils';
 import { createAppBeatmapsFromBeatmapset } from './beatmaps';
 
@@ -51,69 +51,4 @@ export async function updateAllUserScores(osuClient: OsuClient, databaseClient: 
 
   await databaseClient.updateUserScores(userScores, user.id);
   await databaseClient.updateUnfinishedBeatmaps(user.id, unfinished);
-}
-
-export async function getUserScores(): Promise<AppBeatmapsetScore[]> {
-  const result: AppBeatmapScore[] = [];
-  const beatmaps = await Beatmaps.findAll();
-  for (const b of beatmaps) {
-    const score = await Scores.findByPk();
-
-    if (score) {
-      result.push({
-        beatmap: {
-          link: `https://osu.ppy.sh/b/${b.id}`,
-          ...b,
-        },
-        score: {
-          accuracy: score.accuracy,
-          created_at: score.created_at,
-          id: score.id,
-          max_combo: score.max_combo,
-          mode: score.mode,
-          mods: score.mods,
-          perfect: score.perfect,
-          pp: score.pp,
-          rank: score.rank,
-          score: score.score,
-          count_100: score.count_100,
-          count_300: score.count_300,
-          count_50: score.count_50,
-          count_geki: score.count_geki,
-          count_katu: score.count_katu,
-          count_miss: score.count_miss,
-        },
-      });
-    } else {
-      result.push({
-        beatmap: {
-          link: `https://osu.ppy.sh/b/${b.id}`,
-          ...b,
-        },
-        score: undefined,
-      });
-    }
-  }
-
-  return createAppBeatmapsetFromAppBeatmaps(result);
-}
-
-function createAppBeatmapsetFromAppBeatmaps(beatmaps: AppBeatmapScore[]): AppBeatmapsetScore[] {
-  const result: AppBeatmapsetScore[] = [];
-  const setIds = Array.from(new Set(beatmaps.map((b) => b.beatmap.beatmapset_id)));
-
-  setIds.forEach((id) => {
-    const beatmapsOfSet = beatmaps.filter((b) => b.beatmap.beatmapset_id === id);
-    result.push({
-      artist: beatmapsOfSet[0].beatmap.artist,
-      creator: beatmapsOfSet[0].beatmap.creator,
-      date: new Date(beatmapsOfSet[0].beatmap.ranked_date),
-      id,
-      link: '',
-      status: beatmapsOfSet[0].beatmap.status,
-      title: beatmapsOfSet[0].beatmap.title,
-      beatmaps: beatmapsOfSet,
-    });
-  });
-  return result;
 }
