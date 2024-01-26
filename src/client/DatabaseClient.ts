@@ -182,7 +182,7 @@ export class DatabaseClient {
         id: parseInt(b.link.split('/').at(-1) ?? ''),
         ...b,
       })),
-      { updateOnDuplicate: ['difficulty_rating'], ...options },
+      { updateOnDuplicate: ['difficulty_rating', 'status', 'ranked_date'], ...options },
     );
   }
 }
