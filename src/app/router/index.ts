@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import UserDetailsView from '@/app/views/UserDetailsView.vue';
+// import UserDetailsView from '@/app/views/UserDetailsView.vue';
+import UnfinishedBeatmapsView from '../views/UnfinishedBeatmapsView.vue';
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: UserDetailsView,
+    component: UnfinishedBeatmapsView,
   },
 ];
 

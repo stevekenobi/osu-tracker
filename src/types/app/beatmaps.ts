@@ -12,6 +12,7 @@ export type AppBeatmapset = {
 };
 
 export type AppBeatmap = {
+  id: number;
   link: string;
   artist: string;
   title: string;
@@ -27,4 +28,10 @@ export type AppBeatmap = {
   length: number;
   ranked_date: string;
   beatmapset_id: number;
+};
+
+export type AppUnfinishedBeatmap = {
+  beatmap_id: string;
+  play_count: number;
+  Beatmap: AppBeatmap;
 };

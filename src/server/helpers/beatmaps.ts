@@ -56,6 +56,7 @@ export function createAppBeatmapsFromBeatmapset(beatmapset: Beatmapset): AppBeat
   return beatmapset.beatmaps
     .filter((b) => b.mode === 'osu')
     .map((b) => ({
+      id: b.id,
       artist: beatmapset.artist,
       title: beatmapset.title,
       creator: beatmapset.creator,

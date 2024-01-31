@@ -23,7 +23,7 @@ export class DatabaseClient {
     Beatmaps.hasOne(Scores, { as: 'score', foreignKey: 'beatmap_id' });
     Scores.belongsTo(Beatmaps, { foreignKey: 'beatmap_id' });
 
-    Beatmaps.hasOne(Unfinished);
+    Beatmaps.hasOne(Unfinished, { as: 'unfinished', foreignKey: 'beatmap_id' });
     Unfinished.belongsTo(Beatmaps, { foreignKey: 'beatmap_id' });
 
     // options: {force: true} -> drop and recreate
@@ -179,7 +179,6 @@ export class DatabaseClient {
   public async updateBeatmaps(beatmaps: AppBeatmap[], options?: any) {
     await Beatmaps.bulkCreate(
       beatmaps.map((b) => ({
-        id: parseInt(b.link.split('/').at(-1) ?? ''),
         ...b,
       })),
       { updateOnDuplicate: ['difficulty_rating', 'status', 'ranked_date'], ...options },

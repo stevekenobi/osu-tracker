@@ -1,5 +1,5 @@
 <template>
-  <div :class="[pxClass, pyClass, borderClass, radiusClass, 'w-fit']">
+  <div :class="[bgClass, pxClass, pyClass, borderClass, radiusClass, 'w-fit']">
     <slot></slot>
   </div>
 </template>
@@ -8,6 +8,11 @@
 import { PropType, computed } from 'vue';
 
 const props = defineProps({
+  bg: {
+    type: String as PropType<'bg-0' | 'bg-1' | 'bg-2' | 'bg-3'>,
+    required: false,
+    default: 'bg-0',
+  },
   paddingHorizontal: {
     type: String as PropType<'none' | 'small' | 'medium' | 'large'>,
     required: false,
@@ -30,6 +35,14 @@ const props = defineProps({
   },
 });
 
+const bgClass = computed(() => {
+  return {
+    'bg-0': 'bg-slate-100',
+    'bg-1': 'bg-slate-200',
+    'bg-2': 'bg-slate-300',
+    'bg-3': 'bg-slate-400',
+  }[props.bg];
+});
 const pxClass = computed(() => {
   return {
     none: 'px-0',
