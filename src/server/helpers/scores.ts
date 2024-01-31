@@ -1,4 +1,4 @@
-import { DatabaseClient, OsuClient } from '../../client';
+import { Beatmaps, DatabaseClient, OsuClient } from '../../client';
 import { UserScore, UserPlayedBeatmaps } from '@/types';
 import { delay } from '../../utils';
 import { createAppBeatmapsFromBeatmapset } from './beatmaps';
@@ -51,4 +51,18 @@ export async function updateAllUserScores(osuClient: OsuClient, databaseClient: 
 
   await databaseClient.updateUserScores(userScores, user.id);
   await databaseClient.updateUnfinishedBeatmaps(user.id, unfinished);
+}
+
+export async function getScoresOfUser(osuClient: OsuClient, id: string) {
+  const beatmaps = await Beatmaps.findAll();
+  const scores = [];
+
+  for (const b of beatmaps) {
+    const score = await osuClient.getUserScoreOnBeatmap(b.id, id);
+
+    if (score) scores.push(score);
+    console.log(`Score on ${b.id} ${score ? 'found' : 'not found'}`);
+  }
+
+  return scores;
 }

@@ -38,7 +38,10 @@ export async function updateBeatmaps(databaseClient: DatabaseClient, osuClient: 
       for (const b of beatmapsets) {
         const beatmaps = createAppBeatmapsFromBeatmapset(b);
 
-        await databaseClient.updateBeatmaps(beatmaps, { transaction });
+        await databaseClient.updateBeatmaps(
+          beatmaps.filter((map) => map.status === 'ranked' || map.status === 'approved' || map.status === 'loved'),
+          { transaction },
+        );
       }
     } while (cursor_string);
     await transaction.commit();

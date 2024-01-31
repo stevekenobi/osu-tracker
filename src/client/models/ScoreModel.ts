@@ -86,11 +86,9 @@ export function initScores(sequelize: Sequelize) {
       },
       count_geki: {
         type: DataTypes.INTEGER,
-        allowNull: false,
       },
       count_katu: {
         type: DataTypes.INTEGER,
-        allowNull: false,
       },
       count_miss: {
         type: DataTypes.INTEGER,
