@@ -7,7 +7,7 @@
     <div class="mx-auto mt-8">
       <div class="flex flex-row flex-nowrap">
         <div class="flex items-center justify-center cursor-pointer">
-          <span v-show="previousPage" class="mx-3 text-sm font-semibold text-brand-blue-1" @click="currentPage = previousPage">Previous</span>
+          <span v-if="previousPage" class="mx-3 text-sm font-semibold text-brand-blue-1" @click="currentPage = previousPage">Previous</span>
         </div>
 
         <div v-for="page in closePages" :key="page" class="flex items-center justify-center cursor-pointer w-full">
@@ -31,7 +31,7 @@
         </div>
 
         <div class="flex items-center justify-center cursor-pointer">
-          <span v-show="nextPage" class="mx-3 text-sm font-semibold text-brand-blue-1" @click="currentPage = nextPage">Next</span>
+          <span v-if="nextPage" class="mx-3 text-sm font-semibold text-brand-blue-1" @click="currentPage = nextPage">Next</span>
         </div>
       </div>
     </div>
