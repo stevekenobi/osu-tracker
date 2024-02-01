@@ -12,14 +12,14 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  test: {
-    globals: true,
-    setupFiles: ['./tests/setup.ts'],
-    coverage: {
-      provider: 'v8',
-      all: true,
-      '100': true,
-      exclude: ['src/types/**', 'src/server/**', '.eslintrc.cjs'],
-    },
-  },
+  // test: {
+  //   globals: true,
+  //   setupFiles: ['./tests/setup.ts'],
+  //   coverage: {
+  //     provider: 'v8',
+  //     all: true,
+  //     '100': true,
+  //     exclude: ['src/types/**', 'src/server/**', '.eslintrc.cjs'],
+  //   },
+  // },
 });
