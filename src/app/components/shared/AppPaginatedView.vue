@@ -12,6 +12,17 @@
         >
           Previous
         </div>
+        <div class="flex items-center">
+          <p class="text-sm text-gray-700">
+            Showing
+            <span class="font-medium">{{ (currentPage - 1) * size + 1 }}</span>
+            to
+            <span class="font-medium">{{ currentPage * size }}</span>
+            of
+            <span class="font-medium">{{ items.length }}</span>
+            results
+          </p>
+        </div>
         <div
           class="relative ml-3 cursor-pointer inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
           @click="currentPage = nextPage ?? maxPage"
