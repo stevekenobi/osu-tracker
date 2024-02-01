@@ -1,5 +1,5 @@
 <template>
-  <app-block :border="true" radius="small" padding-horizontal="medium" padding-vertical="small" class="w-full" bg="bg-1">
+  <app-block :border="true" radius="small" padding-horizontal="medium" padding-vertical="small" class="w-full" bg="bg-1" :hoverable="true">
     <div class="flex justify-between">
       <div class="flex gap-2">
         <span>{{ beatmap.Beatmap.artist }}</span>

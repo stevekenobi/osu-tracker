@@ -1,5 +1,5 @@
 <template>
-  <div :class="[bgClass, pxClass, pyClass, borderClass, radiusClass, 'w-fit']">
+  <div :class="[bgClass, pxClass, pyClass, borderClass, radiusClass, hoverClass, 'w-fit']">
     <slot></slot>
   </div>
 </template>
@@ -32,6 +32,11 @@ const props = defineProps({
     type: String as PropType<'none' | 'small' | 'medium' | 'large'>,
     required: false,
     default: 'none',
+  },
+  hoverable: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 });
 
@@ -66,6 +71,16 @@ const radiusClass = computed(() => {
     medium: 'rounded-lg',
     large: 'rounded-xl',
   }[props.radius];
+});
+const hoverClass = computed(() => {
+  return props.hoverable
+    ? {
+        'bg-0': 'hover:bg-slate-200',
+        'bg-1': 'hover:bg-slate-300',
+        'bg-2': 'hover:bg-slate-400',
+        'bg-3': 'hover:bg-slate-500',
+      }[props.bg]
+    : '';
 });
 const borderClass = computed(() => (props.border ? 'border border-slate-600' : ''));
 </script>

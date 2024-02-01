@@ -32,7 +32,7 @@
           </p>
         </div>
         <div>
-          <div class="isolate inline-flex rounded-md shadow-sm">
+          <div class="isolate inline-flex rounded-md">
             <div
               class="relative inline-flex items-center cursor-pointer rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
               @click="currentPage = previousPage ?? 1"
@@ -47,7 +47,7 @@
               v-for="page in closePages"
               :key="page"
               class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 cursor-pointer"
-              :class="{ 'bg-brand-blue-1 text-white': page === currentPage }"
+              :class="{ 'bg-brand-blue-1 text-white hover:bg-blue-800': page === currentPage }"
               @click="currentPage = page"
             >
               {{ page }}
