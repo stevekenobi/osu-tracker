@@ -8,7 +8,7 @@
       <div class="flex flex-1 justify-between sm:hidden">
         <div
           class="cursor-pointer relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-          @click="currentPage = previousPage ?? 1"
+          @click="setPage(previousPage ?? 1)"
         >
           Previous
         </div>
@@ -25,7 +25,7 @@
         </div>
         <div
           class="relative ml-3 cursor-pointer inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-          @click="currentPage = nextPage ?? maxPage"
+          @click="setPage(nextPage ?? maxPage)"
         >
           Next
         </div>
@@ -46,7 +46,7 @@
           <div class="isolate inline-flex rounded-md">
             <div
               class="relative inline-flex items-center cursor-pointer rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-              @click="currentPage = previousPage ?? 1"
+              @click="setPage(previousPage ?? 1)"
             >
               <span class="sr-only">Previous</span>
               <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -59,14 +59,14 @@
               :key="page"
               class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 cursor-pointer"
               :class="{ 'bg-brand-blue-1 text-white hover:bg-blue-800': page === currentPage }"
-              @click="currentPage = page"
+              @click="setPage(page)"
             >
               {{ page }}
             </div>
 
             <div
               class="relative inline-flex items-center rounded-r-md cursor-pointer px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-              @click="currentPage = nextPage ?? maxPage"
+              @click="setPage(nextPage ?? maxPage)"
             >
               <span class="sr-only">Next</span>
               <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -99,6 +99,9 @@ const props = defineProps({
     default: 'none',
   },
 });
+
+defineExpose({ jumpToPage });
+const emit = defineEmits(['update:page']);
 
 const gapClass = computed(() => {
   return {
@@ -139,5 +142,14 @@ function usePreviousAndNextPages(currentPage: Ref<number>, maxPage: Ref<number>)
   });
 
   return { nextPage, previousPage };
+}
+
+function jumpToPage(page: number) {
+  currentPage.value = page;
+}
+
+function setPage(page: number) {
+  currentPage.value = page;
+  emit('update:page', page);
 }
 </script>
