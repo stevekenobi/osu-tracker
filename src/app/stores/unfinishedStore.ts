@@ -1,4 +1,4 @@
-import { AppBeatmap, AppUnfinishedBeatmap } from '@/types';
+import { AppUnfinishedBeatmap } from '@/types';
 import { defineStore } from 'pinia';
 import { apiRequest } from '../api';
 
