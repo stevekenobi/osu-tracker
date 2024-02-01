@@ -58,7 +58,7 @@
               v-for="page in closePages"
               :key="page"
               class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 cursor-pointer"
-              :class="{ 'bg-brand-blue-1 text-white hover:bg-blue-800': page === currentPage }"
+              :class="{ 'bg-brand-blue-1 text-white hover:bg-blue-500': page === currentPage }"
               @click="setPage(page)"
             >
               {{ page }}
