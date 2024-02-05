@@ -42,10 +42,10 @@ const props = defineProps({
 
 const bgClass = computed(() => {
   return {
-    'bg-0': 'bg-slate-100',
-    'bg-1': 'bg-slate-200',
-    'bg-2': 'bg-slate-300',
-    'bg-3': 'bg-slate-400',
+    'bg-0': 'bg-brand-bg-0',
+    'bg-1': 'bg-brand-bg-1',
+    'bg-2': 'bg-brand-bg-2',
+    'bg-3': 'bg-brand-bg-3',
   }[props.bg];
 });
 const pxClass = computed(() => {
@@ -75,10 +75,10 @@ const radiusClass = computed(() => {
 const hoverClass = computed(() => {
   return props.hoverable
     ? {
-        'bg-0': 'hover:bg-slate-200',
-        'bg-1': 'hover:bg-slate-300',
-        'bg-2': 'hover:bg-slate-400',
-        'bg-3': 'hover:bg-slate-500',
+        'bg-0': 'hover:bg-brand-bg-1',
+        'bg-1': 'hover:bg-brand-bg-2',
+        'bg-2': 'hover:bg-brand-bg-3',
+        'bg-3': 'hover:bg-brand-bg-4',
       }[props.bg]
     : '';
 });

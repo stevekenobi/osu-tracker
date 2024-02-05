@@ -3,9 +3,25 @@
 @tailwind utilities;
 
 :root {
-  @apply bg-slate-100;
+  @apply bg-brand-bg-0 overflow-y-scroll text-white;
 }
 
 #app {
   @apply max-w-7xl mt-4 ml-auto mr-auto pt-0 font-normal px-6 xl:px-0;
+}
+/* global.css */
+
+/* width */
+::-webkit-scrollbar {
+  @apply w-3;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-brand-bg-0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-500 hover:bg-gray-400 rounded-sm;
 }

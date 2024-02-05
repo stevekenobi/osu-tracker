@@ -16,6 +16,7 @@
         </template>
       </app-paginated-view>
     </div>
+    <div v-else>No unfinished beatmaps found ;)</div>
   </div>
 </template>
 
