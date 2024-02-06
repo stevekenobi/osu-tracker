@@ -1,8 +1,7 @@
 import type { Request, Response } from 'express';
 import AbstractService from '../AbstractService';
 import Server from '../server';
-import { getScoresOfUser, updateAllUserScores } from '../helpers/scores';
-import { Scores } from '../../client';
+import { updateAllUserScores } from '../helpers/scores';
 import { AxiosError } from 'axios';
 
 export default class ScoresService extends AbstractService {
@@ -18,20 +17,18 @@ export default class ScoresService extends AbstractService {
   }
 
   override registerRoutes(): void {
-    this.app.post('/api/scores', this._updateAllScoresRequestHandler.bind(this));
-    this.app.get('/api/scores/:year', this._getSystemUserScoresRequestHandler.bind(this));
-    this.app.get('/api/scores/user/:id', this._getUserScoresRequestHandler.bind(this));
+    this.app.post('/api/scores/:year', this._updateAllScoresRequestHandler.bind(this));
   }
 
   private async _updateAllScoresRequestHandler(req: Request, res: Response): Promise<void> {
     try {
-      await updateAllUserScores(this.osuClient, this.databaseClient);
+      updateAllUserScores(this.osuClient, this.sheetClient, req.params.year);
 
       res.status(200).json({
         meta: {
           status: 200,
         },
-        data: 'All done',
+        data: 'Job Started',
       });
     } catch (err: unknown) {
       const error = err as AxiosError;
@@ -42,35 +39,5 @@ export default class ScoresService extends AbstractService {
         data: error.toJSON(),
       });
     }
-  }
-
-  private async _getUserScoresRequestHandler(req: Request, res: Response): Promise<void> {
-    const response = await getScoresOfUser(this.osuClient, req.params.id);
-
-    res.status(200).json({
-      meta: {
-        status: 200,
-      },
-      data: response,
-    });
-  }
-
-  private async _getSystemUserScoresRequestHandler(req: Request, res: Response): Promise<void> {
-    const response = await Scores.findAll();
-
-    if (response.length > 0) {
-      res.status(200).json({
-        meta: {
-          status: 200,
-        },
-        data: response,
-      });
-      return;
-    }
-    res.status(404).json({
-      meta: {
-        status: 404,
-      },
-    });
   }
 }

@@ -27,7 +27,7 @@ export class OsuClient {
       } else if (error.response?.status === 429) {
         await delay(60000);
         return await this.getRequest<T>(requestUrl);
-      } else if (error.response?.status === 504) {
+      } else if (error.response?.status === 502 || error.response?.status === 504) {
         await delay(1000);
         return await this.getRequest<T>(requestUrl);
       }
@@ -79,5 +79,9 @@ export class OsuClient {
 
   public async getUserScoreOnBeatmap(beatmap: number, user: number | string): Promise<UserScore | undefined> {
     return await this.getRequest<UserScore>(`beatmaps/${beatmap}/scores/users/${user}`);
+  }
+
+  public async getAllUserScoresOnBeatmap(beatmap: number, user: number | string): Promise<UserScore[] | undefined> {
+    return await this.getRequest<UserScore[]>(`beatmaps/${beatmap}/scores/users/${user}/all`);
   }
 }

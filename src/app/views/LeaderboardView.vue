@@ -6,32 +6,32 @@
           <table class="min-w-full text-left text-sm font-light">
             <thead class="border-b font-medium border-neutral-500">
               <tr>
-                <th scope="col" class="px-6 py-4">#</th>
-                <th scope="col" class="px-6 py-4">Username</th>
-                <th scope="col" class="px-6 py-4">Ranked Score</th>
-                <th scope="col" class="px-6 py-4">Total Score</th>
-                <th scope="col" class="px-6 py-4">Accuracy</th>
-                <th scope="col" class="px-6 py-4">Playcount</th>
-                <th scope="col" class="px-6 py-4">SSH</th>
-                <th scope="col" class="px-6 py-4">SS</th>
-                <th scope="col" class="px-6 py-4">SH</th>
-                <th scope="col" class="px-6 py-4">S</th>
-                <th scope="col" class="px-6 py-4">A</th>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Ranked Score</th>
+                <th scope="col">Total Score</th>
+                <th scope="col">Accuracy</th>
+                <th scope="col">Playcount</th>
+                <th scope="col">SSH</th>
+                <th scope="col">SS</th>
+                <th scope="col">SH</th>
+                <th scope="col">S</th>
+                <th scope="col">A</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(user, index) in store.getLeaderboard" :key="user.id" class="border-b hover:bg-brand-bg-1 cursor-default">
-                <td class="whitespace-nowrap px-6 py-4 font-medium">{{ index + 1 }}</td>
-                <td class="whitespace-nowrap px-6 py-4">{{ user.username }}</td>
-                <td class="whitespace-nowrap px-6 py-4">{{ numeral(user.ranked_score).format('0,0') }}</td>
-                <td class="whitespace-nowrap px-6 py-4">{{ numeral(user.total_score).format('0,0') }}</td>
-                <td class="whitespace-nowrap px-6 py-4">{{ numeral(user.hit_accuracy).format('0.00') }} %</td>
-                <td class="whitespace-nowrap px-6 py-4">{{ numeral(user.play_count).format('0,0') }}</td>
-                <td class="whitespace-nowrap px-6 py-4">{{ numeral(user.ssh).format('0,0') }}</td>
-                <td class="whitespace-nowrap px-6 py-4">{{ numeral(user.ss).format('0,0') }}</td>
-                <td class="whitespace-nowrap px-6 py-4">{{ numeral(user.sh).format('0,0') }}</td>
-                <td class="whitespace-nowrap px-6 py-4">{{ numeral(user.s).format('0,0') }}</td>
-                <td class="whitespace-nowrap px-6 py-4">{{ numeral(user.a).format('0,0') }}</td>
+              <tr v-for="(user, index) in store.getLeaderboard" :key="user.Link" class="border-b hover:bg-brand-bg-1 cursor-default">
+                <td class="font-medium">{{ index + 1 }}</td>
+                <td>{{ user.Username }}</td>
+                <td>{{ user['Ranked Score'] }}</td>
+                <td>{{ user['Total Score'] }}</td>
+                <td>{{ user.Accuracy }} %</td>
+                <td>{{ user.Playcount }}</td>
+                <td>{{ user.SSH }}</td>
+                <td>{{ user.SS }}</td>
+                <td>{{ user.SH }}</td>
+                <td>{{ user.S }}</td>
+                <td>{{ user.A }}</td>
               </tr>
             </tbody>
           </table>
@@ -42,7 +42,6 @@
 </template>
 
 <script setup lang="ts">
-import numeral from 'numeral';
 import { onMounted } from 'vue';
 import { userLeaderboardStore } from '../stores/leaderboardStore';
 
@@ -50,3 +49,12 @@ const store = userLeaderboardStore();
 
 onMounted(async () => store.fetchLeaderboard());
 </script>
+
+<style lang="scss" scoped>
+th {
+  @apply px-6 py-4;
+}
+td {
+  @apply whitespace-nowrap px-6 py-4;
+}
+</style>

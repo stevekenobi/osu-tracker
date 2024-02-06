@@ -1,4 +1,4 @@
-export type RankStatus = 'graveyard' | 'wip' | 'pending' | 'ranked' | 'approved' | 'qualified' | 'loved';
+export type RankStatus = 'graveyard' | 'wip' | 'pending' | 'ranked' | 'approved' | 'qualified' | 'loved' | 'unknown';
 
 export type Ruleset = 'fruits' | 'mania' | 'osu' | 'taiko';
 

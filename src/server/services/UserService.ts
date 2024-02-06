@@ -2,7 +2,7 @@ import type { Request, Response } from 'express';
 import type Server from '../server';
 import AbstractService from '../AbstractService';
 import { updateLeaderboard } from '../helpers/leaderboard';
-import { updateAllUserScores } from '../helpers/scores';
+import { updateUnfinishedBeatmaps } from '../helpers/beatmaps';
 
 export default class UserService extends AbstractService {
   constructor(serverInstance: Server) {
@@ -17,28 +17,8 @@ export default class UserService extends AbstractService {
   }
 
   override registerRoutes(): void {
-    this.app.get('/api/user', this._getSystemUserRequestHandler.bind(this));
     this.app.post('/api/user', this._addSystemUserRequestHandler.bind(this));
     this.app.get('/api/users/:id', this._getUserByIdRequestHandler.bind(this));
-  }
-
-  private async _getSystemUserRequestHandler(req: Request, res: Response): Promise<void> {
-    const user = await this.databaseClient.getSystemUser();
-    if (user === undefined) {
-      res.status(200).json({
-        meta: {
-          status: 404,
-        },
-      });
-
-      return;
-    }
-    res.status(200).json({
-      meta: {
-        status: 200,
-      },
-      data: user,
-    });
   }
 
   private async _addSystemUserRequestHandler(req: Request, res: Response): Promise<void> {
@@ -52,9 +32,8 @@ export default class UserService extends AbstractService {
       return;
     }
 
-    await this.databaseClient.updateSystemUserFromOsu(user);
-    updateLeaderboard(this.osuClient, this.databaseClient);
-    updateAllUserScores(this.osuClient, this.databaseClient);
+    updateLeaderboard(this.osuClient, this.sheetClient);
+    updateUnfinishedBeatmaps(this.sheetClient, this.osuClient);
 
     res.status(200).json({
       meta: {

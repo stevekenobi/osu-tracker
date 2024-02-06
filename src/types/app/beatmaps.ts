@@ -6,7 +6,7 @@ export type AppBeatmapset = {
   title: string;
   link: string;
   creator: string;
-  date: Date;
+  ranked_date: Date;
   status: RankStatus;
   beatmaps: AppBeatmap[];
 };
@@ -26,7 +26,7 @@ export type AppBeatmap = {
   hp: number;
   od: number;
   length: number;
-  ranked_date: string;
+  ranked_date: Date;
   beatmapset_id: number;
 };
 

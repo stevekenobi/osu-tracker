@@ -21,7 +21,7 @@ export default class LeaderboardService extends AbstractService {
   }
 
   private async _getCountryLeaderboardRequestHandler(req: Request, res: Response): Promise<void> {
-    const result = await this.databaseClient.getLeaderboard();
+    const result = await this.sheetClient.readLeaderboard();
 
     res.status(200).json({
       meta: {
@@ -32,7 +32,7 @@ export default class LeaderboardService extends AbstractService {
   }
 
   private async _updateCountryLeaderboardRequestHandler(req: Request, res: Response): Promise<void> {
-    updateLeaderboard(this.osuClient, this.databaseClient);
+    updateLeaderboard(this.osuClient, this.sheetClient);
     res.status(200).json({
       meta: {
         status: 200,

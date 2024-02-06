@@ -1,9 +1,9 @@
-import { AppLeaderboardUser } from '@/types';
+import { SheetLeaderboardUser } from '@/types';
 import { apiRequest } from '../api';
 import { defineStore } from 'pinia';
 
 export type UserState = {
-  leaderboard: AppLeaderboardUser[];
+  leaderboard: SheetLeaderboardUser[];
 };
 
 export const userLeaderboardStore = defineStore('leaderboard', {
@@ -15,7 +15,7 @@ export const userLeaderboardStore = defineStore('leaderboard', {
   },
   actions: {
     async fetchLeaderboard() {
-      const beatmaps = await apiRequest<AppLeaderboardUser[]>('get', 'leaderboard');
+      const beatmaps = await apiRequest<SheetLeaderboardUser[]>('get', 'leaderboard');
 
       this.leaderboard = beatmaps;
     },
