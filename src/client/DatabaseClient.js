@@ -23,7 +23,7 @@ class DatabaseClient {
       },
     };
 
-    this.sequelizeSingleton = new Sequelize(databaseUrl, process.env.database_secure === 'true' ? options : {});
+    this.sequelizeSingleton = new Sequelize(databaseUrl, process.env.DATABASE_SECURE === 'true' ? options : {});
   }
 
   async initializeDatabase() {

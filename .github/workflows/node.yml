@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      client_id: 27949
-      client_secret: tPp9TKXZCa2AU8e5uQp8vOK2caWqrmqIamQ8544B
+      CLIENT_ID: ${{ secrets.CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
 
     strategy:
       matrix:

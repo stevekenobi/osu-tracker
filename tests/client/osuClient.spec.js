@@ -1,8 +1,8 @@
 const OsuClient = require('../../src/client/OsuClient');
 
 const client = new OsuClient({
-  clientId: process.env.client_id,
-  clientSecret: process.env.client_secret,
+  clientId: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
 });
 
 describe('osu client', () => {
