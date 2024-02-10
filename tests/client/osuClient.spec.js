@@ -1,4 +1,4 @@
-const { OsuClient } = require('../../src/client/OsuClient');
+const OsuClient = require('../../src/client/OsuClient');
 
 const client = new OsuClient({
   clientId: process.env.client_id,
@@ -7,9 +7,14 @@ const client = new OsuClient({
 
 describe('osu client', () => {
   describe('getCountryLeaderboard', () => {
-    test('returns the first 100 users of a country', async () => {
-      const response = await client.getCountryLeaderboard({ limit: 100 });
-      expect(response.ranking.length.toBe(100));
+    test('returns the first 50 users of a country', async () => {
+      const response = await client.getCountryLeaderboard({ country: 'GR' });
+      expect(response.ranking.length).toBe(50);
+    });
+
+    test('returns users of the same country', async () => {
+      const response = await client.getCountryLeaderboard({ country: 'GR' });
+      expect(response.ranking.every((u) => u.user.country.code === 'GR'));
     });
   });
 });
