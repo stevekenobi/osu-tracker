@@ -12,7 +12,7 @@
     "dev:server": "nodemon",
     "start": "node --env-file=.env ./src/server/index.js",
     "test:unit": "jest --setupFiles ./tests/setup.js",
-    "test:coverage": "vitest run --coverage",
+    "test:coverage": "jest --setupFiles ./tests/setup.js",
     "format": "prettier --write src/ tests/",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "lint:check": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --ignore-path .gitignore"
