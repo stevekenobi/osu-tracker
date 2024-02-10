@@ -1,12 +1,27 @@
+/**
+ * @param {number} ms 
+ * @returns {Promise}
+ */
 function delay(ms) {
   return new Promise((res) => setTimeout(res, ms));
 }
 
+/**
+ * @param {number} start 
+ * @param {number} stop 
+ * @param {number} step 
+ * @returns {Array<number>}
+ */
 function range(start, stop, step = 1) {
-  return Array(Math.ceil((stop - start) / step))
+  return Array(Math.ceil((stop - start + 1) / step))
     .fill(start)
     .map((x, y) => x + y * step);
 }
+
+/**
+ * @param {Object} query 
+ * @returns {string}
+ */
 
 function createQuery(query) {
   if (query)
@@ -17,6 +32,9 @@ function createQuery(query) {
   return '';
 }
 
+/**
+ * @returns {Array<string>}
+ */
 function getYearsUntilToday() {
   const endDate = new Date().getFullYear();
   const years = [];
@@ -27,18 +45,34 @@ function getYearsUntilToday() {
   return years;
 }
 
+/**
+ * @param {Object} beatmap 
+ * @returns {boolean}
+ */
 function isBeatmapRankedApprovedOrLoved(beatmap) {
   return beatmap.status === 'ranked' || beatmap.status === 'approved' || beatmap.status === 'loved';
 }
 
+/**
+ * @param {number} id 
+ * @returns {string}
+ */
 function createBeatmapLinkFromId(id) {
   return `https://osu.ppy.sh/b/${id}`;
 }
 
+/**
+ * @param {number} id 
+ * @returns {string}
+ */
 function createUserLinkFromId(id) {
   return `https://osu.ppy.sh/u/${id}`;
 }
 
+/**
+ * @param {string} link 
+ * @returns {number}
+ */
 function extractIdFromLink(link) {
   return Number.parseInt(link.split('/').at(-1) ?? '');
 }
