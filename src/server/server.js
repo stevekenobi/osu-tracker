@@ -60,7 +60,7 @@ class TrackerServer {
     // );
 
     this.server = http.createServer(this.getApp()).listen('5173', () => {
-      console.log(`⚡️[server]: Server is running at http://localhost:5173`);
+      console.log('⚡️[server]: Server is running at http://localhost:5173');
     });
   }
 
@@ -101,7 +101,7 @@ class TrackerServer {
       process.env.leaderboard_sheet_id,
       process.env.unfinished_sheet_id,
       process.env.beatmaps_sheet_id,
-      );
+    );
   }
 
   _initServices() {

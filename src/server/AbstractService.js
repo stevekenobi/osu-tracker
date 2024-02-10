@@ -15,21 +15,21 @@ class AbstractService {
    * @returns {void}
    */
   registerRoutes() {
-    throw new Error('overwrite registerRoutes()')
+    throw new Error('overwrite registerRoutes()');
   }
   /**
    * @abstract
    * @returns {void}
    */
   init() {
-    throw new Error('overwrite init()')
+    throw new Error('overwrite init()');
   }
   /**
    * @abstract
    * @returns {void}
    */
   shutDown() {
-    throw new Error('overwrite shutDown()')
+    throw new Error('overwrite shutDown()');
   }
 }
 

@@ -1,4 +1,5 @@
 const AbstractService = require('../AbstractService');
+const { updateLeaderboard } = require('../helpers/leaderboard');
 
 class LeaderboardService extends AbstractService {
   constructor(serverInstance) {

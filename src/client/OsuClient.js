@@ -4,11 +4,20 @@ const baseUrl = 'https://osu.ppy.sh/api/v2';
 const authUrl = ' https://osu.ppy.sh/oauth/token';
 
 class OsuClient {
+  /**
+   * @constructor
+   * @param {AuthDetails} authDetails
+   */
   constructor(authDetails) {
     this.authToken = '';
     this.authDetails = authDetails;
   }
 
+  /**
+   * @private
+   * @param {string} requestUrl
+   * @returns {Promise<Object|null>}
+   */
   async getRequest(requestUrl) {
     try {
       const response = await axios.get(`${baseUrl}/${requestUrl}`, {
@@ -29,13 +38,18 @@ class OsuClient {
         return await this.getRequest(requestUrl);
       } else if (error.response?.status === 502 || error.response?.status === 504) {
         await delay(1000);
-        return (await this.getRequest) < T > requestUrl;
+        return await this.getRequest(requestUrl);
       }
       console.log(error);
       throw error;
     }
   }
 
+  /**
+   * @private
+   * @param {string} requestUrl
+   * @returns {Promise}
+   */
   async authenticate() {
     const data = JSON.stringify({
       client_id: this.authDetails.clientId,
