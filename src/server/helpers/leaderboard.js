@@ -1,7 +1,3 @@
-const DatabaseClient = require('../../client/DatabaseClient');
-const OsuClient = require('../../client/OsuClient');
-const SheetClient = require('../../client/SheetClient');
-
 /**
  * @param {OsuClient} osuClient
  * @param {DatabaseClient} databaseClient
