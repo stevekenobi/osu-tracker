@@ -19,7 +19,7 @@ class SheetClient {
   }
 
   /**
-   * @param {Array<OsuRanking>} users
+   * @param {OsuRanking[]} users
    */
   async updateLeaderboard(users) {
     const doc = new GoogleSpreadsheet(this.leaderboard_sheet_id, this.serviceAccountAuth);

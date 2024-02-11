@@ -11,13 +11,6 @@ const { updateLeaderboard } = require('./helpers/leaderboard');
 const DatabaseClient = require('../client/DatabaseClient');
 
 class TrackerServer {
-  // private server: HttpServer | undefined = undefined;
-  // private app: Express | undefined = undefined;
-  // private router: Router | undefined = undefined;
-  // private osuClient: OsuClient | undefined = undefined;
-  // private sheetClient: SheetClient | undefined = undefined;
-  // private services: AbstractService[] = [];
-
   constructor() {
     this.services = [];
     this._initClients();
