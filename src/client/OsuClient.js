@@ -4,12 +4,22 @@ const baseUrl = 'https://osu.ppy.sh/api/v2';
 const authUrl = ' https://osu.ppy.sh/oauth/token';
 
 class OsuClient {
+  /**
+   * @constructor
+   * @param {AuthDetails} authDetails
+   */
   constructor(authDetails) {
     this.authToken = '';
     this.authDetails = authDetails;
   }
 
-  async getRequest(requestUrl) {
+  /**
+   * @private
+   * @param {string} requestUrl
+   * @returns {Promise<Object|undefined>}
+   */
+  /* c8 ignore start */
+  async getRequest (requestUrl) {
     try {
       const response = await axios.get(`${baseUrl}/${requestUrl}`, {
         headers: {
@@ -29,13 +39,19 @@ class OsuClient {
         return await this.getRequest(requestUrl);
       } else if (error.response?.status === 502 || error.response?.status === 504) {
         await delay(1000);
-        return (await this.getRequest) < T > requestUrl;
+        return await this.getRequest(requestUrl);
       }
       console.log(error);
       throw error;
     }
   }
+  /* c8 ignore end */
 
+  /**
+   * @private
+   * @param {string} requestUrl
+   * @returns {Promise}
+   */
   async authenticate() {
     const data = JSON.stringify({
       client_id: this.authDetails.clientId,
@@ -57,20 +73,31 @@ class OsuClient {
     this.authToken = response.data.access_token;
   }
 
+  /**
+   * @param {number} id
+   * @returns {Promise<OsuUser|undefined>}
+   */
   async getUserById(id) {
     return await this.getRequest(`users/${id}`);
   }
 
+  /**
+   * @param {number} id
+   * @returns {Promise<OsuBeatmapset|undefined>}
+   */
   async getBeatmapsetById(id) {
     return await this.getRequest(`beatmapsets/${id}`);
   }
 
+  /**
+   * @param {Object} query
+   * @returns {Promise<OsuBeatmapsetSearchResult|undefined>}
+   */
   async getBeatmapsetSearch(query) {
     return await this.getRequest(`beatmapsets/search${createQuery(query)}`);
   }
 
   /**
-   *
    * @param {Object} query
    * @returns {Promise<OsuLeaderboardResponse>}
    */
@@ -78,16 +105,23 @@ class OsuClient {
     return await this.getRequest(`rankings/osu/performance${createQuery(query)}`);
   }
 
+  /**
+   * @param {number} id
+   * @param {string} type
+   * @param {Object} query
+   * @returns {Promise<OsuUserPlayedBeatmap[]|undefined>}
+   */
   async getUserBeamaps(id, type, query) {
     return await this.getRequest(`users/${id}/beatmapsets/${type}${createQuery(query)}`);
   }
 
+  /**
+   * @param {number} beatmap
+   * @param {number} user
+   * @returns {Promise<OsuUserScoreOnBeatmap|undefined>}
+   */
   async getUserScoreOnBeatmap(beatmap, user) {
     return await this.getRequest(`beatmaps/${beatmap}/scores/users/${user}`);
-  }
-
-  async getAllUserScoresOnBeatmap(beatmap, user) {
-    return await this.getRequest(`beatmaps/${beatmap}/scores/users/${user}/all`);
   }
 }
 

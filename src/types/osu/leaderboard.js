@@ -25,12 +25,3 @@
  * @property {number} id
  * @property {string} username
  */
-
-/**
- * @typedef {Object} GradeCounts
- * @property {number} ss
- * @property {number} ssh
- * @property {number} s
- * @property {number} sh
- * @property {number} a
- */

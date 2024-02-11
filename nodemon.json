@@ -1,4 +1,5 @@
 {
   "watch": ["src/server", "src/client", "src/utils"],
+  "ignore": ["tests"],
   "exec": "node --env-file=.env ./src/server/index.js"
 }

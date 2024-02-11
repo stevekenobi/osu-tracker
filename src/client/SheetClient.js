@@ -1,5 +1,5 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
-const creds = require('../../google_service_account.json');
+const creds = JSON.parse(process.env['GOOGLE_SERVICE_ACCOUNT']);
 const { JWT } = require('google-auth-library');
 const { createUserLinkFromId } = require('../utils');
 const numeral = require('numeral');
@@ -19,7 +19,7 @@ class SheetClient {
   }
 
   /**
-   * @param {Array<OsuRanking>} users
+   * @param {OsuRanking[]} users
    */
   async updateLeaderboard(users) {
     const doc = new GoogleSpreadsheet(this.leaderboard_sheet_id, this.serviceAccountAuth);

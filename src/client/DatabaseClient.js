@@ -7,13 +7,9 @@ class DatabaseClient {
   /**
    * @constructor
    * @param {string} databaseUrl
+   * @param {boolean} databaseSecure
    */
-  constructor(databaseUrl) {
-    if (this.sequelizeSingleton) {
-      console.log('Already initialized');
-      return;
-    }
-
+  constructor(databaseUrl, databaseSecure) {
     const options = {
       dialectOptions: {
         ssl: {
@@ -23,7 +19,9 @@ class DatabaseClient {
       },
     };
 
-    this.sequelizeSingleton = new Sequelize(databaseUrl, process.env.database_secure === 'true' ? options : {});
+    /* c8 ignore start */
+    this.sequelizeSingleton = new Sequelize(databaseUrl, databaseSecure ? options : {});
+    /* c8 ignore end */
   }
 
   async initializeDatabase() {
@@ -44,25 +42,19 @@ class DatabaseClient {
   }
 
   /**
-   * @param {Array<OsuRanking>} users
+   * @param {Array<LeaderboardModel>} users
+   * @returns {Promise}
    */
   async addLeaderboardUsers(users) {
     await Leaderboard.destroy({ truncate: true });
-    await Leaderboard.bulkCreate(
-      users.map((u) => ({
-        id: u.user.id,
-        username: u.user.username,
-        rankedScore: u.ranked_score,
-        totalScore: u.total_score,
-        hitAccuracy: u.hit_accuracy,
-        playcount: u.play_count,
-        SSH: u.grade_counts.ssh,
-        SS: u.grade_counts.ss,
-        SH: u.grade_counts.sh,
-        S: u.grade_counts.s,
-        A: u.grade_counts.a,
-      })),
-    );
+    await Leaderboard.bulkCreate(users);
+  }
+
+  /**
+   * @returns {Promise<Leaderboard[]>}
+   */
+  async getLeaderboardUsers() {
+    return await Leaderboard.findAll();
   }
 }
 

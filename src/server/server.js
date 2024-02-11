@@ -11,13 +11,6 @@ const { updateLeaderboard } = require('./helpers/leaderboard');
 const DatabaseClient = require('../client/DatabaseClient');
 
 class TrackerServer {
-  // private server: HttpServer | undefined = undefined;
-  // private app: Express | undefined = undefined;
-  // private router: Router | undefined = undefined;
-  // private osuClient: OsuClient | undefined = undefined;
-  // private sheetClient: SheetClient | undefined = undefined;
-  // private services: AbstractService[] = [];
-
   constructor() {
     this.services = [];
     this._initClients();
@@ -60,7 +53,7 @@ class TrackerServer {
     // );
 
     this.server = http.createServer(this.getApp()).listen('5173', () => {
-      console.log(`⚡️[server]: Server is running at http://localhost:5173`);
+      console.log('⚡️[server]: Server is running at http://localhost:5173');
     });
   }
 
@@ -90,18 +83,18 @@ class TrackerServer {
 
   _initClients() {
     this.osuClient = new OsuClient({
-      clientId: process.env.client_id,
-      clientSecret: process.env.client_secret,
+      clientId: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
     });
 
-    this.databaseClient = new DatabaseClient(process.env.database_url);
+    this.databaseClient = new DatabaseClient(process.env.DATABASE_URL, process.env.DATABASE_SECURE);
     this.getDatabaseClient().initializeDatabase();
 
     this.sheetClient = new SheetClient(
-      process.env.leaderboard_sheet_id,
-      process.env.unfinished_sheet_id,
-      process.env.beatmaps_sheet_id,
-      );
+      process.env.LEADERBOARD_SHEET_ID,
+      process.env.UNFINISHED_SHEET_ID,
+      process.env.BEATMAPS_SHEET_ID,
+    );
   }
 
   _initServices() {
