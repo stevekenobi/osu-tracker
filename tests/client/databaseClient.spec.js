@@ -1,7 +1,6 @@
 const DatabaseClient = require('../../src/client/DatabaseClient');
 
-let client = new DatabaseClient('sqlite::memory:', true);
-client = new DatabaseClient('sqlite::memory:', false);
+const client = new DatabaseClient('sqlite::memory:', true);
 
 describe('database client', () => {
   beforeAll(async () => await client.initializeDatabase());
