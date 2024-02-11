@@ -1,11 +1,11 @@
-'use strict';
-
-const TrackerServer= require('./server');
-const LeaderboardService= require('./services/LeaderboardService');
+const TrackerServer = require('./server');
+const LeaderboardService = require('./services/LeaderboardService');
+const BeatmapsService = require('./services/BeatmapsService');
 
 const server = new TrackerServer();
 
 server.registerService(LeaderboardService);
+server.registerService(BeatmapsService);
 
 function shutDownServer() {
   server
