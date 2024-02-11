@@ -11,5 +11,7 @@
  * @property {number} OD
  * @property {number} HP
  * @property {number} BPM
+ * @property {string} status
+ * @property {string} mode
  * @property {Date} rankedDate
  */

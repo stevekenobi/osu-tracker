@@ -1,3 +1,4 @@
+const { isBeatmapRankedApprovedOrLoved } = require('../../utils');
 /**
  * @param {OsuClient} osuClient
  * @param {DatabaseClient} databaseClient
@@ -41,20 +42,25 @@ function createBeatmapModelsFromOsuBeatmapsets(beatmapsets) {
   const beatmaps = [];
   for (const s of beatmapsets) {
     beatmaps.push(
-      ...s.beatmaps.map((b) => ({
-        id: b.id,
-        beatmapsetId: s.id,
-        artist: s.artist,
-        title: s.title,
-        creator: s.creator,
-        version: b.version,
-        AR: b.ar,
-        CS: b.cs,
-        OD: b.accuracy,
-        HP: b.drain,
-        BPM: b.bpm,
-        rankedDate: s.ranked_date,
-      })),
+      ...s.beatmaps
+        .filter((b) => isBeatmapRankedApprovedOrLoved(b))
+        .filter((b) => b.mode === 'osu')
+        .map((b) => ({
+          id: b.id,
+          beatmapsetId: s.id,
+          artist: s.artist,
+          title: s.title,
+          creator: s.creator,
+          version: b.version,
+          AR: b.ar,
+          CS: b.cs,
+          OD: b.accuracy,
+          HP: b.drain,
+          BPM: b.bpm,
+          mode: b.mode,
+          status: b.status,
+          rankedDate: s.ranked_date,
+        })),
     );
   }
   return beatmaps;

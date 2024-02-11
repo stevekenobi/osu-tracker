@@ -50,6 +50,14 @@ function initBeatmaps(sequelize) {
         type: DataTypes.DOUBLE,
         allowNull: false,
       },
+      status: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      mode: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       rankedDate: {
         type: DataTypes.DATE,
         allowNull: false,
