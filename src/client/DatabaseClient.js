@@ -7,13 +7,9 @@ class DatabaseClient {
   /**
    * @constructor
    * @param {string} databaseUrl
+   * @param {boolean} databaseSecure
    */
-  constructor(databaseUrl) {
-    if (this.sequelizeSingleton) {
-      console.log('Already initialized');
-      return;
-    }
-
+  constructor(databaseUrl, databaseSecure) {
     const options = {
       dialectOptions: {
         ssl: {
@@ -23,7 +19,7 @@ class DatabaseClient {
       },
     };
 
-    this.sequelizeSingleton = new Sequelize(databaseUrl, process.env.DATABASE_SECURE === 'true' ? options : {});
+    this.sequelizeSingleton = new Sequelize(databaseUrl, databaseSecure ? options : {});
   }
 
   async initializeDatabase() {
@@ -45,10 +41,18 @@ class DatabaseClient {
 
   /**
    * @param {Array<LeaderboardModel>} users
+   * @returns {Promise}
    */
   async addLeaderboardUsers(users) {
     await Leaderboard.destroy({ truncate: true });
     await Leaderboard.bulkCreate(users);
+  }
+  
+  /**
+   * @returns {Promise<Leaderboard[]>}
+   */
+  async getLeaderboardUsers() {
+    return await Leaderboard.findAll();
   }
 }
 

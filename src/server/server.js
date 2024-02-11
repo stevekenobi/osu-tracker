@@ -94,7 +94,7 @@ class TrackerServer {
       clientSecret: process.env.CLIENT_SECRET,
     });
 
-    this.databaseClient = new DatabaseClient(process.env.DATABASE_URL);
+    this.databaseClient = new DatabaseClient(process.env.DATABASE_URL, process.env.DATABASE_SECURE);
     this.getDatabaseClient().initializeDatabase();
 
     this.sheetClient = new SheetClient(

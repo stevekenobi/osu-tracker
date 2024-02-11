@@ -1,15 +1,18 @@
 /**
- * @param {number} ms 
+ * @param {number} ms
  * @returns {Promise}
  */
+
+/* c8 ignore start */
 function delay(ms) {
   return new Promise((res) => setTimeout(res, ms));
 }
+/* c8 ignore end */
 
 /**
- * @param {number} start 
- * @param {number} stop 
- * @param {number} step 
+ * @param {number} start
+ * @param {number} stop
+ * @param {number} step
  * @returns {Array<number>}
  */
 function range(start, stop, step = 1) {
@@ -19,7 +22,7 @@ function range(start, stop, step = 1) {
 }
 
 /**
- * @param {Object} query 
+ * @param {Object} query
  * @returns {string}
  */
 
@@ -46,7 +49,7 @@ function getYearsUntilToday() {
 }
 
 /**
- * @param {Object} beatmap 
+ * @param {Object} beatmap
  * @returns {boolean}
  */
 function isBeatmapRankedApprovedOrLoved(beatmap) {
@@ -54,7 +57,7 @@ function isBeatmapRankedApprovedOrLoved(beatmap) {
 }
 
 /**
- * @param {number} id 
+ * @param {number} id
  * @returns {string}
  */
 function createBeatmapLinkFromId(id) {
@@ -62,7 +65,7 @@ function createBeatmapLinkFromId(id) {
 }
 
 /**
- * @param {number} id 
+ * @param {number} id
  * @returns {string}
  */
 function createUserLinkFromId(id) {
@@ -70,7 +73,7 @@ function createUserLinkFromId(id) {
 }
 
 /**
- * @param {string} link 
+ * @param {string} link
  * @returns {number}
  */
 function extractIdFromLink(link) {
