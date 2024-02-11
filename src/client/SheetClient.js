@@ -1,7 +1,7 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const creds = JSON.parse(process.env['GOOGLE_SERVICE_ACCOUNT']);
 const { JWT } = require('google-auth-library');
-const { createUserLinkFromId } = require('../utils');
+const { createUserLinkFromId, createBeatmapLinkFromId } = require('../utils');
 const numeral = require('numeral');
 
 class SheetClient {
@@ -44,6 +44,36 @@ class SheetClient {
         A: numeral(u.grade_counts.a).format('0,0'),
       })),
       { raw: true },
+    );
+  }
+
+  /**
+   * @param {string} year
+   * @param {BeatmapModel[]} beatmaps
+   */
+  async updateBeatmapsOfYear(year, beatmaps) {
+    const doc = new GoogleSpreadsheet(this.beatmaps_sheet_id, this.serviceAccountAuth);
+    await doc.loadInfo();
+
+    const sheet = doc.sheetsByTitle[year];
+
+    await sheet.clearRows({ start: 2 });
+    await sheet.addRows(
+      beatmaps.map((b) => ({
+        Link: createBeatmapLinkFromId(b.id),
+        Artist: b.artist,
+        Title: b.title,
+        Creator: b.creator,
+        Version: b.version,
+        Difficulty: b.difficulty,
+        Status: b.status,
+        BPM: b.status,
+        AR: b.AR,
+        CS: b.CS,
+        HP: b.HP,
+        OD: b.OD,
+        Length: b.length,
+      })),
     );
   }
 }

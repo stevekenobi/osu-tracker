@@ -29,7 +29,7 @@ class DatabaseClient {
     initBeatmaps(this.getSequelizeSingleton());
     initLeaderboard(this.getSequelizeSingleton());
 
-    await this.getSequelizeSingleton().sync({ force: true });
+    await this.getSequelizeSingleton().sync({ alter: true });
   }
 
   /**
@@ -64,7 +64,14 @@ class DatabaseClient {
    * @returns {Promise<void>}
    */
   async updateBeatmaps(beatmaps) {
-    await Beatmaps.bulkCreate(beatmaps, { updateOnDuplicate: ['artist', 'title', 'creator', 'version', 'AR', 'CS', 'OD', 'HP', 'BPM', 'status', 'rankedDate'] });
+    await Beatmaps.bulkCreate(beatmaps, { updateOnDuplicate: ['artist', 'title', 'creator', 'version', 'difficulty', 'AR', 'CS', 'OD', 'HP', 'BPM', 'length', 'status', 'rankedDate'] });
+  }
+
+  /**
+   * @returns {Promise<Beatmaps[]>}
+   */
+  async getBeatmaps() {
+    return await Beatmaps.findAll();
   }
 }
 

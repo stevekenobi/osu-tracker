@@ -1,4 +1,4 @@
-const { isBeatmapRankedApprovedOrLoved } = require('../../utils');
+const { isBeatmapRankedApprovedOrLoved, getYearsUntilToday } = require('../../utils');
 /**
  * @param {OsuClient} osuClient
  * @param {DatabaseClient} databaseClient
@@ -34,6 +34,27 @@ async function importAllBeatmaps(osuClient, databaseClient) {
 }
 
 /**
+ *
+ * @param {DatabaseClient} databaseClient
+ * @param {SheetClient} sheetClient
+ */
+async function syncBeatmapsSheet(databaseClient, sheetClient) {
+  const beatmaps = await databaseClient.getBeatmaps();
+
+  const years = getYearsUntilToday();
+  for (const year of years) {
+    const yearlyBeatmaps = beatmaps.filter((b) => b.rankedDate.getFullYear().toString() === year);
+    await sheetClient.updateBeatmapsOfYear(
+      year,
+      createBeatmapsetsFromBeatmaps(yearlyBeatmaps)
+        .sort((a, b) => (a.beatmaps[0].rankedDate > b.beatmaps[0].rankedDate ? 1 : -1))
+        .flatMap((s) => s.beatmaps),
+    );
+    console.log(`finished ${year}`);
+  }
+}
+
+/**
  * @param {OsuBeatmapset[]} beatmapsets
  * @returns {BeatmapModel[]}
  */
@@ -52,11 +73,13 @@ function createBeatmapModelsFromOsuBeatmapsets(beatmapsets) {
           title: s.title,
           creator: s.creator,
           version: b.version,
+          difficulty: b.difficulty_rating,
           AR: b.ar,
           CS: b.cs,
           OD: b.accuracy,
           HP: b.drain,
           BPM: b.bpm,
+          length: b.total_length,
           mode: b.mode,
           status: b.status,
           rankedDate: s.ranked_date,
@@ -66,4 +89,20 @@ function createBeatmapModelsFromOsuBeatmapsets(beatmapsets) {
   return beatmaps;
 }
 
-module.exports = { importLatestBeatmaps, importAllBeatmaps };
+/**
+ * @param {BeatmapModel[]} beatmaps
+ */
+function createBeatmapsetsFromBeatmaps(beatmaps) {
+  const beatmapsetIds = Array.from(new Set(beatmaps.map((b) => b.beatmapsetId)));
+  const beatmapsets = [];
+  beatmapsetIds.forEach((i) => {
+    beatmapsets.push({
+      id: i,
+      beatmaps: beatmaps.filter((b) => b.beatmapsetId === i).sort((a, b) => (a.difficulty > b.difficulty ? 1 : -1)),
+    });
+  });
+
+  return beatmapsets;
+}
+
+module.exports = { importLatestBeatmaps, importAllBeatmaps, syncBeatmapsSheet };

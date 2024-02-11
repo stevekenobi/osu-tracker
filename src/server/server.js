@@ -9,7 +9,7 @@ const SheetClient = require('../client/SheetClient');
 const DatabaseClient = require('../client/DatabaseClient');
 
 const { updateLeaderboard } = require('./helpers/leaderboard');
-const { importLatestBeatmaps } = require('./helpers/beatmaps');
+const { importLatestBeatmaps, syncBeatmapsSheet } = require('./helpers/beatmaps');
 
 const cron = require('node-cron');
 
@@ -40,6 +40,10 @@ class TrackerServer {
 
     cron.schedule('0-59/10 * * * *', () => {
       importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
+    });
+
+    cron.schedule('0 * * * *', () => {
+      syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
     });
 
     this.server = http.createServer(this.getApp()).listen('5173', () => {

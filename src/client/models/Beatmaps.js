@@ -30,6 +30,10 @@ function initBeatmaps(sequelize) {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      difficulty: {
+        type: DataTypes.DOUBLE,
+        allowNull: false,
+      },
       AR: {
         type: DataTypes.DOUBLE,
         allowNull: false,
@@ -50,6 +54,10 @@ function initBeatmaps(sequelize) {
         type: DataTypes.DOUBLE,
         allowNull: false,
       },
+      length: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       status: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -61,7 +69,7 @@ function initBeatmaps(sequelize) {
       rankedDate: {
         type: DataTypes.DATE,
         allowNull: false,
-      }
+      },
     },
     {
       sequelize,
