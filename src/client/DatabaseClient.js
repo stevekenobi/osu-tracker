@@ -19,7 +19,9 @@ class DatabaseClient {
       },
     };
 
+    /* c8 ignore start */
     this.sequelizeSingleton = new Sequelize(databaseUrl, databaseSecure ? options : {});
+    /* c8 ignore end */
   }
 
   async initializeDatabase() {
@@ -47,7 +49,7 @@ class DatabaseClient {
     await Leaderboard.destroy({ truncate: true });
     await Leaderboard.bulkCreate(users);
   }
-  
+
   /**
    * @returns {Promise<Leaderboard[]>}
    */
