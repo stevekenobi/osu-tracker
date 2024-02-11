@@ -1,5 +1,6 @@
 const { Sequelize } = require('sequelize');
 const { initLeaderboard, Leaderboard } = require('./models/Leaderboard');
+const { initBeatmaps, Beatmaps } = require('./models/Beatmaps');
 
 class DatabaseClient {
   sequelizeSingleton = undefined;
@@ -25,9 +26,10 @@ class DatabaseClient {
   }
 
   async initializeDatabase() {
+    initBeatmaps(this.getSequelizeSingleton());
     initLeaderboard(this.getSequelizeSingleton());
 
-    await this.getSequelizeSingleton().sync({ alter: true });
+    await this.getSequelizeSingleton().sync({ force: true });
   }
 
   /**
@@ -42,8 +44,8 @@ class DatabaseClient {
   }
 
   /**
-   * @param {Array<LeaderboardModel>} users
-   * @returns {Promise}
+   * @param {LeaderboardModel[]} users
+   * @returns {Promise<void>}
    */
   async addLeaderboardUsers(users) {
     await Leaderboard.destroy({ truncate: true });
@@ -55,6 +57,14 @@ class DatabaseClient {
    */
   async getLeaderboardUsers() {
     return await Leaderboard.findAll();
+  }
+
+  /**
+   * @param {BeatmapModel[]} beatmaps
+   * @returns {Promise<void>}
+   */
+  async updateBeatmaps(beatmaps) {
+    await Beatmaps.bulkCreate(beatmaps);
   }
 }
 
