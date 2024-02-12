@@ -46,7 +46,7 @@
 
 /**
  * @typedef {Object} OsuUserPlayedBeatmap
- * @property {number} beatmapset_id
+ * @property {number} beatmap_id
  * @property {number} count
  * @property {PlayedBeatmap} beatmap
  * @property {PlayedBeatmapset} beatmapset

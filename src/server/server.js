@@ -6,9 +6,12 @@ const http = require('http');
 
 const OsuClient = require('../client/OsuClient');
 const SheetClient = require('../client/SheetClient');
+const DatabaseClient = require('../client/DatabaseClient');
 
 const { updateLeaderboard } = require('./helpers/leaderboard');
-const DatabaseClient = require('../client/DatabaseClient');
+const { importLatestBeatmaps, syncBeatmapsSheet } = require('./helpers/beatmaps');
+
+const cron = require('node-cron');
 
 class TrackerServer {
   constructor() {
@@ -31,26 +34,17 @@ class TrackerServer {
   start() {
     this._initServices();
 
-    // importLatestBeatmaps(this.getOsuClient(), this.getSheetClient());
-    updateLeaderboard(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
-    // updateUnfinishedBeatmaps(this.getSheetClient(), this.getOsuClient());
-    // // updateRecentScores();
+    cron.schedule('0,30 * * * *', () => {
+      updateLeaderboard(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
+    });
 
-    setInterval(
-      () => {
-        //     importLatestBeatmaps(this.getOsuClient(), this.getSheetClient());
-        updateLeaderboard(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
-        //     // updateRecentScores();
-      },
-      60 * 60 * 1000,
-    );
+    cron.schedule('0-59/10 * * * *', () => {
+      importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
+    });
 
-    // setInterval(
-    //   () => {
-    //     updateUnfinishedBeatmaps(this.getSheetClient(), this.getOsuClient());
-    //   },
-    //   24 * 60 * 60 * 1000,
-    // );
+    cron.schedule('0 * * * *', () => {
+      syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
+    });
 
     this.server = http.createServer(this.getApp()).listen('5173', () => {
       console.log('⚡️[server]: Server is running at http://localhost:5173');
@@ -90,11 +84,7 @@ class TrackerServer {
     this.databaseClient = new DatabaseClient(process.env.DATABASE_URL, process.env.DATABASE_SECURE);
     this.getDatabaseClient().initializeDatabase();
 
-    this.sheetClient = new SheetClient(
-      process.env.LEADERBOARD_SHEET_ID,
-      process.env.UNFINISHED_SHEET_ID,
-      process.env.BEATMAPS_SHEET_ID,
-    );
+    this.sheetClient = new SheetClient(process.env.LEADERBOARD_SHEET_ID, process.env.UNFINISHED_SHEET_ID, process.env.BEATMAPS_SHEET_ID);
   }
 
   _initServices() {

@@ -49,7 +49,7 @@ function getYearsUntilToday() {
 }
 
 /**
- * @param {Object} beatmap
+ * @param {OsuBeatmap|OsuBeatmapset} beatmap
  * @returns {boolean}
  */
 function isBeatmapRankedApprovedOrLoved(beatmap) {

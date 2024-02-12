@@ -7,6 +7,7 @@ class AbstractService {
     this.app = this.serverInstance.getApp();
 
     this.sheetClient = this.serverInstance.getSheetClient();
+    this.databaseClient = this.serverInstance.getDatabaseClient();
     this.osuClient = this.serverInstance.getOsuClient();
   }
 

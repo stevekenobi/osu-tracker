@@ -30,5 +30,6 @@
 /**
  * @typedef {Object} OsuBeatmapsetSearchResult
  * @property {Array<OsuBeatmapset>} beatmapsets
+ * @property {string} cursor_string
  */
      
