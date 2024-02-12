@@ -76,6 +76,24 @@ class SheetClient {
       })),
     );
   }
+
+  async updateMissingBeatmaps(ids) {
+    const doc = new GoogleSpreadsheet(this.beatmaps_sheet_id, this.serviceAccountAuth);
+    await doc.loadInfo();
+
+    const sheet = doc.sheetsByTitle['Missing'];
+    await sheet.clearRows({ start: 2 });
+    await sheet.addRows(ids.map(i => ({Id: i})));
+  }
+
+  async getMissingBeatmaps() {
+    const doc = new GoogleSpreadsheet(this.beatmaps_sheet_id, this.serviceAccountAuth);
+    await doc.loadInfo();
+
+    const sheet = doc.sheetsByTitle['Missing'];
+
+    return (await sheet.getRows()).map(r => r.get('Id'));
+  }
 }
 
 module.exports = SheetClient;

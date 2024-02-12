@@ -15,9 +15,10 @@ async function importLatestBeatmaps(osuClient, databaseClient) {
 /**
  * @param {OsuClient} osuClient
  * @param {DatabaseClient} databaseClient
+ * @param {SheetClient} sheetClient
  * @returns {Promise<void>}
  */
-async function importAllBeatmaps(osuClient, databaseClient) {
+async function importAllBeatmaps(osuClient, databaseClient, sheetClient) {
   console.log('importing all beatmaps');
   let cursor_string = '';
   /**@type {OsuBeatmapset[]} */
@@ -31,10 +32,28 @@ async function importAllBeatmaps(osuClient, databaseClient) {
 
   await databaseClient.updateBeatmaps(createBeatmapModelsFromOsuBeatmapsets(beatmapsets));
   console.log('finished importing all beatmaps');
+
+  const missingBeatmapIds = await sheetClient.getMissingBeatmaps();
+  console.log('total missing maps', missingBeatmapIds);
+
+  const missingBeatmaps = [];
+  for (const id of missingBeatmapIds) {
+    const beatmap = await osuClient.getBeatmapById(id);
+    if (!beatmap) console.log(`Did not find ${id}`);
+    if (!isBeatmapRankedApprovedOrLoved(beatmap)) console.log(`found ${beatmap.status} map`);
+    if (beatmap.mode !== 'osu') console.log(`found ${beatmap.mode} map`);
+    missingBeatmaps.push(beatmap);
+  }
+
+  console.log('osu maps', missingBeatmaps.filter((b) => b.mode === 'osu').length);
+  console.log('ranked maps', missingBeatmaps.filter((b) => isBeatmapRankedApprovedOrLoved(b)).length);
+
+  await databaseClient.updateBeatmaps(createBeatmapModelsFromOsuBeatmaps(missingBeatmaps));
+
+  console.log('finished importing missing beatmaps');
 }
 
 /**
- *
  * @param {DatabaseClient} databaseClient
  * @param {SheetClient} sheetClient
  */
@@ -52,6 +71,36 @@ async function syncBeatmapsSheet(databaseClient, sheetClient) {
     );
     console.log(`finished ${year}`);
   }
+}
+
+/**
+ * @param {OsuClient} osuClient
+ * @param {DatabaseClient} databaseClient
+ * @param {SheetClient} sheetClient
+ */
+async function findMissingBeatmaps(osuClient, databaseClient, sheetClient) {
+  let j = 0;
+  /**@type {UserPlayedBeatmaps[]} */
+  const beatmaps = [];
+  let result = await osuClient.getUserBeamaps(2927048, 'most_played', { limit: 100 });
+  do {
+    if (!result) {
+      result = await osuClient.getUserBeamaps(2927048, 'most_played', { limit: 100, offset: j });
+      continue;
+    }
+    j += 100;
+    beatmaps.push(...result);
+
+    result = await osuClient.getUserBeamaps(2927048, 'most_played', { limit: 100, offset: j });
+  } while (result.length > 0);
+
+  /**@type {number[]} */
+  const allBeatmapIds = (await databaseClient.getBeatmaps()).map((b) => b.id);
+  console.log(allBeatmapIds);
+
+  const missingBeatmaps = beatmaps.filter((b) => b.beatmap.mode === 'osu' && isBeatmapRankedApprovedOrLoved(b.beatmap)).filter((b) => !allBeatmapIds.includes(b.beatmap_id.toString()));
+
+  await sheetClient.updateMissingBeatmaps(missingBeatmaps.map((x) => x.beatmap_id));
 }
 
 /**
@@ -89,6 +138,30 @@ function createBeatmapModelsFromOsuBeatmapsets(beatmapsets) {
   return beatmaps;
 }
 
+function createBeatmapModelsFromOsuBeatmaps(beatmaps) {
+  return beatmaps
+    .filter((b) => isBeatmapRankedApprovedOrLoved(b))
+    .filter((b) => b.mode === 'osu')
+    .map((b) => ({
+      id: b.id,
+      beatmapsetId: b.beatmapset_id,
+      artist: b.beatmapset.artist,
+      title: b.beatmapset.title,
+      creator: b.beatmapset.creator,
+      version: b.version,
+      difficulty: b.difficulty_rating,
+      AR: b.ar,
+      CS: b.cs,
+      OD: b.accuracy,
+      HP: b.drain,
+      BPM: b.bpm,
+      length: b.total_length,
+      mode: b.mode,
+      status: b.status,
+      rankedDate: b.beatmapset.ranked_date,
+    }));
+}
+
 /**
  * @param {BeatmapModel[]} beatmaps
  */
@@ -105,4 +178,4 @@ function createBeatmapsetsFromBeatmaps(beatmaps) {
   return beatmapsets;
 }
 
-module.exports = { importLatestBeatmaps, importAllBeatmaps, syncBeatmapsSheet };
+module.exports = { importLatestBeatmaps, importAllBeatmaps, syncBeatmapsSheet, findMissingBeatmaps };
