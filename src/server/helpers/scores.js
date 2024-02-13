@@ -5,11 +5,11 @@ const { delay } = require('../../utils');
  * @param {DatabaseClient} databaseClient
  */
 async function updateScores(osuClient, databaseClient) {
+  console.log('started importing scores');
   let j = 0;
   let result = await osuClient.getUserBeamaps(12375044, 'most_played', { limit: 100 });
   do {
     const scores = [];
-    console.log(j);
     if (!result) {
       result = await osuClient.getUserBeamaps(12375044, 'most_played', { limit: 100, offset: j });
       continue;
@@ -17,10 +17,10 @@ async function updateScores(osuClient, databaseClient) {
 
     for (const beatmap of result) {
       const score = await osuClient.getUserScoreOnBeatmap(beatmap.beatmap_id, 12375044);
-      console.log(`score on ${beatmap.beatmap_id} ${score ? 'found' : 'not found'}`);
+      console.log(`${j + 1} - ${j + 100} score on ${beatmap.beatmap_id} ${score ? 'found' : 'not found'}`);
       if (score) scores.push(score.score);
     }
-    await delay(5000);
+    await delay(2000);
     j += 100;
 
     await databaseClient.updateScores(
@@ -42,7 +42,7 @@ async function updateScores(osuClient, databaseClient) {
     );
     result = await osuClient.getUserBeamaps(12375044, 'most_played', { limit: 100, offset: j });
   } while (result.length > 0);
-
+  console.log('finished importing scores');
 }
 
 module.exports = { updateScores };

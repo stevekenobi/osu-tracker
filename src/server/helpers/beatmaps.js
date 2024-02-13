@@ -45,9 +45,6 @@ async function importAllBeatmaps(osuClient, databaseClient, sheetClient) {
     missingBeatmaps.push(beatmap);
   }
 
-  console.log('osu maps', missingBeatmaps.filter((b) => b.mode === 'osu').length);
-  console.log('ranked maps', missingBeatmaps.filter((b) => isBeatmapRankedApprovedOrLoved(b)).length);
-
   await databaseClient.updateBeatmaps(createBeatmapModelsFromOsuBeatmaps(missingBeatmaps));
 
   console.log('finished importing missing beatmaps');
