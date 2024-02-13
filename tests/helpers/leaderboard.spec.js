@@ -1,11 +1,9 @@
-const OsuClient = require('../../src/client/OsuClient');
-const DatabaseClient = require('../../src/client/DatabaseClient');
-const SheetClient = require('../../src/client/SheetClient');
 const { updateLeaderboard } = require('../../src/server/helpers/leaderboard');
+const createDatabaseClientMock = require('../mocks/DatabaseClient');
+const createOsuClientMock = require('../mocks/OsuClient');
+const createSheetClientMock = require('../mocks/SheetClient');
 
-jest.mock('../../src/client/OsuClient');
-
-jest.spyOn(OsuClient.prototype, 'getCountryLeaderboard').mockImplementation(async () =>
+const osuClient = createOsuClientMock('getCountryLeaderboard', async () =>
   Promise.resolve({
     cursor: undefined,
     ranking: [
@@ -64,27 +62,17 @@ jest.spyOn(OsuClient.prototype, 'getCountryLeaderboard').mockImplementation(asyn
         },
       },
     ],
-  }),
-);
+  }),);
 
-const databaseClientMock = jest.spyOn(DatabaseClient.prototype, 'addLeaderboardUsers').mockImplementation(async () => Promise.resolve());
+const databaseClient = createDatabaseClientMock('addLeaderboardUsers', async () => Promise.resolve());
 
-const sheetClientMock = jest.spyOn(SheetClient.prototype, 'updateLeaderboard').mockImplementation(async () => Promise.resolve());
-
-const osuClient = new OsuClient({
-  clientId: process.env.CLIENT_ID,
-  clientSecret: process.env.CLIENT_SECRET,
-});
-
-const databaseClient = new DatabaseClient('sqlite::memory:', false);
-
-const sheetClient = new SheetClient('1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc');
+const sheetClient =  createSheetClientMock('updateLeaderboard', async () => Promise.resolve());
 
 describe('leaderboard helper', () => {
   describe('updateLeaderboard', () => {
     test('updates the leaderboard', async () => {
       await updateLeaderboard(osuClient, databaseClient, sheetClient);
-      expect(databaseClientMock).toHaveBeenCalledWith([
+      expect(databaseClient.addLeaderboardUsers).toHaveBeenCalledWith([
         {
           id: 2,
           username: 'ximeniez',
@@ -125,7 +113,7 @@ describe('leaderboard helper', () => {
           A: 123,
         },
       ]);
-      expect(sheetClientMock).toHaveBeenCalledWith([
+      expect(sheetClient.updateLeaderboard).toHaveBeenCalledWith([
         {
           pp: 127,
           ranked_score: 12375044,

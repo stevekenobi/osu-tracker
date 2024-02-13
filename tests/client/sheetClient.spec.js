@@ -81,7 +81,7 @@ describe('sheet client', () => {
   describe('getMissingBeatmaps', () => {
     test('returns missing beatmap ids', async () => {
       const result = await sheetClient.getMissingBeatmaps();
-      expect(result).toEqual([1,2,3,4,5,6,7]);
+      expect(result).toEqual(['1','2','3','4','5','6','7']);
     });
   });
 });

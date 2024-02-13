@@ -175,4 +175,4 @@ function createBeatmapsetsFromBeatmaps(beatmaps) {
   return beatmapsets;
 }
 
-module.exports = { importLatestBeatmaps, importAllBeatmaps, syncBeatmapsSheet, findMissingBeatmaps };
+module.exports = { importLatestBeatmaps, importAllBeatmaps, syncBeatmapsSheet, findMissingBeatmaps, createBeatmapModelsFromOsuBeatmapsets, createBeatmapModelsFromOsuBeatmaps, createBeatmapsetsFromBeatmaps };
