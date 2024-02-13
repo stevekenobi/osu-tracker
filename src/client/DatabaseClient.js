@@ -19,10 +19,11 @@ class DatabaseClient {
           rejectUnauthorized: true,
         },
       },
+      logging: false
     };
 
     /* c8 ignore start */
-    this.sequelizeSingleton = new Sequelize(databaseUrl, databaseSecure ? options : {});
+    this.sequelizeSingleton = new Sequelize(databaseUrl, databaseSecure ? options : {logging: false});
     /* c8 ignore end */
   }
 

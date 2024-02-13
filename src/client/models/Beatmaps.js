@@ -67,7 +67,7 @@ function initBeatmaps(sequelize) {
         allowNull: false,
       },
       rankedDate: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: false,
       },
     },

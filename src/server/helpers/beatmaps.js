@@ -59,7 +59,7 @@ async function syncBeatmapsSheet(databaseClient, sheetClient) {
 
   const years = getYearsUntilToday();
   for (const year of years) {
-    const yearlyBeatmaps = beatmaps.filter((b) => b.rankedDate.getFullYear().toString() === year);
+    const yearlyBeatmaps = beatmaps.filter((b) => b.rankedDate.slice(0,4) === year);
     await sheetClient.updateBeatmapsOfYear(
       year,
       createBeatmapsetsFromBeatmaps(yearlyBeatmaps)

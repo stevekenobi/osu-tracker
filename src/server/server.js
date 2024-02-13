@@ -39,7 +39,7 @@ class TrackerServer {
       updateLeaderboard(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
     });
 
-    cron.schedule('0,10,20,40,50 * * * *', async () => {
+    cron.schedule('0,30 * * * *', async () => {
       await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
       await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
     });
@@ -49,7 +49,6 @@ class TrackerServer {
       await updateScores(this.getOsuClient(), this.getDatabaseClient());
       await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
     });
-
 
     this.server = http.createServer(this.getApp()).listen('5173', () => {
       console.log('⚡️[server]: Server is running at http://localhost:5173');
