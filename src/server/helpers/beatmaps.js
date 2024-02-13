@@ -39,7 +39,7 @@ async function importAllBeatmaps(osuClient, databaseClient, sheetClient) {
   const missingBeatmaps = [];
   for (const id of missingBeatmapIds) {
     const beatmap = await osuClient.getBeatmapById(id);
-    if (!beatmap) console.log(`Did not find ${id}`);
+    if (!beatmap) throw new Error(`Did not find ${id}`);
     if (!isBeatmapRankedApprovedOrLoved(beatmap)) console.log(`found ${beatmap.status} map`);
     if (beatmap.mode !== 'osu') console.log(`found ${beatmap.mode} map`);
     missingBeatmaps.push(beatmap);

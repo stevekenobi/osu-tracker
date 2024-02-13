@@ -15,12 +15,13 @@ async function updateScores(osuClient, databaseClient) {
       continue;
     }
 
-    for (const beatmap of result) {
+    result.forEach(async beatmap => {
       const score = await osuClient.getUserScoreOnBeatmap(beatmap.beatmap_id, 12375044);
       console.log(`${j + 1} - ${j + 100} score on ${beatmap.beatmap_id} ${score ? 'found' : 'not found'}`);
       if (score) scores.push(score.score);
-    }
-    await delay(2000);
+    });
+
+    await delay(5000);
     j += 100;
 
     await databaseClient.updateScores(
