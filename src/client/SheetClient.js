@@ -25,7 +25,7 @@ class SheetClient {
     const doc = new GoogleSpreadsheet(this.leaderboard_sheet_id, this.serviceAccountAuth);
     await doc.loadInfo();
 
-    const sheet = doc.sheetsByIndex[0];
+    const sheet = doc.sheetsByTitle['GR'];
 
     await sheet.clearRows({ start: 2 });
     await sheet.addRows(
@@ -67,7 +67,7 @@ class SheetClient {
         Version: b.version,
         Difficulty: b.difficulty,
         Status: b.status,
-        BPM: b.status,
+        BPM: b.BPM,
         AR: b.AR,
         CS: b.CS,
         HP: b.HP,
