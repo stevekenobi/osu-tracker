@@ -1,6 +1,7 @@
 const { Sequelize } = require('sequelize');
 const { initLeaderboard, Leaderboard } = require('./models/Leaderboard');
 const { initBeatmaps, Beatmaps } = require('./models/Beatmaps');
+const { initScores, Scores } = require('./models/Scores');
 
 class DatabaseClient {
   sequelizeSingleton = undefined;
@@ -28,6 +29,10 @@ class DatabaseClient {
   async initializeDatabase() {
     initBeatmaps(this.getSequelizeSingleton());
     initLeaderboard(this.getSequelizeSingleton());
+    initScores(this.getSequelizeSingleton());
+
+    Beatmaps.hasOne(Scores, {foreignKey: 'beatmap_id'});
+    Scores.belongsTo(Beatmaps);
 
     await this.getSequelizeSingleton().sync({ alter: true });
   }
@@ -70,8 +75,25 @@ class DatabaseClient {
   /**
    * @returns {Promise<Beatmaps[]>}
    */
-  async getBeatmaps() {
-    return await Beatmaps.findAll();
+  async getBeatmaps(options) {
+    return await Beatmaps.findAll(options);
+  }
+
+  async updateScores(scores) {
+    await Scores.bulkCreate(scores, {updateOnDuplicate: [
+      'accuracy',
+      'max_combo',
+      'mode',
+      'mods',
+      'perfect',
+      'pp',
+      'rank',
+      'score',
+      'count_100',
+      'count_300',
+      'count_50',
+      'count_miss',
+    ] });
   }
 }
 

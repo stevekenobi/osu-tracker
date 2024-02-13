@@ -12,6 +12,7 @@ const { updateLeaderboard } = require('./helpers/leaderboard');
 const { importLatestBeatmaps, syncBeatmapsSheet } = require('./helpers/beatmaps');
 
 const cron = require('node-cron');
+const { updateScores } = require('./helpers/scores');
 
 class TrackerServer {
   constructor() {
@@ -38,12 +39,14 @@ class TrackerServer {
       updateLeaderboard(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
     });
 
-    cron.schedule('0-59/10 * * * *', () => {
+    cron.schedule('10,20,40,50 * * * *', () => {
       importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
     });
 
-    cron.schedule('0 * * * *', () => {
-      syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
+    cron.schedule('30 * * * *', async () => {
+      await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
+      await updateScores(this.getOsuClient(), this.getDatabaseClient());
+      await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
     });
 
     this.server = http.createServer(this.getApp()).listen('5173', () => {

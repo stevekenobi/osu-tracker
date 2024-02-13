@@ -73,6 +73,10 @@ class SheetClient {
         HP: b.HP,
         OD: b.OD,
         Length: b.length,
+        Rank: b.Score?.rank,
+        Mods: b.Score?.mods,
+        Accuracy: b.Score?.accuracy ? numeral(b.Score.accuracy).format('0.00') : undefined,
+        Score: b.Score?.score ? numeral(b.Score.score).format('0,0') : undefined,
       })),
     );
   }
@@ -83,7 +87,7 @@ class SheetClient {
 
     const sheet = doc.sheetsByTitle['Missing'];
     await sheet.clearRows({ start: 2 });
-    await sheet.addRows(ids.map(i => ({Id: i})));
+    await sheet.addRows(ids.map((i) => ({ Id: i })));
   }
 
   async getMissingBeatmaps() {
@@ -92,7 +96,7 @@ class SheetClient {
 
     const sheet = doc.sheetsByTitle['Missing'];
 
-    return (await sheet.getRows()).map(r => r.get('Id'));
+    return (await sheet.getRows()).map((r) => r.get('Id'));
   }
 }
 
