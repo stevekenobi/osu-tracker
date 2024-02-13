@@ -59,7 +59,7 @@ async function syncBeatmapsSheet(databaseClient, sheetClient) {
 
   const years = getYearsUntilToday();
   for (const year of years) {
-    const yearlyBeatmaps = beatmaps.filter((b) => b.rankedDate.slice(0,4) === year);
+    const yearlyBeatmaps = beatmaps.filter((b) => b.rankedDate.slice(0, 4) === year);
     await sheetClient.updateBeatmapsOfYear(
       year,
       createBeatmapsetsFromBeatmaps(yearlyBeatmaps)
@@ -68,6 +68,10 @@ async function syncBeatmapsSheet(databaseClient, sheetClient) {
     );
     console.log(`finished ${year}`);
   }
+
+  await sheetClient.updateProblematicBeatmaps(beatmaps.filter((b) => b.Score?.perfect === false).sort((a, b) => a.difficulty > b.difficulty ? 1 : -1));
+  await sheetClient.updateNonSDBeatmaps(beatmaps.filter((b) => b.Score?.mods.includes('SD') === false).sort((a, b) => a.difficulty > b.difficulty ? 1 : -1));
+  await sheetClient.updateDtBeatmaps(beatmaps.filter((b) => b.Score?.mods.includes('DT')).sort((a, b) => a.difficulty > b.difficulty ? 1 : -1));
 }
 
 /**
@@ -86,7 +90,7 @@ async function findMissingBeatmaps(osuClient, databaseClient, sheetClient) {
       continue;
     }
     j += 100;
-    beatmaps.push(...result);
+    beatmaps.push(...result.filter((b) => b.beatmap.mode === 'osu' && isBeatmapRankedApprovedOrLoved(b.beatmap)));
 
     result = await osuClient.getUserBeamaps(2927048, 'most_played', { limit: 100, offset: j });
   } while (result.length > 0);
@@ -95,7 +99,7 @@ async function findMissingBeatmaps(osuClient, databaseClient, sheetClient) {
   const allBeatmapIds = (await databaseClient.getBeatmaps()).map((b) => b.id);
   console.log(allBeatmapIds);
 
-  const missingBeatmaps = beatmaps.filter((b) => b.beatmap.mode === 'osu' && isBeatmapRankedApprovedOrLoved(b.beatmap)).filter((b) => !allBeatmapIds.includes(b.beatmap_id.toString()));
+  const missingBeatmaps = beatmaps.filter((b) => !allBeatmapIds.includes(b.beatmap_id.toString()));
 
   await sheetClient.updateMissingBeatmaps(missingBeatmaps.map((x) => x.beatmap_id));
 }
@@ -175,4 +179,12 @@ function createBeatmapsetsFromBeatmaps(beatmaps) {
   return beatmapsets;
 }
 
-module.exports = { importLatestBeatmaps, importAllBeatmaps, syncBeatmapsSheet, findMissingBeatmaps, createBeatmapModelsFromOsuBeatmapsets, createBeatmapModelsFromOsuBeatmaps, createBeatmapsetsFromBeatmaps };
+module.exports = {
+  importLatestBeatmaps,
+  importAllBeatmaps,
+  syncBeatmapsSheet,
+  findMissingBeatmaps,
+  createBeatmapModelsFromOsuBeatmapsets,
+  createBeatmapModelsFromOsuBeatmaps,
+  createBeatmapsetsFromBeatmaps,
+};

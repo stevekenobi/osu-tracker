@@ -98,6 +98,70 @@ class SheetClient {
 
     return (await sheet.getRows()).map((r) => r.get('Id'));
   }
+
+  async updateNoScoreBeatmaps(beatmaps) {
+    const doc = new GoogleSpreadsheet(this.unfinished_sheet_id, this.serviceAccountAuth);
+    await doc.loadInfo();
+
+    const sheet = doc.sheetsByTitle['No Score'];
+
+    await sheet.clearRows({ start: 2 });
+    await sheet.addRows(
+      beatmaps.map((b) => ({
+        Link: createBeatmapLinkFromId(b.beatmap_id),
+        Artist: b.beatmapset.artist,
+        Title: b.beatmapset.title,
+        Creator: b.beatmapset.creator,
+        Version: b.beatmap.version,
+        Difficulty: b.beatmap.difficulty_rating,
+        Status: b.beatmap.status,
+        Length: b.beatmap.total_length,
+        Playcount: b.count,
+      })),
+    );
+  }
+
+  async updateProblematicBeatmaps(beatmaps) {
+    await this.updateUnfinishedBeatmaps(beatmaps, 'Problematic');
+  }
+
+  async updateNonSDBeatmaps(beatmaps) {
+    await this.updateUnfinishedBeatmaps(beatmaps, 'Non SD');
+  }
+
+  async updateDtBeatmaps(beatmaps) {
+    await this.updateUnfinishedBeatmaps(beatmaps, 'DT');
+  }
+
+  /**
+   * @private
+   */
+  async updateUnfinishedBeatmaps(beatmaps, title) {
+    const doc = new GoogleSpreadsheet(this.unfinished_sheet_id, this.serviceAccountAuth);
+    await doc.loadInfo();
+
+    const sheet = doc.sheetsByTitle[title];
+
+    await sheet.clearRows({ start: 2 });
+
+    await sheet.addRows(
+      beatmaps.map((b) => ({
+        Link: createBeatmapLinkFromId(b.id),
+        Artist: b.artist,
+        Title: b.title,
+        Creator: b.creator,
+        Version: b.version,
+        Difficulty: b.difficulty,
+        Status: b.status,
+        BPM: b.BPM,
+        AR: b.AR,
+        CS: b.CS,
+        HP: b.HP,
+        OD: b.OD,
+        Length: b.length,
+      })),
+    );
+  }
 }
 
 module.exports = SheetClient;

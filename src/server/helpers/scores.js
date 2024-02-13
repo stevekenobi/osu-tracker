@@ -1,11 +1,13 @@
-const { delay } = require('../../utils');
+const { delay, isBeatmapRankedApprovedOrLoved } = require('../../utils');
 
 /**
  * @param {OsuClient} osuClient
  * @param {DatabaseClient} databaseClient
+ * @param {SheetClient} sheetClient
  */
-async function updateScores(osuClient, databaseClient) {
+async function updateScores(osuClient, databaseClient, sheetClient) {
   console.log('started importing scores');
+  const unfinished = [];
   let j = 0;
   let result = await osuClient.getUserBeamaps(12375044, 'most_played', { limit: 100 });
   do {
@@ -15,11 +17,14 @@ async function updateScores(osuClient, databaseClient) {
       continue;
     }
 
-    result.forEach(async beatmap => {
-      const score = await osuClient.getUserScoreOnBeatmap(beatmap.beatmap_id, 12375044);
-      console.log(`${j + 1} - ${j + 100} score on ${beatmap.beatmap_id} ${score ? 'found' : 'not found'}`);
-      if (score) scores.push(score.score);
-    });
+    result
+      .filter((r) => isBeatmapRankedApprovedOrLoved(r.beatmap) && r.beatmap.mode === 'osu')
+      .forEach(async (beatmap) => {
+        const score = await osuClient.getUserScoreOnBeatmap(beatmap.beatmap_id, 12375044);
+        console.log(`${j + 1} - ${j + 100} score on ${beatmap.beatmap_id} ${score ? 'found' : 'not found'}`);
+        if (score) scores.push(score.score);
+        else unfinished.push(beatmap);
+      });
 
     await delay(5000);
     j += 100;
@@ -43,6 +48,7 @@ async function updateScores(osuClient, databaseClient) {
     );
     result = await osuClient.getUserBeamaps(12375044, 'most_played', { limit: 100, offset: j });
   } while (result.length > 0);
+  await sheetClient.updateNoScoreBeatmaps(unfinished.sort((a, b) => (a.beatmap.difficulty_rating > b.beatmap.difficulty_rating ? 1 : -1)));
   console.log('finished importing scores');
 }
 
