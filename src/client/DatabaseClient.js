@@ -1,5 +1,4 @@
-const { Sequelize } = require('sequelize');
-const { initLeaderboard, Leaderboard } = require('./models/Leaderboard');
+const { Sequelize, Op } = require('sequelize');
 const { initBeatmaps, Beatmaps } = require('./models/Beatmaps');
 
 class DatabaseClient {
@@ -18,16 +17,16 @@ class DatabaseClient {
           rejectUnauthorized: true,
         },
       },
+      logging: false
     };
 
     /* c8 ignore start */
-    this.sequelizeSingleton = new Sequelize(databaseUrl, databaseSecure ? options : {});
+    this.sequelizeSingleton = new Sequelize(databaseUrl, databaseSecure ? options : {logging: false});
     /* c8 ignore end */
   }
 
   async initializeDatabase() {
     initBeatmaps(this.getSequelizeSingleton());
-    initLeaderboard(this.getSequelizeSingleton());
 
     await this.getSequelizeSingleton().sync({ alter: true });
   }
@@ -44,22 +43,6 @@ class DatabaseClient {
   }
 
   /**
-   * @param {LeaderboardModel[]} users
-   * @returns {Promise<void>}
-   */
-  async addLeaderboardUsers(users) {
-    await Leaderboard.destroy({ truncate: true });
-    await Leaderboard.bulkCreate(users);
-  }
-
-  /**
-   * @returns {Promise<Leaderboard[]>}
-   */
-  async getLeaderboardUsers() {
-    return await Leaderboard.findAll();
-  }
-
-  /**
    * @param {BeatmapModel[]} beatmaps
    * @returns {Promise<void>}
    */
@@ -70,8 +53,27 @@ class DatabaseClient {
   /**
    * @returns {Promise<Beatmaps[]>}
    */
-  async getBeatmaps() {
-    return await Beatmaps.findAll();
+  async getBeatmaps(options) {
+    return await Beatmaps.findAll(options);
+  }
+
+  /**
+   * @param {number[]} ids
+   * @returns {boolean}
+   */
+  async beatmapsExists(ids) {
+    await Beatmaps.findAndCountAll({
+      where: {
+        [Op.or]: ids.map(i => ({id: i}))
+      }
+    });
+  }
+
+  async updateScore(score) {
+    const beatmap = await Beatmaps.findByPk(score.id);
+    if (!beatmap) throw new Error(`beatmap ${score.id} not found in database`);
+ 
+    await Beatmaps.update(score, {where: {id: score.id}});
   }
 }
 

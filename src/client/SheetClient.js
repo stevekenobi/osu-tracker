@@ -25,7 +25,7 @@ class SheetClient {
     const doc = new GoogleSpreadsheet(this.leaderboard_sheet_id, this.serviceAccountAuth);
     await doc.loadInfo();
 
-    const sheet = doc.sheetsByIndex[0];
+    const sheet = doc.sheetsByTitle['GR'];
 
     await sheet.clearRows({ start: 2 });
     await sheet.addRows(
@@ -67,12 +67,16 @@ class SheetClient {
         Version: b.version,
         Difficulty: b.difficulty,
         Status: b.status,
-        BPM: b.status,
+        BPM: b.BPM,
         AR: b.AR,
         CS: b.CS,
         HP: b.HP,
         OD: b.OD,
         Length: b.length,
+        Rank: b.rank,
+        Mods: b.mods,
+        Accuracy: b.accuracy ? numeral(b.accuracy).format('0.00') : undefined,
+        Score: b.score ? numeral(b.score).format('0,0') : undefined,
       })),
     );
   }
@@ -83,7 +87,7 @@ class SheetClient {
 
     const sheet = doc.sheetsByTitle['Missing'];
     await sheet.clearRows({ start: 2 });
-    await sheet.addRows(ids.map(i => ({Id: i})));
+    await sheet.addRows(ids.map((i) => ({ Id: i })));
   }
 
   async getMissingBeatmaps() {
@@ -92,7 +96,71 @@ class SheetClient {
 
     const sheet = doc.sheetsByTitle['Missing'];
 
-    return (await sheet.getRows()).map(r => r.get('Id'));
+    return (await sheet.getRows()).map((r) => r.get('Id'));
+  }
+
+  async updateNoScoreBeatmaps(beatmaps) {
+    const doc = new GoogleSpreadsheet(this.unfinished_sheet_id, this.serviceAccountAuth);
+    await doc.loadInfo();
+
+    const sheet = doc.sheetsByTitle['No Score'];
+
+    await sheet.clearRows({ start: 2 });
+    await sheet.addRows(
+      beatmaps.map((b) => ({
+        Link: createBeatmapLinkFromId(b.beatmap_id),
+        Artist: b.beatmapset.artist,
+        Title: b.beatmapset.title,
+        Creator: b.beatmapset.creator,
+        Version: b.beatmap.version,
+        Difficulty: b.beatmap.difficulty_rating,
+        Status: b.beatmap.status,
+        Length: b.beatmap.total_length,
+        Playcount: b.count,
+      })),
+    );
+  }
+
+  async updateProblematicBeatmaps(beatmaps) {
+    await this.updateUnfinishedBeatmaps(beatmaps, 'Problematic');
+  }
+
+  async updateNonSDBeatmaps(beatmaps) {
+    await this.updateUnfinishedBeatmaps(beatmaps, 'Non SD');
+  }
+
+  async updateDtBeatmaps(beatmaps) {
+    await this.updateUnfinishedBeatmaps(beatmaps, 'DT');
+  }
+
+  /**
+   * @private
+   */
+  async updateUnfinishedBeatmaps(beatmaps, title) {
+    const doc = new GoogleSpreadsheet(this.unfinished_sheet_id, this.serviceAccountAuth);
+    await doc.loadInfo();
+
+    const sheet = doc.sheetsByTitle[title];
+
+    await sheet.clearRows({ start: 2 });
+
+    await sheet.addRows(
+      beatmaps.map((b) => ({
+        Link: createBeatmapLinkFromId(b.id),
+        Artist: b.artist,
+        Title: b.title,
+        Creator: b.creator,
+        Version: b.version,
+        Difficulty: b.difficulty,
+        Status: b.status,
+        BPM: b.BPM,
+        AR: b.AR,
+        CS: b.CS,
+        HP: b.HP,
+        OD: b.OD,
+        Length: b.length,
+      })),
+    );
   }
 }
 
