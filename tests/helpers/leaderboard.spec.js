@@ -1,5 +1,4 @@
 const { updateLeaderboard } = require('../../src/server/helpers/leaderboard');
-const createDatabaseClientMock = require('../mocks/DatabaseClient');
 const createOsuClientMock = require('../mocks/OsuClient');
 const createSheetClientMock = require('../mocks/SheetClient');
 
@@ -64,55 +63,13 @@ const osuClient = createOsuClientMock('getCountryLeaderboard', async () =>
     ],
   }),);
 
-const databaseClient = createDatabaseClientMock('addLeaderboardUsers', async () => Promise.resolve());
 
 const sheetClient =  createSheetClientMock('updateLeaderboard', async () => Promise.resolve());
 
 describe('leaderboard helper', () => {
   describe('updateLeaderboard', () => {
     test('updates the leaderboard', async () => {
-      await updateLeaderboard(osuClient, databaseClient, sheetClient);
-      expect(databaseClient.addLeaderboardUsers).toHaveBeenCalledWith([
-        {
-          id: 2,
-          username: 'ximeniez',
-          rankedScore: 12375044,
-          totalScore: 21554847,
-          hitAccuracy: 99.56,
-          playcount: 5548,
-          SSH: 123,
-          SS: 123,
-          SH: 123,
-          S: 123,
-          A: 123,
-        },
-        {
-          id: 1,
-          username: 'Steve Kenobi',
-          rankedScore: 4171323,
-          totalScore: 21554847,
-          hitAccuracy: 99.56,
-          playcount: 5548,
-          SSH: 123,
-          SS: 123,
-          SH: 123,
-          S: 123,
-          A: 123,
-        },
-        {
-          id: 3,
-          username: 'other',
-          rankedScore: 265,
-          totalScore: 21554847,
-          hitAccuracy: 99.56,
-          playcount: 5548,
-          SSH: 123,
-          SS: 123,
-          SH: 123,
-          S: 123,
-          A: 123,
-        },
-      ]);
+      await updateLeaderboard(osuClient, sheetClient);
       expect(sheetClient.updateLeaderboard).toHaveBeenCalledWith([
         {
           pp: 127,

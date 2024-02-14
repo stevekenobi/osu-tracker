@@ -70,6 +70,50 @@ function initBeatmaps(sequelize) {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      accuracy: {
+        type: DataTypes.DOUBLE,
+        allowNull: true,
+      },
+      max_combo: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      mods: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      perfect: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+      },
+      pp: {
+        type: DataTypes.DOUBLE,
+        allowNull: true,
+      },
+      rank: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      score: {
+        type: DataTypes.BIGINT,
+        allowNull: true,
+      },
+      count_100: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      count_300: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      count_50: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      count_miss: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
     },
     {
       sequelize,

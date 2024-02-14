@@ -55,7 +55,7 @@ async function importAllBeatmaps(osuClient, databaseClient, sheetClient) {
  * @param {SheetClient} sheetClient
  */
 async function syncBeatmapsSheet(databaseClient, sheetClient) {
-  const beatmaps = await databaseClient.getBeatmaps({ include: 'Score' });
+  const beatmaps = await databaseClient.getBeatmaps();
 
   const years = getYearsUntilToday();
   for (const year of years) {

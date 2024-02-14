@@ -73,10 +73,10 @@ class SheetClient {
         HP: b.HP,
         OD: b.OD,
         Length: b.length,
-        Rank: b.Score?.rank,
-        Mods: b.Score?.mods,
-        Accuracy: b.Score?.accuracy ? numeral(b.Score.accuracy).format('0.00') : undefined,
-        Score: b.Score?.score ? numeral(b.Score.score).format('0,0') : undefined,
+        Rank: b.rank,
+        Mods: b.mods,
+        Accuracy: b.accuracy ? numeral(b.accuracy).format('0.00') : undefined,
+        Score: b.score ? numeral(b.score).format('0,0') : undefined,
       })),
     );
   }

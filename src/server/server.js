@@ -36,7 +36,7 @@ class TrackerServer {
     this._initServices();
 
     cron.schedule('0,30 * * * *', () => {
-      updateLeaderboard(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
+      updateLeaderboard(this.getOsuClient(), this.getSheetClient());
     });
 
     cron.schedule('0,30 * * * *', async () => {
@@ -44,13 +44,11 @@ class TrackerServer {
       await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
     });
 
-    // cron.schedule('0 */2 * * *', async () => {
-    //   await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
-    //   await updateScores(this.getOsuClient(), this.getDatabaseClient());
-    //   await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
-    // });
-
-    updateScores(this.getOsuClient(), this.getDatabaseClient());
+    cron.schedule('0 */2 * * *', async () => {
+      await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
+      await updateScores(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
+      await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
+    });
 
     this.server = http.createServer(this.getApp()).listen('5173', () => {
       console.log('⚡️[server]: Server is running at http://localhost:5173');

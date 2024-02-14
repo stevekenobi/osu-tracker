@@ -1,7 +1,5 @@
 const { Sequelize, Op } = require('sequelize');
-const { initLeaderboard, Leaderboard } = require('./models/Leaderboard');
 const { initBeatmaps, Beatmaps } = require('./models/Beatmaps');
-const { initScores, Scores } = require('./models/Scores');
 
 class DatabaseClient {
   sequelizeSingleton = undefined;
@@ -29,11 +27,6 @@ class DatabaseClient {
 
   async initializeDatabase() {
     initBeatmaps(this.getSequelizeSingleton());
-    initLeaderboard(this.getSequelizeSingleton());
-    initScores(this.getSequelizeSingleton());
-
-    Beatmaps.hasOne(Scores, {foreignKey: 'beatmap_id'});
-    Scores.belongsTo(Beatmaps);
 
     await this.getSequelizeSingleton().sync({ alter: true });
   }
@@ -47,22 +40,6 @@ class DatabaseClient {
     }
 
     return this.sequelizeSingleton;
-  }
-
-  /**
-   * @param {LeaderboardModel[]} users
-   * @returns {Promise<void>}
-   */
-  async addLeaderboardUsers(users) {
-    await Leaderboard.destroy({ truncate: true });
-    await Leaderboard.bulkCreate(users);
-  }
-
-  /**
-   * @returns {Promise<Leaderboard[]>}
-   */
-  async getLeaderboardUsers() {
-    return await Leaderboard.findAll();
   }
 
   /**
@@ -92,21 +69,11 @@ class DatabaseClient {
     });
   }
 
-  async updateScores(scores) {
-    await Scores.bulkCreate(scores, {updateOnDuplicate: [
-      'accuracy',
-      'max_combo',
-      'mode',
-      'mods',
-      'perfect',
-      'pp',
-      'rank',
-      'score',
-      'count_100',
-      'count_300',
-      'count_50',
-      'count_miss',
-    ] });
+  async updateScore(score) {
+    const beatmap = await Beatmaps.findByPk(score.id);
+    if (!beatmap) throw new Error(`beatmap ${score.id} not found in database`);
+ 
+    await Beatmaps.update(score, {where: {id: score.id}});
   }
 }
 
