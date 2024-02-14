@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize, Op } = require('sequelize');
 const { initLeaderboard, Leaderboard } = require('./models/Leaderboard');
 const { initBeatmaps, Beatmaps } = require('./models/Beatmaps');
 const { initScores, Scores } = require('./models/Scores');
@@ -78,6 +78,18 @@ class DatabaseClient {
    */
   async getBeatmaps(options) {
     return await Beatmaps.findAll(options);
+  }
+
+  /**
+   * @param {number[]} ids
+   * @returns {boolean}
+   */
+  async beatmapsExists(ids) {
+    await Beatmaps.findAndCountAll({
+      where: {
+        [Op.or]: ids.map(i => ({id: i}))
+      }
+    });
   }
 
   async updateScores(scores) {

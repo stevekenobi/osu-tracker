@@ -22,17 +22,50 @@ async function updateScores(osuClient, databaseClient, sheetClient) {
       .forEach(async (beatmap) => {
         const score = await osuClient.getUserScoreOnBeatmap(beatmap.beatmap_id, 12375044);
         console.log(`${j + 1} - ${j + 100} score on ${beatmap.beatmap_id} ${score ? 'found' : 'not found'}`);
-        if (score) scores.push(score.score);
-        else unfinished.push(beatmap);
+        if (score) {
+          scores.push(score.score);
+        } else unfinished.push(beatmap);
       });
 
     await delay(5000);
     j += 100;
 
+    const beatmapsMissing = [];
+    const beatmapsInDatabase = await databaseClient.beatmapsExists(scores.map((s) => s.beatmap.id));
+
+    if (!beatmapsInDatabase) {
+      for (const s of scores) {
+        const beatmap = await osuClient.getBeatmapById(s.beatmap.id);
+        beatmapsMissing.push(beatmap);
+      }
+
+      await databaseClient.updateBeatmaps(
+        beatmapsMissing.map((b) => ({
+          id: b.id,
+          beatmapsetId: b.beatmapset_id,
+          artist: b.beatmapset.artist,
+          title: b.beatmapset.title,
+          creator: b.beatmapset.creator,
+          version: b.version,
+          difficulty: b.difficulty_rating,
+          AR: b.ar,
+          CS: b.cs,
+          OD: b.accuracy,
+          HP: b.drain,
+          BPM: b.bpm,
+          length: b.total_length,
+          status: b.status,
+          mode: b.mode,
+          rankedDate: b.beatmapset.ranked_date,
+        })),
+      );
+    }
+
     await databaseClient.updateScores(
       scores.map((s) => ({
         accuracy: s.accuracy * 100,
         beatmap_id: s.beatmap.id,
+        BeatmapId: s.beatmap.id,
         max_combo: s.max_combo,
         mode: s.mode,
         mods: s.mods.join(','),
