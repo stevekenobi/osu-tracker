@@ -31,9 +31,9 @@ async function updateScores(osuClient, databaseClient, sheetClient) {
     await delay(5000);
     j += 100;
 
-    for(const s of scores) {
+    for (const s of scores) {
       try {
-        await databaseClient.updateScore ({
+        await databaseClient.updateScore({
           id: s.beatmap.id,
           accuracy: s.accuracy * 100,
           beatmap_id: s.beatmap.id,
@@ -54,7 +54,7 @@ async function updateScores(osuClient, databaseClient, sheetClient) {
         const beatmapset = await osuClient.getBeatmapsetById(s.beatmap.beatmapset_id);
         await databaseClient.updateBeatmaps(createBeatmapModelsFromOsuBeatmapsets([beatmapset]));
 
-        await databaseClient.updateScore ({
+        await databaseClient.updateScore({
           id: s.beatmap.id,
           accuracy: s.accuracy * 100,
           beatmap_id: s.beatmap.id,

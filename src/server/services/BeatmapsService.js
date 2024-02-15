@@ -40,7 +40,7 @@ class BeatmapsService extends AbstractService {
    * @param {Response} res
    */
   async _findAllMissingBeatmapsRequestHandler(req, res) {
-    findMissingBeatmaps(this.osuClient, this.databaseClient, this.sheetClient);
+    findMissingBeatmaps(this.osuClient, this.databaseClient, this.sheetClient, req.body.userId);
     res.status(200).json({
       meta: {
         status: 200,

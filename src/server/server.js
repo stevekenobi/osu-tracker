@@ -50,6 +50,14 @@ class TrackerServer {
       await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
     });
 
+
+    syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
+    if (process.env.ENVIRONMENT === 'dev')
+      setInterval(() => {
+        const used = process.memoryUsage().heapUsed / 1024 / 1024;
+        console.log(`This app is currently using ${Math.floor(used)} MB of memory.`);
+      }, 5000);
+
     this.server = http.createServer(this.getApp()).listen('5173', () => {
       console.log('⚡️[server]: Server is running at http://localhost:5173');
     });

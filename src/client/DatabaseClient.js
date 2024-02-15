@@ -17,11 +17,11 @@ class DatabaseClient {
           rejectUnauthorized: true,
         },
       },
-      logging: false
+      logging: false,
     };
 
     /* c8 ignore start */
-    this.sequelizeSingleton = new Sequelize(databaseUrl, databaseSecure ? options : {logging: false});
+    this.sequelizeSingleton = new Sequelize(databaseUrl, databaseSecure ? options : { logging: false });
     /* c8 ignore end */
   }
 
@@ -58,22 +58,58 @@ class DatabaseClient {
   }
 
   /**
+   * @returns {Promise<Beatmaps[]>}
+   */
+  async getBeatmapsOfYear(year) {
+    return await Beatmaps.findAll({ where: { rankedDate: { [Op.like]: `${year}%` } } });
+  }
+
+  /**
+   * @returns {Promise<Beatmaps[]>}
+   */
+  async getUnfinishedBeatmaps(option) {
+    const result = option === 'problematic' ? await this.getProblematicBeatmaps() : option === 'non-sd' ? await this.getNonSDBeatmaps() : await this.getDTBeatmaps();
+    return result.sort((a,b) => a.difficulty > b.difficulty ? 1 : -1);
+  }
+
+  /**
+   * @returns {Promise<Beatmaps[]>}
+   */
+  async getProblematicBeatmaps() {
+    return await Beatmaps.findAll({ where: { perfect: false } });
+  }
+
+  /**
+   * @returns {Promise<Beatmaps[]>}
+   */
+  async getNonSDBeatmaps() {
+    return await Beatmaps.findAll({ where: { mods: { [Op.notLike]: '%SD%' } } });
+  }
+
+  /**
+   * @returns {Promise<Beatmaps[]>}
+   */
+  async getDTBeatmaps() {
+    return await Beatmaps.findAll({ where: { mods: { [Op.like]: '%DT%' } } });
+  }
+
+  /**
    * @param {number[]} ids
    * @returns {boolean}
    */
   async beatmapsExists(ids) {
     await Beatmaps.findAndCountAll({
       where: {
-        [Op.or]: ids.map(i => ({id: i}))
-      }
+        [Op.or]: ids.map((i) => ({ id: i })),
+      },
     });
   }
 
   async updateScore(score) {
     const beatmap = await Beatmaps.findByPk(score.id);
     if (!beatmap) throw new Error(`beatmap ${score.id} not found in database`);
- 
-    await Beatmaps.update(score, {where: {id: score.id}});
+
+    await Beatmaps.update(score, { where: { id: score.id } });
   }
 }
 

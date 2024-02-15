@@ -1,5 +1,5 @@
 {
   "watch": ["src/server", "src/client", "src/utils"],
   "ignore": ["tests"],
-  "exec": "node --env-file=.env ./src/server/index.js"
+  "exec": "node --max-old-space-size=512 --env-file=.env ./src/server/index.js"
 }
