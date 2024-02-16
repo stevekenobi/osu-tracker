@@ -31,6 +31,10 @@ class DatabaseClient {
     await this.getSequelizeSingleton().sync({ alter: true });
   }
 
+  async closeConnection() {
+    await this.getSequelizeSingleton().close();
+  }
+
   /**
    * @returns {Sequelize}
    */
