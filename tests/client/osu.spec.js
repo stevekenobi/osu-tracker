@@ -6,18 +6,6 @@ const client = new OsuClient({
 });
 
 describe('osu client', () => {
-  describe('getCountryLeaderboard', () => {
-    test('returns the first 50 users of a country', async () => {
-      const response = await client.getCountryLeaderboard({ country: 'GR' });
-      expect(response.ranking.length).toBe(50);
-    });
-
-    test('returns users of the same country', async () => {
-      const response = await client.getCountryLeaderboard({ country: 'GR' });
-      expect(response.ranking.every((u) => u.user.country.code === 'GR'));
-    });
-  });
-
   describe('getUserById', () => {
     test('returns correct user', async () => {
       const response = await client.getUserById(12375044);
@@ -33,7 +21,7 @@ describe('osu client', () => {
   });
 
   describe('getBeatmapsetById', () => {
-    test('returns', async () => {
+    test('returns correct beatmapset', async () => {
       const response = await client.getBeatmapsetById(89810);
       expect(response.artist).toBe('Masayoshi Minoshima');
       expect(response.creator).toBe('Shinxyn');
@@ -52,10 +40,46 @@ describe('osu client', () => {
     });
   });
 
+  describe('getBeatmapById', () => {
+    test('returns correct beatmap', async () => {
+      const response = await client.getBeatmapById(1158162);
+      expect (response.beatmapset_id).toBe(546794);
+      expect (response.difficulty_rating).toBe(4.87);
+      expect (response.id).toBe(1158162);
+      expect (response.mode).toBe('osu');
+      expect (response.status).toBe('ranked');
+      expect (response.total_length).toBe(228);
+      expect (response.user_id).toBe(270377);
+      expect (response.version).toBe('Countless');
+      expect (response.accuracy).toBe(8);
+      expect (response.ar).toBe(9);
+      expect (response.bpm).toBe(82);
+      expect (response.cs).toBe(4);
+      expect (response.drain).toBe(6.7);
+    });
+
+    test('returns undefined beatmap', async () => {
+      const response = await client.getBeatmapById(1158662);
+      expect(response);
+    });
+  });
+
   describe('getBeatmapsetSearch', () => {
     test('returns recent array', async () => {
       const response = await client.getBeatmapsetSearch();
       expect(response.beatmapsets.length).toBe(50);
+    });
+  });
+
+  describe('getCountryLeaderboard', () => {
+    test('returns the first 50 users of a country', async () => {
+      const response = await client.getCountryLeaderboard({ country: 'GR' });
+      expect(response.ranking.length).toBe(50);
+    });
+
+    test('returns users of the same country', async () => {
+      const response = await client.getCountryLeaderboard({ country: 'GR' });
+      expect(response.ranking.every((u) => u.user.country.code === 'GR'));
     });
   });
 

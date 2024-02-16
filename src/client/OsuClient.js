@@ -87,6 +87,10 @@ class OsuClient {
     return await this.getRequest(`beatmapsets/${id}`);
   }
 
+  /**
+   * @param {number} id 
+   * @returns {Promise<OsuBeatmap|undefined>}
+   */
   async getBeatmapById(id) {
     return await this.getRequest(`beatmaps/${id}`);
   }
