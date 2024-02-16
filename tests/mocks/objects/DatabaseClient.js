@@ -1,9 +1,10 @@
 const DatabaseClient = require('../../src/client/DatabaseClient');
+const mockClient = require('./Client');
 
 jest.mock('../../src/client/DatabaseClient');
 
-function createDatabaseClientMock(method, value) {
-  jest.spyOn(DatabaseClient.prototype, method).mockImplementation(value);
+function createDatabaseClientMock(options) {
+  mockClient(DatabaseClient, options);
   return new DatabaseClient('sqlite::memory:', false);
 }
 

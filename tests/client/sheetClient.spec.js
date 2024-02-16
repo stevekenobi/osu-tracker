@@ -45,12 +45,10 @@ describe('sheet client', () => {
           HP: 5,
           OD: 6,
           length: 154,
-          Score: {
-            rank: 'SH',
-            mods: 'HD,SD',
-            accuracy: 99.82,
-            score: 12375044,
-          },
+          rank: 'SH',
+          mods: 'HD,SD',
+          accuracy: 99.82,
+          score: 12375044,
         },
         {
           id: 1235,
@@ -66,7 +64,6 @@ describe('sheet client', () => {
           HP: 5,
           OD: 6,
           length: 154,
-          Score: null,
         },
       ]);
     });
@@ -74,14 +71,88 @@ describe('sheet client', () => {
 
   describe('updateMissingBeatmaps', () => {
     test('updates missing beatmaps', async () => {
-      await sheetClient.updateMissingBeatmaps([1,2,3,4,5,6,7]);
+      await sheetClient.clearMissingBeatmaps();
+      await sheetClient.updateMissingBeatmaps([1, 2, 3, 4, 5, 6, 7]);
     });
   });
 
   describe('getMissingBeatmaps', () => {
     test('returns missing beatmap ids', async () => {
       const result = await sheetClient.getMissingBeatmaps();
-      expect(result).toEqual(['1','2','3','4','5','6','7']);
+      expect(result).toEqual(['1', '2', '3', '4', '5', '6', '7']);
+    });
+  });
+
+  describe('updateNoScoreBeatmaps', () => {
+    test('updates no score beatmaps', async () => {
+      await sheetClient.updateNoScoreBeatmaps([
+        {
+          beatmap_id: 123,
+          beatmapset: {
+            artist: 'artist',
+            title: 'title',
+            creator: 'creator',
+          },
+          beatmap: {
+            version: 'version',
+            difficulty_rating: '1.23',
+            status: 'ranked',
+            total_length: '150',
+          },
+          count: '12',
+        },
+      ]);
+
+      const result = await sheetClient.getNoScoreBeatmaps();
+      expect(result).toEqual([
+        { Link: 'https://osu.ppy.sh/b/123', Artist: 'artist', Title: 'title', Creator: 'creator', Version: 'version', Difficulty: '1.23', Status: 'ranked', Length: '150', Playcount: '12' },
+      ]);
+    });
+  });
+
+  describe('update unfinished beatmaps', () => {
+    test.each`
+      method                         | title
+      ${'updateProblematicBeatmaps'} | ${'Problematic'}
+      ${'updateNonSDBeatmaps'}       | ${'Non SD'}
+      ${'updateDtBeatmaps'}          | ${'DT'}
+    `('updates unfinished', async (obj) => {
+      await sheetClient[obj.method]([
+        {
+          id: 123,
+          artist: 'artist',
+          title: 'title',
+          creator: 'creator',
+          version: 'version',
+          difficulty: 1.23,
+          status: 'loved',
+          BPM: 150,
+          AR: 9.2,
+          CS: 4,
+          HP: 7,
+          OD: 8,
+          length: 124,
+        },
+      ]);
+
+      const result = await sheetClient.getUnfinishedBeatmaps(obj.title);
+      expect(result).toStrictEqual([
+        {
+          Link: 'https://osu.ppy.sh/b/123',
+          Artist: 'artist',
+          Title: 'title',
+          Creator: 'creator',
+          Version: 'version',
+          Difficulty: '1.23',
+          Status: 'loved',
+          BPM: '150',
+          AR: '9.2',
+          CS: '4',
+          HP: '7',
+          OD: '8',
+          Length: '124',
+        },
+      ]);
     });
   });
 });

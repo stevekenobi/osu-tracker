@@ -6,9 +6,9 @@ const config = {
   coverageProvider: 'v8',
   coverageDirectory: '.coverage',
   collectCoverageFrom: [
-    'src/client/**/*.{js,jsx}',
-    'src/server/helpers/**/*.{js,jsx}',
-    'src/utils/**/*.{js,jsx}',
+    'src/client/**/*.js',
+    'src/server/helpers/**/*.js',
+    'src/utils/**/*.js',
   ],
   coverageThreshold: {
     global: {

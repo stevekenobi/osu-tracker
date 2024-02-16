@@ -76,8 +76,8 @@ describe('utils', () => {
   describe('extractIdFromLink', () => {
     test.each`
       link                              | expected
-      ${'https://osu.ppy.sh/u/1754'}   | ${1754}
-      ${'https://osu.ppy.sh/b/175454'} | ${175454}
+      ${'https://osu.ppy.sh/u/1754'}    | ${1754}
+      ${'https://osu.ppy.sh/b/175454'}  | ${175454}
     `('returns number', (obj) => {
       const result = extractIdFromLink(obj.link);
       expect(result).toBe(obj.expected);
