@@ -50,8 +50,6 @@ class TrackerServer {
       await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
     });
 
-
-    syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
     if (process.env.ENVIRONMENT === 'dev')
       setInterval(() => {
         const used = process.memoryUsage().heapUsed / 1024 / 1024;
@@ -74,10 +72,9 @@ class TrackerServer {
       this.getServer().close((err) => {
         if (err) {
           console.log(err.message);
-          clearTimeout(timeoutRef);
           reject(err);
         }
-
+  
         this._shutDownServices();
 
         console.log('Closed out all connections. Server shutdown successful');
@@ -111,6 +108,12 @@ class TrackerServer {
     this.services.forEach((service) => {
       console.log(`shuting down ${typeof service}`);
       service.shutDown();
+    });
+
+    this.getDatabaseClient().closeConnection().then(() => {
+      console.log('closed database connection');
+    }, () => {
+      console.log('error closing database connection');
     });
   }
 

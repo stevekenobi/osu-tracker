@@ -18,7 +18,6 @@ class OsuClient {
    * @param {string} requestUrl
    * @returns {Promise<Object|undefined>}
    */
-  /* c8 ignore start */
   async getRequest (requestUrl) {
     try {
       const response = await axios.get(`${baseUrl}/${requestUrl}`, {
@@ -45,7 +44,6 @@ class OsuClient {
       throw error;
     }
   }
-  /* c8 ignore end */
 
   /**
    * @private
