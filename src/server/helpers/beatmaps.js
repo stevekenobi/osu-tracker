@@ -1,4 +1,5 @@
 const { isBeatmapRankedApprovedOrLoved, getYearsUntilToday, delay } = require('../../utils');
+
 /**
  * @param {OsuClient} osuClient
  * @param {DatabaseClient} databaseClient
@@ -51,17 +52,29 @@ async function importAllBeatmaps(osuClient, databaseClient, sheetClient) {
  */
 async function syncBeatmapsSheet(databaseClient, sheetClient) {
   const years = getYearsUntilToday();
+  const stats = [];
   for (const year of years) {
     const beatmaps = await databaseClient.getBeatmapsOfYear(year);
-    const yearlyBeatmaps = beatmaps.filter((b) => b.rankedDate.slice(0, 4) === year);
     await sheetClient.updateBeatmapsOfYear(
       year,
-      createBeatmapsetsFromBeatmaps(yearlyBeatmaps)
+      createBeatmapsetsFromBeatmaps(beatmaps)
         .sort((a, b) => (a.beatmaps[0].rankedDate > b.beatmaps[0].rankedDate ? 1 : -1))
         .flatMap((s) => s.beatmaps),
     );
     console.log(`finished ${year}`);
+    const playedBeatmaps = beatmaps.filter((b) => b.score);
+    const totalScore = playedBeatmaps.reduce((sum, b) => sum + Number.parseInt(b.score), 0);
+    stats.push({
+      Year: year,
+      'Total Beatmaps': beatmaps.length,
+      'Played Beatmaps': playedBeatmaps.length,
+      Completion: (100 * playedBeatmaps.length) / beatmaps.length,
+      'Total Score': totalScore,
+      'Average Score': totalScore / playedBeatmaps.length,
+    });
   }
+
+  await sheetClient.updateStats(stats);
 
   await sheetClient.updateProblematicBeatmaps(await databaseClient.getUnfinishedBeatmaps('problematic'));
   await sheetClient.updateNonSDBeatmaps(await databaseClient.getUnfinishedBeatmaps('non-sd'));

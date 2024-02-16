@@ -81,6 +81,16 @@ class SheetClient {
     );
   }
 
+  async updateStats(stats) {
+    const doc = new GoogleSpreadsheet(this.beatmaps_sheet_id, this.serviceAccountAuth);
+    await doc.loadInfo();
+
+    const sheet = doc.sheetsByTitle['Stats'];
+    await sheet.clearRows({ start: 2, end: 22 });
+
+    await sheet.addRows(stats);
+  }
+
   async updateMissingBeatmaps(ids) {
     const doc = new GoogleSpreadsheet(process.env.DEV_BEATMAPS_SHEET_ID, this.serviceAccountAuth);
     await doc.loadInfo();
@@ -134,16 +144,16 @@ class SheetClient {
 
     const sheet = doc.sheetsByTitle['No Score'];
 
-    return (await sheet.getRows()).map(r => r.toObject());
+    return (await sheet.getRows()).map((r) => r.toObject());
   }
 
-  async getUnfinishedBeatmaps(title){
+  async getUnfinishedBeatmaps(title) {
     const doc = new GoogleSpreadsheet(this.unfinished_sheet_id, this.serviceAccountAuth);
     await doc.loadInfo();
 
     const sheet = doc.sheetsByTitle[title];
 
-    return (await sheet.getRows()).map(r => r.toObject());
+    return (await sheet.getRows()).map((r) => r.toObject());
   }
 
   async updateProblematicBeatmaps(beatmaps) {
