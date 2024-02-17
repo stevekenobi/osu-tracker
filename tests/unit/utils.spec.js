@@ -1,4 +1,4 @@
-const { range, createQuery, getYearsUntilToday, isBeatmapRankedApprovedOrLoved, createBeatmapLinkFromId, createUserLinkFromId, extractIdFromLink } = require('../../src/utils');
+const { range, createQuery, getYearsUntilToday } = require('../../src/utils');
 
 describe('utils', () => {
   describe('range', () => {
