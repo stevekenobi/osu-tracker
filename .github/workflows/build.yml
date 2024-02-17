@@ -1,10 +1,8 @@
-name: Clients CI
+name: Build CI
 
 on:
   pull_request:
     branches: ['main']
-  schedule:
-    - cron: '0 4 * * *'
 
 jobs:
   build:
@@ -35,4 +33,4 @@ jobs:
         run: yarn
 
       - name: Test
-        run: yarn test:clients
+        run: yarn test:coverage

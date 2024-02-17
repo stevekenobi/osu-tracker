@@ -6,8 +6,10 @@
   "scripts": {
     "dev:server": "nodemon",
     "start": "node --env-file=.env ./src/server/index.js",
-    "test:clients": "jest",
+    "test:clients": "jest tests/client",
     "format": "prettier --write src/ tests/",
+    "test:unit": "jest tests/unit --watchAll",
+    "test:coverage": "jest run tests/unit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "lint:check": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --ignore-path .gitignore"
   },
