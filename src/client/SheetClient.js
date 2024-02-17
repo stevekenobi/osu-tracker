@@ -1,5 +1,5 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
-const creds = JSON.parse(process.env['GOOGLE_SERVICE_ACCOUNT']);
+const creds = require('../../google_service_account.json');
 const { JWT } = require('google-auth-library');
 const { createUserLinkFromId, createBeatmapLinkFromId } = require('../utils');
 const numeral = require('numeral');

@@ -21,7 +21,7 @@ class DatabaseClient {
     };
 
     /* c8 ignore start */
-    this.sequelizeSingleton = new Sequelize(databaseUrl, databaseSecure ? options : { logging: false });
+    this.sequelizeSingleton = new Sequelize(databaseUrl, databaseSecure === 'true' ? options : { logging: false });
     /* c8 ignore end */
   }
 
