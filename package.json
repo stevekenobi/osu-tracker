@@ -9,7 +9,7 @@
     "test:clients": "jest tests/client",
     "format": "prettier --write src/ tests/",
     "test:unit": "jest tests/unit --watchAll",
-    "test:coverage": "jest run tests/unit",
+    "test:coverage": "jest tests/unit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "lint:check": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --ignore-path .gitignore"
   },
