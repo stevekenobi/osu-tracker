@@ -39,6 +39,7 @@ class TrackerServer {
       updateLeaderboard(this.getOsuClient(), this.getSheetClient());
     });
 
+    updateLeaderboard(this.getOsuClient(), this.getSheetClient());
     cron.schedule('0,30 * * * *', async () => {
       await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
       await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());

@@ -5,7 +5,7 @@ let databaseClient = undefined;
 
 describe('database', () => {
   beforeAll(async () => {
-    databaseClient = new DatabaseClient(process.env.PROD_DATABASE_URL, true);
+    databaseClient = new DatabaseClient(process.env.PROD_DATABASE_URL, 'true');
     await databaseClient.initializeDatabase();
   });
   afterAll(async () => {
