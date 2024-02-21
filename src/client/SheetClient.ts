@@ -1,15 +1,15 @@
-const { GoogleSpreadsheet } = require('google-spreadsheet');
-const creds = require('../../google_service_account.json');
-const { JWT } = require('google-auth-library');
-const { createUserLinkFromId, createBeatmapLinkFromId } = require('../utils');
-const numeral = require('numeral');
+import { GoogleSpreadsheet } from 'google-spreadsheet';
+import creds from '../../google_service_account.json';
+import { JWT } from 'google-auth-library';
+import { createUserLinkFromId, createBeatmapLinkFromId } from '../utils';
+import numeral from 'numeral';
 
-class SheetClient {
-  constructor(leaderboard_sheet_id, unfinished_sheet_id, beatmaps_sheet_id) {
-    this.leaderboard_sheet_id = leaderboard_sheet_id;
-    this.unfinished_sheet_id = unfinished_sheet_id;
-    this.beatmaps_sheet_id = beatmaps_sheet_id;
-
+export default class SheetClient {
+  private readonly serviceAccountAuth;
+  constructor(
+    private readonly leaderboard_sheet_id,
+    private readonly unfinished_sheet_id,
+    private readonly beatmaps_sheet_id) {
     const SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive.file'];
     this.serviceAccountAuth = new JWT({
       email: creds.client_email,
@@ -18,9 +18,6 @@ class SheetClient {
     });
   }
 
-  /**
-   * @param {OsuRanking[]} users
-   */
   async updateLeaderboard(users) {
     const doc = new GoogleSpreadsheet(this.leaderboard_sheet_id, this.serviceAccountAuth);
     await doc.loadInfo();
@@ -47,10 +44,6 @@ class SheetClient {
     );
   }
 
-  /**
-   * @param {string} year
-   * @param {BeatmapModel[]} beatmaps
-   */
   async updateBeatmapsOfYear(year, beatmaps) {
     const doc = new GoogleSpreadsheet(this.beatmaps_sheet_id, this.serviceAccountAuth);
     await doc.loadInfo();
@@ -168,10 +161,7 @@ class SheetClient {
     await this.updateUnfinishedBeatmaps(beatmaps, 'DT');
   }
 
-  /**
-   * @private
-   */
-  async updateUnfinishedBeatmaps(beatmaps, title) {
+  private async updateUnfinishedBeatmaps(beatmaps, title) {
     const doc = new GoogleSpreadsheet(this.unfinished_sheet_id, this.serviceAccountAuth);
     await doc.loadInfo();
 
@@ -198,5 +188,3 @@ class SheetClient {
     );
   }
 }
-
-module.exports = SheetClient;

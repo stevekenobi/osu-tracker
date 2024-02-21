@@ -1,11 +1,6 @@
-const { isBeatmapRankedApprovedOrLoved, getYearsUntilToday, delay } = require('../../utils');
+import { isBeatmapRankedApprovedOrLoved, getYearsUntilToday, delay } from '../../utils';
 
-/**
- * @param {OsuClient} osuClient
- * @param {DatabaseClient} databaseClient
- * @returns {Promise<void>}
- */
-async function importLatestBeatmaps(osuClient, databaseClient) {
+export async function importLatestBeatmaps(osuClient, databaseClient) {
   console.log('importing new beatmaps');
   const recentBeatmaps = await osuClient.getBeatmapsetSearch();
 
@@ -13,13 +8,7 @@ async function importLatestBeatmaps(osuClient, databaseClient) {
   console.log('finished importing new beatmaps');
 }
 
-/**
- * @param {OsuClient} osuClient
- * @param {DatabaseClient} databaseClient
- * @param {SheetClient} sheetClient
- * @returns {Promise<void>}
- */
-async function importAllBeatmaps(osuClient, databaseClient, sheetClient) {
+export async function importAllBeatmaps(osuClient, databaseClient, sheetClient) {
   console.log('importing all beatmaps');
   let cursor_string = '';
   /**@type {OsuBeatmapset[]} */
@@ -50,7 +39,7 @@ async function importAllBeatmaps(osuClient, databaseClient, sheetClient) {
  * @param {DatabaseClient} databaseClient
  * @param {SheetClient} sheetClient
  */
-async function syncBeatmapsSheet(databaseClient, sheetClient) {
+export async function syncBeatmapsSheet(databaseClient, sheetClient) {
   const years = getYearsUntilToday();
   const stats = [];
   for (const year of years) {
@@ -87,7 +76,7 @@ async function syncBeatmapsSheet(databaseClient, sheetClient) {
  * @param {SheetClient} sheetClient
  * @param {string} userId
  */
-async function findMissingBeatmaps(osuClient, databaseClient, sheetClient, userId) {
+export async function findMissingBeatmaps(osuClient, databaseClient, sheetClient, userId) {
   console.log('starting finding missing beatmaps');
   let j = 0;
   /**@type {UserPlayedBeatmaps[]} */
@@ -115,7 +104,7 @@ async function findMissingBeatmaps(osuClient, databaseClient, sheetClient, userI
  * @param {OsuBeatmapset[]} beatmapsets
  * @returns {BeatmapModel[]}
  */
-function createBeatmapModelsFromOsuBeatmapsets(beatmapsets) {
+export function createBeatmapModelsFromOsuBeatmapsets(beatmapsets) {
   /**@type {BeatmapModel[]} */
   const beatmaps = [];
   for (const s of beatmapsets) {
@@ -146,7 +135,7 @@ function createBeatmapModelsFromOsuBeatmapsets(beatmapsets) {
   return beatmaps;
 }
 
-function createBeatmapModelsFromOsuBeatmaps(beatmaps) {
+export function createBeatmapModelsFromOsuBeatmaps(beatmaps) {
   return beatmaps
     .filter((b) => isBeatmapRankedApprovedOrLoved(b))
     .filter((b) => b.mode === 'osu')
@@ -173,7 +162,7 @@ function createBeatmapModelsFromOsuBeatmaps(beatmaps) {
 /**
  * @param {BeatmapModel[]} beatmaps
  */
-function createBeatmapsetsFromBeatmaps(beatmaps) {
+export function createBeatmapsetsFromBeatmaps(beatmaps) {
   const beatmapsetIds = Array.from(new Set(beatmaps.map((b) => b.beatmapsetId)));
   const beatmapsets = [];
   beatmapsetIds.forEach((i) => {
@@ -185,13 +174,3 @@ function createBeatmapsetsFromBeatmaps(beatmaps) {
 
   return beatmapsets;
 }
-
-module.exports = {
-  importLatestBeatmaps,
-  importAllBeatmaps,
-  syncBeatmapsSheet,
-  findMissingBeatmaps,
-  createBeatmapModelsFromOsuBeatmapsets,
-  createBeatmapModelsFromOsuBeatmaps,
-  createBeatmapsetsFromBeatmaps,
-};

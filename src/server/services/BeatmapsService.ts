@@ -1,7 +1,7 @@
-const AbstractService = require('../AbstractService');
-const { importAllBeatmaps, importLatestBeatmaps, findMissingBeatmaps } = require('../helpers/beatmaps');
+import AbstractService from '../AbstractService';
+import { importAllBeatmaps, importLatestBeatmaps, findMissingBeatmaps } from '../helpers/beatmaps';
 
-class BeatmapsService extends AbstractService {
+export default class BeatmapsService extends AbstractService {
   constructor(serverInstance) {
     super(serverInstance);
   }
@@ -19,11 +19,6 @@ class BeatmapsService extends AbstractService {
     this.app.post('/api/beatmaps/recent', this._updateRecentBeatmapsRequestHandler.bind(this));
   }
 
-  /**
-   * @private
-   * @param {Request} req
-   * @param {Response} res
-   */
   async _importAllBeatmapsRequestHandler(req, res) {
     importAllBeatmaps(this.osuClient, this.databaseClient, this.sheetClient);
     res.status(200).json({
@@ -34,11 +29,6 @@ class BeatmapsService extends AbstractService {
     });
   }
 
-  /**
-   * @private
-   * @param {Request} req
-   * @param {Response} res
-   */
   async _findAllMissingBeatmapsRequestHandler(req, res) {
     findMissingBeatmaps(this.osuClient, this.databaseClient, this.sheetClient, req.body.userId);
     res.status(200).json({

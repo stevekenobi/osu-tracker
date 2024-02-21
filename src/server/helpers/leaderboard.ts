@@ -1,9 +1,4 @@
-/**
- * @param {OsuClient} osuClient
- * @param {SheetClient} sheetClient
- * @returns {Promise<void>}
- */
-async function updateLeaderboard(osuClient, sheetClient) {
+export async function updateLeaderboard(osuClient, sheetClient) {
   console.log('starting getting leaderboard');
 
   const leaderboardUsers = [];
@@ -20,5 +15,3 @@ async function updateLeaderboard(osuClient, sheetClient) {
   await sheetClient.updateLeaderboard(leaderboardUsers.slice(0, 100));
   console.log('finished updating leaderboard');
 }
-
-module.exports = { updateLeaderboard };

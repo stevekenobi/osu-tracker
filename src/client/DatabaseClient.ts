@@ -1,14 +1,9 @@
-const { Sequelize, Op } = require('sequelize');
-const { initBeatmaps, Beatmaps } = require('./models/Beatmaps');
+import { Sequelize, Op } from 'sequelize';
+import { initBeatmaps, Beatmaps } from './models/Beatmaps';
 
-class DatabaseClient {
+export default class DatabaseClient {
   sequelizeSingleton = undefined;
 
-  /**
-   * @constructor
-   * @param {string} databaseUrl
-   * @param {string} databaseSecure
-   */
   constructor(databaseUrl, databaseSecure) {
     const options = {
       dialectOptions: {
@@ -20,9 +15,7 @@ class DatabaseClient {
       logging: false,
     };
 
-    /* c8 ignore start */
     this.sequelizeSingleton = new Sequelize(databaseUrl, databaseSecure === 'true' ? options : { logging: false });
-    /* c8 ignore end */
   }
 
   async initializeDatabase() {
@@ -35,9 +28,6 @@ class DatabaseClient {
     await this.getSequelizeSingleton().close();
   }
 
-  /**
-   * @returns {Sequelize}
-   */
   getSequelizeSingleton() {
     if (!this.sequelizeSingleton) {
       throw new Error('sequelize singleton was not initialized, use initModels() first');
@@ -46,61 +36,35 @@ class DatabaseClient {
     return this.sequelizeSingleton;
   }
 
-  /**
-   * @param {BeatmapModel[]} beatmaps
-   * @returns {Promise<void>}
-   */
   async updateBeatmaps(beatmaps) {
     await Beatmaps.bulkCreate(beatmaps, { updateOnDuplicate: ['artist', 'title', 'creator', 'version', 'difficulty', 'AR', 'CS', 'OD', 'HP', 'BPM', 'length', 'status', 'rankedDate'] });
   }
 
-  /**
-   * @returns {Promise<Beatmaps[]>}
-   */
   async getBeatmaps(options) {
     return await Beatmaps.findAll(options);
   }
 
-  /**
-   * @returns {Promise<Beatmaps[]>}
-   */
   async getBeatmapsOfYear(year) {
     return await Beatmaps.findAll({ where: { rankedDate: { [Op.like]: `${year}%` } } });
   }
 
-  /**
-   * @returns {Promise<Beatmaps[]>}
-   */
   async getUnfinishedBeatmaps(option) {
     const result = option === 'problematic' ? await this.getProblematicBeatmaps() : option === 'non-sd' ? await this.getNonSDBeatmaps() : await this.getDTBeatmaps();
     return result.sort((a,b) => a.difficulty > b.difficulty ? 1 : -1);
   }
 
-  /**
-   * @returns {Promise<Beatmaps[]>}
-   */
   async getProblematicBeatmaps() {
     return await Beatmaps.findAll({ where: { perfect: false } });
   }
 
-  /**
-   * @returns {Promise<Beatmaps[]>}
-   */
   async getNonSDBeatmaps() {
     return await Beatmaps.findAll({ where: { mods: { [Op.notLike]: '%SD%' } } });
   }
 
-  /**
-   * @returns {Promise<Beatmaps[]>}
-   */
   async getDTBeatmaps() {
     return await Beatmaps.findAll({ where: { mods: { [Op.like]: '%DT%' } } });
   }
 
-  /**
-   * @param {number[]} ids
-   * @returns {boolean}
-   */
   async beatmapsExists(ids) {
     await Beatmaps.findAndCountAll({
       where: {
@@ -116,5 +80,3 @@ class DatabaseClient {
     await Beatmaps.update(score, { where: { id: score.id } });
   }
 }
-
-module.exports = DatabaseClient;

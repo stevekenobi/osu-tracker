@@ -1,12 +1,7 @@
-const { delay, isBeatmapRankedApprovedOrLoved } = require('../../utils');
-const { createBeatmapModelsFromOsuBeatmapsets } = require('./beatmaps');
+import { delay, isBeatmapRankedApprovedOrLoved } from '../../utils';
+import { createBeatmapModelsFromOsuBeatmapsets } from './beatmaps';
 
-/**
- * @param {OsuClient} osuClient
- * @param {DatabaseClient} databaseClient
- * @param {SheetClient} sheetClient
- */
-async function updateScores(osuClient, databaseClient, sheetClient) {
+export async function updateScores(osuClient, databaseClient, sheetClient) {
   console.log('started importing scores');
   const unfinished = [];
   let j = 0;
@@ -78,5 +73,3 @@ async function updateScores(osuClient, databaseClient, sheetClient) {
   await sheetClient.updateNoScoreBeatmaps(unfinished.sort((a, b) => (a.beatmap.difficulty_rating > b.beatmap.difficulty_rating ? 1 : -1)));
   console.log('finished importing scores');
 }
-
-module.exports = { updateScores };

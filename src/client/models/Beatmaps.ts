@@ -1,8 +1,36 @@
-const { DataTypes, Model } = require('sequelize');
+import { DataTypes, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
 
-class Beatmaps extends Model {}
+export class Beatmaps extends Model<InferAttributes<Beatmaps>, InferCreationAttributes<Beatmaps>> {
+  public declare id: number;
+  public declare beatmapsetId: number;
+  public declare artist: string;
+  public declare title: string;
+  public declare creator: string;
+  public declare version: string;
+  public declare difficulty: number;
+  public declare AR: number;
+  public declare CS: number;
+  public declare OD: number;
+  public declare HP: number;
+  public declare BPM: number;
+  public declare length: number;
+  public declare status: string;
+  public declare mode: string;
+  public declare rankedDate: string;
+  public declare accuracy: number;
+  public declare max_combo: number;
+  public declare mods: string;
+  public declare perfect: boolean;
+  public declare pp: number;
+  public declare rank: string;
+  public declare score: number;
+  public declare count_100: number;
+  public declare count_300: number;
+  public declare count_50: number;
+  public declare count_miss: number;
+}
 
-function initBeatmaps(sequelize) {
+export function initBeatmaps(sequelize) {
   Beatmaps.init(
     {
       id: {

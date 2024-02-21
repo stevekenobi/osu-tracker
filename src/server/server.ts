@@ -1,20 +1,28 @@
-'use strict';
+import cors from 'cors';
+import express from 'express';
+import http from 'http';
 
-const cors = require('cors');
-const express = require('express');
-const http = require('http');
+import OsuClient from '../client/OsuClient';
+import SheetClient from '../client/SheetClient';
+import DatabaseClient from '../client/DatabaseClient';
 
-const OsuClient = require('../client/OsuClient');
-const SheetClient = require('../client/SheetClient');
-const DatabaseClient = require('../client/DatabaseClient');
+import { updateLeaderboard } from './helpers/leaderboard';
+import { importLatestBeatmaps, syncBeatmapsSheet } from './helpers/beatmaps';
 
-const { updateLeaderboard } = require('./helpers/leaderboard');
-const { importLatestBeatmaps, syncBeatmapsSheet } = require('./helpers/beatmaps');
+import cron from 'node-cron';
+import { updateScores } from './helpers/scores';
 
-const cron = require('node-cron');
-const { updateScores } = require('./helpers/scores');
+export default class TrackerServer {
+  private services = [];
 
-class TrackerServer {
+  private app;
+  private router;
+  private server;
+
+  private databaseClient;
+  private osuClient;
+  private sheetClient;
+
   constructor() {
     this.services = [];
     this._initClients();
@@ -35,22 +43,23 @@ class TrackerServer {
   start() {
     this._initServices();
 
-    if (process.env.ENVIRONMENT === 'production') {
-      cron.schedule('0,30 * * * *', () => {
-        updateLeaderboard(this.getOsuClient(), this.getSheetClient());
-      });
+    cron.schedule('0,30 * * * *', () => {
+      updateLeaderboard(this.getOsuClient(), this.getSheetClient());
+    });
+    updateLeaderboard(this.getOsuClient(), this.getSheetClient());
 
-      cron.schedule('0,30 * * * *', async () => {
-        await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
-        await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
-      });
+    cron.schedule('0,30 * * * *', async () => {
+      await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
+      await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
+    });
 
-      cron.schedule('0 */2 * * *', async () => {
-        await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
-        await updateScores(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
-        await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
-      });
-    } else if (process.env.ENVIRONMENT === 'dev')
+    cron.schedule('0 */2 * * *', async () => {
+      await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
+      await updateScores(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
+      await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
+    });
+
+    if (process.env.ENVIRONMENT === 'dev')
       setInterval(() => {
         const used = process.memoryUsage().heapUsed / 1024 / 1024;
         console.log(`This app is currently using ${Math.floor(used)} MB of memory.`);
@@ -164,5 +173,3 @@ class TrackerServer {
     return this.sheetClient;
   }
 }
-
-module.exports = TrackerServer;

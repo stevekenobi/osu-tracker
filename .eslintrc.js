@@ -1,32 +1,17 @@
+/* eslint-env node */
+require("@rushstack/eslint-patch/modern-module-resolution");
+
 module.exports = {
-  env: {
-    node: true,
-    commonjs: true,
-    es2021: true,
-    jest: true,
-  },
-  extends: 'eslint:recommended',
-  overrides: [
-    {
-      env: {
-        node: true,
-        commonjs: true,
-        es2021: true,
-        jest: true,
-      },
-      files: ['.eslintrc.{js,cjs}', 'tests/**/*'],
-      parserOptions: {
-        sourceType: 'script',
-      },
-    },
+  root: true,
+  extends: [
+    "eslint:recommended",
+    "plugin:vitest-globals/recommended",
   ],
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: "latest",
+    sourceType: "module",
   },
-  rules: {
-    indent: ['error', 2],
-    'linebreak-style': ['error', 'unix'],
-    quotes: ['error', 'single'],
-    semi: ['error', 'always'],
+  env: {
+    "vitest-globals/env": true,
   },
 };

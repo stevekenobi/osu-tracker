@@ -1,16 +1,12 @@
-const { createQuery, delay } = require('../utils');
-const axios = require('axios');
+import { createQuery, delay } from '../utils';
+import axios from 'axios';
 const baseUrl = 'https://osu.ppy.sh/api/v2';
 const authUrl = ' https://osu.ppy.sh/oauth/token';
 
-class OsuClient {
-  /**
-   * @constructor
-   * @param {AuthDetails} authDetails
-   */
-  constructor(authDetails) {
-    this.authToken = '';
-    this.authDetails = authDetails;
+export default class OsuClient {
+  private authToken = '';
+
+  constructor(private readonly authDetails) {
   }
 
   /**
@@ -18,7 +14,7 @@ class OsuClient {
    * @param {string} requestUrl
    * @returns {Promise<Object|undefined>}
    */
-  async getRequest (requestUrl) {
+  async getRequest(requestUrl) {
     try {
       const response = await axios.get(`${baseUrl}/${requestUrl}`, {
         headers: {
@@ -45,11 +41,6 @@ class OsuClient {
     }
   }
 
-  /**
-   * @private
-   * @param {string} requestUrl
-   * @returns {Promise}
-   */
   async authenticate() {
     const data = JSON.stringify({
       client_id: this.authDetails.clientId,
@@ -71,64 +62,31 @@ class OsuClient {
     this.authToken = response.data.access_token;
   }
 
-  /**
-   * @param {number} id
-   * @returns {Promise<OsuUser|undefined>}
-   */
   async getUserById(id) {
     return await this.getRequest(`users/${id}`);
   }
 
-  /**
-   * @param {number} id
-   * @returns {Promise<OsuBeatmapset|undefined>}
-   */
   async getBeatmapsetById(id) {
     return await this.getRequest(`beatmapsets/${id}`);
   }
 
-  /**
-   * @param {number} id 
-   * @returns {Promise<OsuBeatmap|undefined>}
-   */
   async getBeatmapById(id) {
     return await this.getRequest(`beatmaps/${id}`);
   }
 
-  /**
-   * @param {Object} query
-   * @returns {Promise<OsuBeatmapsetSearchResult|undefined>}
-   */
   async getBeatmapsetSearch(query) {
     return await this.getRequest(`beatmapsets/search${createQuery(query)}`);
   }
 
-  /**
-   * @param {Object} query
-   * @returns {Promise<OsuLeaderboardResponse>}
-   */
   async getCountryLeaderboard(query) {
     return await this.getRequest(`rankings/osu/performance${createQuery(query)}`);
   }
 
-  /**
-   * @param {number} id
-   * @param {string} type
-   * @param {Object} query
-   * @returns {Promise<OsuUserPlayedBeatmap[]|undefined>}
-   */
   async getUserBeamaps(id, type, query) {
     return await this.getRequest(`users/${id}/beatmapsets/${type}${createQuery(query)}`);
   }
 
-  /**
-   * @param {number} beatmap
-   * @param {number} user
-   * @returns {Promise<OsuUserScoreOnBeatmap|undefined>}
-   */
   async getUserScoreOnBeatmap(beatmap, user) {
     return await this.getRequest(`beatmaps/${beatmap}/scores/users/${user}`);
   }
 }
-
-module.exports = OsuClient;

@@ -1,6 +1,9 @@
-const TrackerServer = require('./server');
-const LeaderboardService = require('./services/LeaderboardService');
-const BeatmapsService = require('./services/BeatmapsService');
+import TrackerServer from './server/server';
+import LeaderboardService from './server/services/LeaderboardService';
+import BeatmapsService from './server/services/BeatmapsService';
+
+import dotenv from "dotenv";
+dotenv.config();
 
 const server = new TrackerServer();
 
