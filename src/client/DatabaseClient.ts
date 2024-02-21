@@ -1,6 +1,7 @@
 import type { FindOptions } from 'sequelize';
 import { Sequelize, Op } from 'sequelize';
 import { initBeatmaps, Beatmaps } from './models/Beatmaps';
+import type { AppBeatmap, AppScore } from '../types';
 
 export default class DatabaseClient {
   private sequelizeSingleton: Sequelize | undefined = undefined;
@@ -37,11 +38,11 @@ export default class DatabaseClient {
     return this.sequelizeSingleton;
   }
 
-  async updateBeatmaps(beatmaps: Beatmaps[]): Promise<void> {
+  async updateBeatmaps(beatmaps: AppBeatmap[]): Promise<void> {
     await Beatmaps.bulkCreate(beatmaps, { updateOnDuplicate: ['artist', 'title', 'creator', 'version', 'difficulty', 'AR', 'CS', 'OD', 'HP', 'BPM', 'length', 'status', 'rankedDate'] });
   }
 
-  async getBeatmaps(options: FindOptions<Beatmaps>): Promise<Beatmaps[]> {
+  async getBeatmaps(options?: FindOptions<Beatmaps>): Promise<Beatmaps[]> {
     return await Beatmaps.findAll(options);
   }
 
@@ -66,7 +67,7 @@ export default class DatabaseClient {
     return await Beatmaps.findAll({ where: { mods: { [Op.like]: '%DT%' } } });
   }
 
-  async updateScore(score: Beatmaps): Promise<void> {
+  async updateScore(score: AppScore): Promise<void> {
     const beatmap = await Beatmaps.findByPk(score.id);
     if (!beatmap) throw new Error(`beatmap ${score.id} not found in database`);
 

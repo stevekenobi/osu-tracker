@@ -31,7 +31,7 @@ export default class BeatmapsService extends AbstractService {
     });
   }
 
-  private async _findAllMissingBeatmapsRequestHandler(req: Request<unknown, unknown, {userId: string}>, res: Response) : Promise<void>{
+  private async _findAllMissingBeatmapsRequestHandler(req: Request<unknown, unknown, {userId: number}>, res: Response) : Promise<void>{
     findMissingBeatmaps(this.osuClient, this.databaseClient, this.sheetClient, req.body.userId);
     res.status(200).json({
       meta: {

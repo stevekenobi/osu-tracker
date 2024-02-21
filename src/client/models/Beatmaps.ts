@@ -1,4 +1,4 @@
-import type { InferAttributes, InferCreationAttributes} from 'sequelize';
+import type { InferAttributes, InferCreationAttributes, Sequelize} from 'sequelize';
 import { DataTypes, Model } from 'sequelize';
 
 export class Beatmaps extends Model<InferAttributes<Beatmaps>, InferCreationAttributes<Beatmaps>> {
@@ -18,20 +18,20 @@ export class Beatmaps extends Model<InferAttributes<Beatmaps>, InferCreationAttr
   public declare status: string;
   public declare mode: string;
   public declare rankedDate: string;
-  public declare accuracy: number;
-  public declare max_combo: number;
-  public declare mods: string;
-  public declare perfect: boolean;
-  public declare pp: number;
-  public declare rank: string;
-  public declare score: number;
-  public declare count_100: number;
-  public declare count_300: number;
-  public declare count_50: number;
-  public declare count_miss: number;
+  public declare accuracy?: number;
+  public declare max_combo?: number;
+  public declare mods?: string;
+  public declare perfect?: boolean;
+  public declare pp?: number;
+  public declare rank?: string;
+  public declare score?: number;
+  public declare count_100?: number;
+  public declare count_300?: number;
+  public declare count_50?: number;
+  public declare count_miss?: number;
 }
 
-export function initBeatmaps(sequelize) {
+export function initBeatmaps(sequelize: Sequelize): void {
   Beatmaps.init(
     {
       id: {

@@ -1,8 +1,8 @@
-import type OsuClient from '@/src/client/OsuClient';
-import type SheetClient from '@/src/client/SheetClient';
-import type { OsuLeaderboardUser, SheetLeaderboard } from '@/src/types';
-import { createUserLinkFromId } from '@/src/utils';
 import numeral from 'numeral';
+import type OsuClient from '../../client/OsuClient';
+import type SheetClient from '../../client/SheetClient';
+import type { OsuLeaderboardUser, SheetLeaderboard } from '../../types';
+import { createUserLinkFromId } from '../../utils';
 
 export async function updateLeaderboard(osuClient: OsuClient, sheetClient: SheetClient): Promise<void> {
   console.log('starting getting leaderboard');

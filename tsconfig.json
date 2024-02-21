@@ -108,9 +108,6 @@
     "allowUnreachableCode": false,
     "allowJs": true,
     "types": ["vitest/globals"],
-    "paths": {
-      "@/*": ["./*"]
-    }
   },
   "include": ["src/**/*", "tests/**/*", "vitest.config.ts", ".eslintrc.cjs"],
   "exclude": ["coverage/**/*"]

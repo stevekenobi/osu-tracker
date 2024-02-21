@@ -12,10 +12,10 @@ export type SheetBeatmap = {
   HP: string;
   OD: string;
   Length: string;
-  Rank: string;
-  Mods: string;
-  Accuracy: string;
-  Score: string;
+  Rank?: string;
+  Mods?: string;
+  Accuracy?: string;
+  Score?: string;
 };
 
 export type SheetNoScoreBeatmap = {

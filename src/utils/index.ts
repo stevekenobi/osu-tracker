@@ -8,7 +8,7 @@ export function range(start: number, stop: number, step = 1): number[] {
     .map((x, y) => x + y * step);
 }
 
-export function createQuery(query: {[key: string]: string | number}): string {
+export function createQuery(query?: {[key: string]: string | number}): string {
   if (query)
     return `?${Object.keys(query)
       .map((x) => `${x}=${query[x]}`)
