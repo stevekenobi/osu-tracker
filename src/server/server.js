@@ -35,23 +35,22 @@ class TrackerServer {
   start() {
     this._initServices();
 
-    cron.schedule('0,30 * * * *', () => {
-      updateLeaderboard(this.getOsuClient(), this.getSheetClient());
-    });
+    if (process.env.ENVIRONMENT === 'production') {
+      cron.schedule('0,30 * * * *', () => {
+        updateLeaderboard(this.getOsuClient(), this.getSheetClient());
+      });
 
-    updateLeaderboard(this.getOsuClient(), this.getSheetClient());
-    cron.schedule('0,30 * * * *', async () => {
-      await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
-      await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
-    });
+      cron.schedule('0,30 * * * *', async () => {
+        await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
+        await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
+      });
 
-    cron.schedule('0 */2 * * *', async () => {
-      await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
-      await updateScores(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
-      await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
-    });
-
-    if (process.env.ENVIRONMENT === 'dev')
+      cron.schedule('0 */2 * * *', async () => {
+        await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
+        await updateScores(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
+        await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
+      });
+    } else if (process.env.ENVIRONMENT === 'dev')
       setInterval(() => {
         const used = process.memoryUsage().heapUsed / 1024 / 1024;
         console.log(`This app is currently using ${Math.floor(used)} MB of memory.`);
@@ -75,7 +74,7 @@ class TrackerServer {
           console.log(err.message);
           reject(err);
         }
-  
+
         this._shutDownServices();
 
         console.log('Closed out all connections. Server shutdown successful');
@@ -111,11 +110,16 @@ class TrackerServer {
       service.shutDown();
     });
 
-    this.getDatabaseClient().closeConnection().then(() => {
-      console.log('closed database connection');
-    }, () => {
-      console.log('error closing database connection');
-    });
+    this.getDatabaseClient()
+      .closeConnection()
+      .then(
+        () => {
+          console.log('closed database connection');
+        },
+        () => {
+          console.log('error closing database connection');
+        },
+      );
   }
 
   getServer() {
