@@ -10,7 +10,7 @@ const server = new TrackerServer();
 server.registerService(LeaderboardService);
 server.registerService(BeatmapsService);
 
-function shutDownServer() {
+function shutDownServer(): void {
   server
     .stop()
     .then(

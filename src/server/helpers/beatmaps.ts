@@ -11,7 +11,6 @@ export async function importLatestBeatmaps(osuClient, databaseClient) {
 export async function importAllBeatmaps(osuClient, databaseClient, sheetClient) {
   console.log('importing all beatmaps');
   let cursor_string = '';
-  /**@type {OsuBeatmapset[]} */
   do {
     const beatmapSearch = await osuClient.getBeatmapsetSearch({ cursor_string });
 
@@ -35,10 +34,6 @@ export async function importAllBeatmaps(osuClient, databaseClient, sheetClient) 
   console.log('finished importing missing beatmaps');
 }
 
-/**
- * @param {DatabaseClient} databaseClient
- * @param {SheetClient} sheetClient
- */
 export async function syncBeatmapsSheet(databaseClient, sheetClient) {
   const years = getYearsUntilToday();
   const stats = [];
@@ -70,16 +65,9 @@ export async function syncBeatmapsSheet(databaseClient, sheetClient) {
   await sheetClient.updateDtBeatmaps(await databaseClient.getUnfinishedBeatmaps('dt'));
 }
 
-/**
- * @param {OsuClient} osuClient
- * @param {DatabaseClient} databaseClient
- * @param {SheetClient} sheetClient
- * @param {string} userId
- */
 export async function findMissingBeatmaps(osuClient, databaseClient, sheetClient, userId) {
   console.log('starting finding missing beatmaps');
   let j = 0;
-  /**@type {UserPlayedBeatmaps[]} */
   const allBeatmapIds = (await databaseClient.getBeatmaps()).map((b) => b.id);
   let result = await osuClient.getUserBeamaps(userId, 'most_played', { limit: 100 });
   do {
@@ -100,12 +88,7 @@ export async function findMissingBeatmaps(osuClient, databaseClient, sheetClient
   console.log('finished finding missing beatmaps');
 }
 
-/**
- * @param {OsuBeatmapset[]} beatmapsets
- * @returns {BeatmapModel[]}
- */
 export function createBeatmapModelsFromOsuBeatmapsets(beatmapsets) {
-  /**@type {BeatmapModel[]} */
   const beatmaps = [];
   for (const s of beatmapsets) {
     beatmaps.push(
@@ -159,9 +142,6 @@ export function createBeatmapModelsFromOsuBeatmaps(beatmaps) {
     }));
 }
 
-/**
- * @param {BeatmapModel[]} beatmaps
- */
 export function createBeatmapsetsFromBeatmaps(beatmaps) {
   const beatmapsetIds = Array.from(new Set(beatmaps.map((b) => b.beatmapsetId)));
   const beatmapsets = [];

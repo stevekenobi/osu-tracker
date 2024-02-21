@@ -1,24 +1,25 @@
+import type { Request, Response } from 'express';
 import AbstractService from '../AbstractService';
 import { updateLeaderboard } from '../helpers/leaderboard';
-import TrackerServer from '../server';
+import type TrackerServer from '../server';
 
 export default class LeaderboardService extends AbstractService {
   constructor(serverInstance: TrackerServer) {
     super(serverInstance);
   }
 
-  init() {
+  override init(): void {
     /* empty */
   }
-  shutDown() {
+  override shutDown(): void {
     /* empty */
   }
 
-  registerRoutes() {
+  override registerRoutes(): void {
     this.app.post('/api/leaderboard', this._updateCountryLeaderboardRequestHandler.bind(this));
   }
 
-  async _updateCountryLeaderboardRequestHandler(req, res) {
+  private async _updateCountryLeaderboardRequestHandler(_req: Request, res: Response): Promise<void> {
     updateLeaderboard(this.osuClient, this.sheetClient);
     res.status(200).json({
       meta: {

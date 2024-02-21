@@ -16,15 +16,15 @@ export default class AbstractService {
     this.osuClient = this.serverInstance.getOsuClient();
   }
 
-  registerRoutes() {
+  registerRoutes(): void {
     throw new Error('overwrite registerRoutes()');
   }
 
-  init() {
+  init(): void {
     throw new Error('overwrite init()');
   }
 
-  shutDown() {
+  shutDown(): void {
     throw new Error('overwrite shutDown()');
   }
 }

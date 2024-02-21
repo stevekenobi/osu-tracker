@@ -1,4 +1,4 @@
 export type AuthDetails = {
-  client_id: number
+  client_id: string
   client_secret: string
 };
