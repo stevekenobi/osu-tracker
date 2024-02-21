@@ -1,10 +1,11 @@
+import type { FindOptions } from 'sequelize';
 import { Sequelize, Op } from 'sequelize';
 import { initBeatmaps, Beatmaps } from './models/Beatmaps';
 
 export default class DatabaseClient {
-  sequelizeSingleton = undefined;
+  private sequelizeSingleton: Sequelize | undefined = undefined;
 
-  constructor(databaseUrl, databaseSecure) {
+  constructor(databaseUrl: string, databaseSecure: string) {
     const options = {
       dialectOptions: {
         ssl: {
@@ -18,17 +19,17 @@ export default class DatabaseClient {
     this.sequelizeSingleton = new Sequelize(databaseUrl, databaseSecure === 'true' ? options : { logging: false });
   }
 
-  async initializeDatabase() {
+  async initializeDatabase(): Promise<void> {
     initBeatmaps(this.getSequelizeSingleton());
 
     await this.getSequelizeSingleton().sync({ alter: true });
   }
 
-  async closeConnection() {
+  async closeConnection(): Promise<void> {
     await this.getSequelizeSingleton().close();
   }
 
-  getSequelizeSingleton() {
+  getSequelizeSingleton(): Sequelize {
     if (!this.sequelizeSingleton) {
       throw new Error('sequelize singleton was not initialized, use initModels() first');
     }
@@ -36,44 +37,36 @@ export default class DatabaseClient {
     return this.sequelizeSingleton;
   }
 
-  async updateBeatmaps(beatmaps) {
+  async updateBeatmaps(beatmaps: Beatmaps[]): Promise<void> {
     await Beatmaps.bulkCreate(beatmaps, { updateOnDuplicate: ['artist', 'title', 'creator', 'version', 'difficulty', 'AR', 'CS', 'OD', 'HP', 'BPM', 'length', 'status', 'rankedDate'] });
   }
 
-  async getBeatmaps(options) {
+  async getBeatmaps(options: FindOptions<Beatmaps>): Promise<Beatmaps[]> {
     return await Beatmaps.findAll(options);
   }
 
-  async getBeatmapsOfYear(year) {
+  async getBeatmapsOfYear(year: string): Promise<Beatmaps[]> {
     return await Beatmaps.findAll({ where: { rankedDate: { [Op.like]: `${year}%` } } });
   }
 
-  async getUnfinishedBeatmaps(option) {
+  async getUnfinishedBeatmaps(option: 'problematic' | 'non-sd' | 'dt'): Promise<Beatmaps[]> {
     const result = option === 'problematic' ? await this.getProblematicBeatmaps() : option === 'non-sd' ? await this.getNonSDBeatmaps() : await this.getDTBeatmaps();
-    return result.sort((a,b) => a.difficulty > b.difficulty ? 1 : -1);
+    return result.sort((a, b) => a.difficulty > b.difficulty ? 1 : -1);
   }
 
-  async getProblematicBeatmaps() {
+  async getProblematicBeatmaps(): Promise<Beatmaps[]> {
     return await Beatmaps.findAll({ where: { perfect: false } });
   }
 
-  async getNonSDBeatmaps() {
+  async getNonSDBeatmaps(): Promise<Beatmaps[]> {
     return await Beatmaps.findAll({ where: { mods: { [Op.notLike]: '%SD%' } } });
   }
 
-  async getDTBeatmaps() {
+  async getDTBeatmaps(): Promise<Beatmaps[]> {
     return await Beatmaps.findAll({ where: { mods: { [Op.like]: '%DT%' } } });
   }
 
-  async beatmapsExists(ids) {
-    await Beatmaps.findAndCountAll({
-      where: {
-        [Op.or]: ids.map((i) => ({ id: i })),
-      },
-    });
-  }
-
-  async updateScore(score) {
+  async updateScore(score: Beatmaps): Promise<void> {
     const beatmap = await Beatmaps.findByPk(score.id);
     if (!beatmap) throw new Error(`beatmap ${score.id} not found in database`);
 

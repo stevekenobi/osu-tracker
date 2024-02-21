@@ -1,7 +1,7 @@
 import { createQuery, delay } from '../utils';
 import type { AxiosError } from 'axios';
 import axios from 'axios';
-import type { AuthDetails } from '../types';
+import { OsuLeaderboardResponse, type AuthDetails, OsuLeaderboardQuery } from '../types';
 const baseUrl = 'https://osu.ppy.sh/api/v2';
 const authUrl = ' https://osu.ppy.sh/oauth/token';
 
@@ -76,8 +76,8 @@ export default class OsuClient {
     return await this.getRequest(`beatmapsets/search${createQuery(query)}`);
   }
 
-  async getCountryLeaderboard(query) {
-    return await this.getRequest(`rankings/osu/performance${createQuery(query)}`);
+  async getCountryLeaderboard(query: OsuLeaderboardQuery): Promise<OsuLeaderboardResponse | undefined> {
+    return await this.getRequest<OsuLeaderboardResponse>(`rankings/osu/performance${createQuery(query)}`);
   }
 
   async getUserBeamaps(id: number, type: 'most_played', query) {

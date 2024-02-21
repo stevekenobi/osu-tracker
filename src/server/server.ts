@@ -16,7 +16,7 @@ import { updateScores } from './helpers/scores';
 import type AbstractService from './AbstractService';
 
 interface IAbstractService {
-  new (server: TrackerServer): AbstractService;
+  new(server: TrackerServer): AbstractService;
 }
 
 export default class TrackerServer {
@@ -106,10 +106,10 @@ export default class TrackerServer {
       client_secret: process.env['CLIENT_SECRET'] ?? '',
     });
 
-    this.databaseClient = new DatabaseClient(process.env['DATABASE_URL'], process.env['DATABASE_SECURE']);
+    this.databaseClient = new DatabaseClient(process.env['DATABASE_URL'] ?? '', process.env['DATABASE_SECURE'] ?? '');
     this.getDatabaseClient().initializeDatabase();
 
-    this.sheetClient = new SheetClient(process.env['LEADERBOARD_SHEET_ID'], process.env['UNFINISHED_SHEET_ID'], process.env['BEATMAPS_SHEET_ID']);
+    this.sheetClient = new SheetClient(process.env['LEADERBOARD_SHEET_ID'] ?? '', process.env['UNFINISHED_SHEET_ID'] ?? '', process.env['BEATMAPS_SHEET_ID'] ?? '');
   }
 
   _initServices(): void {

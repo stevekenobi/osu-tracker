@@ -1,15 +1,12 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import creds from '../../google_service_account.json';
 import { JWT } from 'google-auth-library';
-import { createUserLinkFromId, createBeatmapLinkFromId } from '../utils';
-import numeral from 'numeral';
+import type { SheetBeatmap, SheetLeaderboard, SheetNoScoreBeatmap, SheetStats } from '../types';
 
 export default class SheetClient {
   private readonly serviceAccountAuth;
-  constructor(
-    private readonly leaderboard_sheet_id,
-    private readonly unfinished_sheet_id,
-    private readonly beatmaps_sheet_id) {
+
+  constructor(private readonly leaderboard_sheet_id: string, private readonly unfinished_sheet_id: string, private readonly beatmaps_sheet_id: string) {
     const SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive.file'];
     this.serviceAccountAuth = new JWT({
       email: creds.client_email,
@@ -18,173 +15,125 @@ export default class SheetClient {
     });
   }
 
-  async updateLeaderboard(users) {
+  async updateLeaderboard(users: SheetLeaderboard[]): Promise<void> {
     const doc = new GoogleSpreadsheet(this.leaderboard_sheet_id, this.serviceAccountAuth);
     await doc.loadInfo();
 
     const sheet = doc.sheetsByTitle['GR'];
 
+    if (!sheet) throw new Error('sheet GR not found in Leaderboard');
+
     await sheet.clearRows({ start: 2 });
     await sheet.addRows(
-      users.map((u, index) => ({
-        '#': index + 1,
-        Link: createUserLinkFromId(u.user.id),
-        Username: u.user.username,
-        'Ranked Score': numeral(u.ranked_score).format('0,0'),
-        'Total Score': numeral(u.total_score).format('0,0'),
-        Accuracy: numeral(u.hit_accuracy).format('0.00'),
-        Playcount: numeral(u.play_count).format('0,0'),
-        SSH: numeral(u.grade_counts.ssh).format('0,0'),
-        SS: numeral(u.grade_counts.ss).format('0,0'),
-        SH: numeral(u.grade_counts.sh).format('0,0'),
-        S: numeral(u.grade_counts.s).format('0,0'),
-        A: numeral(u.grade_counts.a).format('0,0'),
-      })),
+      users,
       { raw: true },
     );
   }
 
-  async updateBeatmapsOfYear(year, beatmaps) {
+  async updateBeatmapsOfYear(year: string, beatmaps: SheetBeatmap[]): Promise<void> {
     const doc = new GoogleSpreadsheet(this.beatmaps_sheet_id, this.serviceAccountAuth);
     await doc.loadInfo();
 
     const sheet = doc.sheetsByTitle[year];
 
+    if (!sheet) throw new Error(`sheet ${year} not found in beatmaps`);
+
     await sheet.clearRows({ start: 2 });
-    await sheet.addRows(
-      beatmaps.map((b) => ({
-        Link: createBeatmapLinkFromId(b.id),
-        Artist: b.artist,
-        Title: b.title,
-        Creator: b.creator,
-        Version: b.version,
-        Difficulty: b.difficulty,
-        Status: b.status,
-        BPM: b.BPM,
-        AR: b.AR,
-        CS: b.CS,
-        HP: b.HP,
-        OD: b.OD,
-        Length: b.length,
-        Rank: b.rank,
-        Mods: b.mods,
-        Accuracy: b.accuracy ? numeral(b.accuracy).format('0.00') : undefined,
-        Score: b.score ? numeral(b.score).format('0,0') : undefined,
-      })),
-    );
+    await sheet.addRows(beatmaps);
   }
 
-  async updateStats(stats) {
+  async updateStats(stats: SheetStats[]): Promise<void> {
     const doc = new GoogleSpreadsheet(this.beatmaps_sheet_id, this.serviceAccountAuth);
     await doc.loadInfo();
 
     const sheet = doc.sheetsByTitle['Stats'];
+    if (!sheet) throw new Error('sheet Stats not found in beatmaps');
+
     await sheet.clearRows({ start: 2, end: 22 });
 
     await sheet.addRows(stats);
   }
 
-  async updateMissingBeatmaps(ids) {
-    const doc = new GoogleSpreadsheet(process.env.DEV_BEATMAPS_SHEET_ID, this.serviceAccountAuth);
+  async updateMissingBeatmaps(ids: number[]): Promise<void> {
+    const doc = new GoogleSpreadsheet(process.env['DEV_BEATMAPS_SHEET_ID'] ?? '', this.serviceAccountAuth);
     await doc.loadInfo();
 
     const sheet = doc.sheetsByTitle['Missing'];
+    if (!sheet) throw new Error('sheet Missing not found in beatmaps');
     await sheet.addRows(ids.map((i) => ({ Id: i })));
   }
 
-  async clearMissingBeatmaps() {
-    const doc = new GoogleSpreadsheet(process.env.DEV_BEATMAPS_SHEET_ID, this.serviceAccountAuth);
+  async clearMissingBeatmaps(): Promise<void> {
+    const doc = new GoogleSpreadsheet(process.env['DEV_BEATMAPS_SHEET_ID'] ?? '', this.serviceAccountAuth);
     await doc.loadInfo();
 
     const sheet = doc.sheetsByTitle['Missing'];
+    if (!sheet) throw new Error('sheet Missing not found in beatmaps');
     await sheet.clearRows({ start: 2 });
   }
 
-  async getMissingBeatmaps() {
-    const doc = new GoogleSpreadsheet(process.env.DEV_BEATMAPS_SHEET_ID, this.serviceAccountAuth);
+  async getMissingBeatmaps(): Promise<string[]> {
+    const doc = new GoogleSpreadsheet(process.env['DEV_BEATMAPS_SHEET_ID'] ?? '', this.serviceAccountAuth);
     await doc.loadInfo();
 
     const sheet = doc.sheetsByTitle['Missing'];
+    if (!sheet) throw new Error('sheet Missing not found in beatmaps');
 
-    return (await sheet.getRows()).map((r) => r.get('Id'));
+    return (await sheet.getRows<{ Id: string }>()).map((r) => (r.toObject() as { Id: string }).Id);
   }
 
-  async updateNoScoreBeatmaps(beatmaps) {
+  async updateNoScoreBeatmaps(beatmaps: SheetNoScoreBeatmap[]): Promise<void> {
     const doc = new GoogleSpreadsheet(this.unfinished_sheet_id, this.serviceAccountAuth);
     await doc.loadInfo();
 
     const sheet = doc.sheetsByTitle['No Score'];
+    if (!sheet) throw new Error('sheet No Score not found in unfinished');
 
     await sheet.clearRows({ start: 2 });
-    await sheet.addRows(
-      beatmaps.map((b) => ({
-        Link: createBeatmapLinkFromId(b.beatmap_id),
-        Artist: b.beatmapset.artist,
-        Title: b.beatmapset.title,
-        Creator: b.beatmapset.creator,
-        Version: b.beatmap.version,
-        Difficulty: b.beatmap.difficulty_rating,
-        Status: b.beatmap.status,
-        Length: b.beatmap.total_length,
-        Playcount: b.count,
-      })),
-    );
+    await sheet.addRows(beatmaps);
   }
 
-  async getNoScoreBeatmaps() {
+  async getNoScoreBeatmaps(): Promise<SheetNoScoreBeatmap[]> {
     const doc = new GoogleSpreadsheet(this.unfinished_sheet_id, this.serviceAccountAuth);
     await doc.loadInfo();
 
     const sheet = doc.sheetsByTitle['No Score'];
+    if (!sheet) throw new Error('sheet No Score not found in unfinished');
 
-    return (await sheet.getRows()).map((r) => r.toObject());
+    return (await sheet.getRows()).map((r) => r.toObject() as SheetNoScoreBeatmap);
   }
 
-  async getUnfinishedBeatmaps(title) {
+  async getUnfinishedBeatmaps(title: string): Promise<SheetBeatmap[]> {
     const doc = new GoogleSpreadsheet(this.unfinished_sheet_id, this.serviceAccountAuth);
     await doc.loadInfo();
 
     const sheet = doc.sheetsByTitle[title];
+    if (!sheet) throw new Error(`sheet ${title} not found in unfinished`);
 
-    return (await sheet.getRows()).map((r) => r.toObject());
+    return (await sheet.getRows<SheetBeatmap>()).map((r) => r.toObject() as SheetBeatmap);
   }
 
-  async updateProblematicBeatmaps(beatmaps) {
+  async updateProblematicBeatmaps(beatmaps: SheetBeatmap[]): Promise<void> {
     await this.updateUnfinishedBeatmaps(beatmaps, 'Problematic');
   }
 
-  async updateNonSDBeatmaps(beatmaps) {
+  async updateNonSDBeatmaps(beatmaps: SheetBeatmap[]): Promise<void> {
     await this.updateUnfinishedBeatmaps(beatmaps, 'Non SD');
   }
 
-  async updateDtBeatmaps(beatmaps) {
+  async updateDtBeatmaps(beatmaps: SheetBeatmap[]): Promise<void> {
     await this.updateUnfinishedBeatmaps(beatmaps, 'DT');
   }
 
-  private async updateUnfinishedBeatmaps(beatmaps, title) {
+  private async updateUnfinishedBeatmaps(beatmaps: SheetBeatmap[], title: string): Promise<void> {
     const doc = new GoogleSpreadsheet(this.unfinished_sheet_id, this.serviceAccountAuth);
     await doc.loadInfo();
 
     const sheet = doc.sheetsByTitle[title];
+    if (!sheet) throw new Error(`sheet ${title} not found in unfinished`);
 
     await sheet.clearRows({ start: 2 });
 
-    await sheet.addRows(
-      beatmaps.map((b) => ({
-        Link: createBeatmapLinkFromId(b.id),
-        Artist: b.artist,
-        Title: b.title,
-        Creator: b.creator,
-        Version: b.version,
-        Difficulty: b.difficulty,
-        Status: b.status,
-        BPM: b.BPM,
-        AR: b.AR,
-        CS: b.CS,
-        HP: b.HP,
-        OD: b.OD,
-        Length: b.length,
-      })),
-    );
+    await sheet.addRows(beatmaps);
   }
 }
