@@ -1,7 +1,11 @@
+import type OsuClient from '@/src/client/OsuClient';
+import type DatabaseClient from '@/src/client/DatabaseClient';
+import type SheetClient from '@/src/client/SheetClient';
+
 import { delay, isBeatmapRankedApprovedOrLoved } from '../../utils';
 import { createBeatmapModelsFromOsuBeatmapsets } from './beatmaps';
 
-export async function updateScores(osuClient, databaseClient, sheetClient) {
+export async function updateScores(osuClient: OsuClient, databaseClient: DatabaseClient, sheetClient: SheetClient): Promise<void> {
   console.log('started importing scores');
   const unfinished = [];
   let j = 0;

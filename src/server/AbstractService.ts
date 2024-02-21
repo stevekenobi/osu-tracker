@@ -1,4 +1,4 @@
-import TrackerServer from "./server";
+import type TrackerServer from './server';
 
 export default class AbstractService {
   readonly app;

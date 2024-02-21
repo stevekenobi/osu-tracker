@@ -2,7 +2,7 @@ import TrackerServer from './server/server';
 import LeaderboardService from './server/services/LeaderboardService';
 import BeatmapsService from './server/services/BeatmapsService';
 
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 dotenv.config();
 
 const server = new TrackerServer();

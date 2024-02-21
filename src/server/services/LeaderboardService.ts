@@ -1,8 +1,9 @@
 import AbstractService from '../AbstractService';
 import { updateLeaderboard } from '../helpers/leaderboard';
+import TrackerServer from '../server';
 
 export default class LeaderboardService extends AbstractService {
-  constructor(serverInstance) {
+  constructor(serverInstance: TrackerServer) {
     super(serverInstance);
   }
 
