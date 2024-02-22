@@ -34,11 +34,9 @@ export async function importAllBeatmaps(osuClient: OsuClient, databaseClient: Da
   console.log('total missing maps', missingBeatmapIds);
 
   for (const id of missingBeatmapIds) {
-    const beatmap = await osuClient.getBeatmapById(id);
-    if (!beatmap) throw new Error(`Did not find ${id}`);
-    if (!isBeatmapRankedApprovedOrLoved(beatmap)) console.log(`found ${beatmap.status} map`);
-    if (beatmap.mode !== 'osu') console.log(`found ${beatmap.mode} map`);
-    await databaseClient.updateBeatmaps(createBeatmapModelsFromOsuBeatmaps([beatmap]));
+    const beatmapset = await osuClient.getBeatmapsetById(id);
+    if (!beatmapset) throw new Error(`Did not find ${id}`);
+    await databaseClient.updateBeatmaps(createBeatmapModelsFromOsuBeatmapsets([beatmapset]));
   }
 
   console.log('finished importing missing beatmaps');
@@ -58,7 +56,7 @@ export async function syncBeatmapsSheet(databaseClient: DatabaseClient, sheetCli
       ));
     console.log(`finished ${year}`);
     const playedBeatmaps = beatmaps.filter((b) => b.score);
-    const totalScore = playedBeatmaps.reduce((sum, b) => sum + b.score!, 0);
+    const totalScore = playedBeatmaps.reduce((sum, b) => sum + (b.score ? b.score : 0), 0);
     stats.push({
       Year: year,
       'Total Beatmaps': numeral(beatmaps.length).format('0,0'),
@@ -80,6 +78,7 @@ export async function findMissingBeatmaps(osuClient: OsuClient, databaseClient: 
   console.log('starting finding missing beatmaps');
   let j = 0;
   const allBeatmapIds = (await databaseClient.getBeatmaps()).map((b) => b.id);
+  const missingIds: number[] = [];
   let result = await osuClient.getUserBeatmaps(userId, 'most_played', { limit: 100 });
   do {
     if (!result) {
@@ -89,13 +88,14 @@ export async function findMissingBeatmaps(osuClient: OsuClient, databaseClient: 
     }
     j += 100;
 
-    const missingBeatmaps = result.filter((b) => b.beatmap.mode === 'osu' && isBeatmapRankedApprovedOrLoved(b.beatmap)).filter((b) => !allBeatmapIds.includes(b.beatmap_id));
+    missingIds.push(...result.filter((b) => b.beatmap.mode === 'osu' && isBeatmapRankedApprovedOrLoved(b.beatmap)).filter((b) => !allBeatmapIds.includes(b.beatmap_id)).map(b => b.beatmapset.id));
 
-    await sheetClient.updateMissingBeatmaps(missingBeatmaps.map((x) => x.beatmap_id));
     result = await osuClient.getUserBeatmaps(userId, 'most_played', { limit: 100, offset: j });
 
     await delay(500);
   } while (result!.length > 0);
+
+  await sheetClient.updateMissingBeatmaps(Array.from(new Set(missingIds)));
   console.log('finished finding missing beatmaps');
 }
 

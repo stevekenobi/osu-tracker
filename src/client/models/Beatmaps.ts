@@ -35,12 +35,12 @@ export function initBeatmaps(sequelize: Sequelize): void {
   Beatmaps.init(
     {
       id: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
       },
       beatmapsetId: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       artist: {
@@ -124,7 +124,7 @@ export function initBeatmaps(sequelize: Sequelize): void {
         allowNull: true,
       },
       score: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.INTEGER,
         allowNull: true,
       },
       count_100: {
@@ -147,6 +147,7 @@ export function initBeatmaps(sequelize: Sequelize): void {
     {
       sequelize,
       tableName: 'Beatmaps',
+      timestamps: false,
     },
   );
 }

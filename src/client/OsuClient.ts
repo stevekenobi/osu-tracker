@@ -61,7 +61,7 @@ export default class OsuClient {
     this.authToken = response.data.access_token;
   }
 
-  async getBeatmapsetById(id: number): Promise<OsuBeatmapset | undefined> {
+  async getBeatmapsetById(id: number | string): Promise<OsuBeatmapset | undefined> {
     return await this.getRequest(`beatmapsets/${id}`);
   }
 

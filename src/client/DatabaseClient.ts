@@ -3,11 +3,21 @@ import { Sequelize, Op } from 'sequelize';
 import { initBeatmaps, Beatmaps } from './models/Beatmaps';
 import type { AppBeatmap, AppScore } from '../types';
 
+type TrackerOptions = {
+  dialectOptions: {
+    ssl?: {
+      require: boolean;
+      rejectUnauthorized: boolean;
+    };
+  };
+  logging: boolean;
+};
+
 export default class DatabaseClient {
   private sequelizeSingleton: Sequelize | undefined = undefined;
 
   constructor(databaseUrl: string, databaseSecure: string) {
-    const options = {
+    const options: TrackerOptions = {
       dialectOptions: {
         ssl: {
           require: true,
@@ -17,7 +27,11 @@ export default class DatabaseClient {
       logging: false,
     };
 
-    this.sequelizeSingleton = new Sequelize(databaseUrl, databaseSecure === 'true' ? options : { logging: false });
+    if (databaseSecure === 'false') {
+      delete options.dialectOptions.ssl;
+    }
+
+    this.sequelizeSingleton = new Sequelize(databaseUrl, options);
   }
 
   async initializeDatabase(): Promise<void> {

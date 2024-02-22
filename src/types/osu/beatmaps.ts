@@ -39,6 +39,7 @@ export type OsuUserBeatmap = {
     total_length: number;
   }
   beatmapset: {
+    id: number;
     artist: string;
     title: string;
     creator: string;
