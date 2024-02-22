@@ -10,7 +10,7 @@
     "build": "npx tsc",
     "format": "prettier --write src/ tests/",
     "test:unit": "vitest",
-    "test:coverage": "vitest --coverage",
+    "test:coverage": "vitest run tests/unit --coverage",
     "test:clients": "vitest --test-timeout=60000 --hook-timeout=60000",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "lint:check": "eslint . --ext .ts,.tsx,.js,.jsx,.cjs,.mjs --ignore-path .gitignore"
@@ -27,6 +27,7 @@
     "@types/numeral": "^2.0.5",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
+    "@vitest/coverage-v8": "^1.3.1",
     "axios": "^1.6.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.1",

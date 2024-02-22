@@ -5,5 +5,12 @@ export default defineConfig({
     environment: 'node',
     globals: true,
     setupFiles: ['./tests/setup.ts'],
+    coverage: {
+      provider: 'v8',
+      thresholds: {
+        '100': true,
+      },
+      all: true,
+    },
   },
 });
