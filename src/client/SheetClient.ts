@@ -30,6 +30,16 @@ export default class SheetClient {
     );
   }
 
+  async getLeaderboard(): Promise<SheetLeaderboard[]> {
+    const doc = new GoogleSpreadsheet(this.leaderboard_sheet_id, this.serviceAccountAuth);
+    await doc.loadInfo();
+
+    const sheet = doc.sheetsByTitle['GR'];
+    if (!sheet) throw new Error('sheet GR not found in Leaderboard');
+
+    return (await sheet.getRows<SheetLeaderboard>()).map(r => r.toObject() as SheetLeaderboard);
+  }
+
   async updateBeatmapsOfYear(year: string, beatmaps: SheetBeatmap[]): Promise<void> {
     const doc = new GoogleSpreadsheet(this.beatmaps_sheet_id, this.serviceAccountAuth);
     await doc.loadInfo();
@@ -40,6 +50,18 @@ export default class SheetClient {
 
     await sheet.clearRows({ start: 2 });
     await sheet.addRows(beatmaps);
+  }
+
+  async getBeatmapsOfYear(year: string): Promise<SheetBeatmap[]> {
+    const doc = new GoogleSpreadsheet(this.beatmaps_sheet_id, this.serviceAccountAuth);
+    await doc.loadInfo();
+
+    const sheet = doc.sheetsByTitle[year];
+
+    if (!sheet) throw new Error(`sheet ${year} not found in beatmaps`);
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    return (await sheet.getRows<SheetBeatmap>()).map(r => Object.fromEntries(Object.entries(r.toObject()).filter(([_, v]) => v != undefined)) as SheetBeatmap);
   }
 
   async updateStats(stats: SheetStats[]): Promise<void> {

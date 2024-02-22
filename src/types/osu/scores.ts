@@ -1,5 +1,6 @@
 export type OsuScore = {
   score: {
+    id: number;
     accuracy: number;
     score: number;
     max_combo: number;
@@ -8,6 +9,8 @@ export type OsuScore = {
     pp: number;
     perfect: boolean;
     rank: string;
+    created_at: string;
+    user_id: number;
     statistics: {
       count_100: number,
       count_300: number,

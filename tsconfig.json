@@ -109,6 +109,6 @@
     "allowJs": true,
     "types": ["vitest/globals"],
   },
-  "include": ["src/**/*", "tests/**/*", "vitest.config.ts", ".eslintrc.cjs"],
+  "include": ["src/**/*", "tests/**/*", "./vitest.config.ts", "./.eslintrc.cjs"],
   "exclude": ["coverage/**/*"]
 }

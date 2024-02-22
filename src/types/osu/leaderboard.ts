@@ -25,5 +25,8 @@ export type OsuLeaderboardUser = {
   user: {
     id: number,
     username: string,
-  }
+    country: {
+      code: string,
+    },
+  },
 };

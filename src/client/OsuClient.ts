@@ -65,7 +65,7 @@ export default class OsuClient {
     return await this.getRequest(`beatmapsets/${id}`);
   }
 
-  async getBeatmapById(id: string): Promise<OsuBeatmap | undefined> {
+  async getBeatmapById(id: number | string): Promise<OsuBeatmap | undefined> {
     return await this.getRequest(`beatmaps/${id}`);
   }
 
@@ -73,11 +73,11 @@ export default class OsuClient {
     return await this.getRequest(`beatmapsets/search${createQuery(query)}`);
   }
 
-  async getCountryLeaderboard(query: OsuLeaderboardQuery): Promise<OsuLeaderboardResponse | undefined> {
+  async getCountryLeaderboard(query?: Partial<OsuLeaderboardQuery>): Promise<OsuLeaderboardResponse | undefined> {
     return await this.getRequest<OsuLeaderboardResponse>(`rankings/osu/performance${createQuery(query)}`);
   }
 
-  async getUserBeatmaps(id: number, type: 'most_played', query: Partial<{ limit: number, offset: number }>): Promise<OsuUserBeatmap[] | undefined> {
+  async getUserBeatmaps(id: number, type: 'most_played', query?: Partial<{ limit: number, offset: number }>): Promise<OsuUserBeatmap[] | undefined> {
     return await this.getRequest(`users/${id}/beatmapsets/${type}${createQuery(query)}`);
   }
 
