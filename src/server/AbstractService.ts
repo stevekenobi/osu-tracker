@@ -1,8 +1,13 @@
-'use strict';
+import type TrackerServer from './server';
 
-class AbstractService {
+export default class AbstractService {
+  readonly app;
 
-  constructor(serverInstance) {
+  readonly sheetClient;
+  readonly databaseClient;
+  readonly osuClient;
+
+  constructor(private readonly serverInstance: TrackerServer) {
     this.serverInstance = serverInstance;
     this.app = this.serverInstance.getApp();
 
@@ -11,27 +16,15 @@ class AbstractService {
     this.osuClient = this.serverInstance.getOsuClient();
   }
 
-  /**
-   * @abstract
-   * @returns {void}
-   */
-  registerRoutes() {
+  registerRoutes(): void {
     throw new Error('overwrite registerRoutes()');
   }
-  /**
-   * @abstract
-   * @returns {void}
-   */
-  init() {
+
+  init(): void {
     throw new Error('overwrite init()');
   }
-  /**
-   * @abstract
-   * @returns {void}
-   */
-  shutDown() {
+
+  shutDown(): void {
     throw new Error('overwrite shutDown()');
   }
 }
-
-module.exports = AbstractService;

@@ -1,15 +1,15 @@
-const { Op } = require('sequelize');
-const DatabaseClient = require('../../src/client/DatabaseClient');
-const { Beatmaps } = require('../../src/client/models/Beatmaps');
-let databaseClient = undefined;
+import { Op } from 'sequelize';
+import DatabaseClient from '../../src/client/DatabaseClient';
+import { Beatmaps } from '../../src/client/models/Beatmaps';
+let databaseClient: DatabaseClient | undefined = undefined;
 
 describe('database', () => {
   beforeAll(async () => {
-    databaseClient = new DatabaseClient(process.env.PROD_DATABASE_URL, 'true');
+    databaseClient = new DatabaseClient(process.env['PROD_DATABASE_URL'] ?? '', 'true');
     await databaseClient.initializeDatabase();
   });
   afterAll(async () => {
-    await databaseClient.closeConnection();
+    await databaseClient?.closeConnection();
   });
 
   test('all beatmaps are osu', async () => {
