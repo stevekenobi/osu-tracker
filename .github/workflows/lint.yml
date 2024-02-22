@@ -24,7 +24,7 @@ jobs:
           cache: 'npm'
 
       - name: Build
-        run: yarn
+        run: yarn && yarn build
 
       - name: Lint
         run: yarn lint:check

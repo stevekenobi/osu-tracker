@@ -38,7 +38,7 @@ jobs:
         run: echo $DATA > /home/runner/work/osu-tracker/osu-tracker/google_service_account.json
 
       - name: Build
-        run: yarn
+        run: yarn && yarn build
 
       - name: Test
         run: yarn test:coverage
