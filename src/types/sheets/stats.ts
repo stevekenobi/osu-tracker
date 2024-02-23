@@ -5,4 +5,9 @@ export type SheetStats = {
   Completion: string
   'Total Score': string
   'Average Score': string
+  SSH: string
+  SS: string
+  SH: string
+  S: string
+  A: string
 };

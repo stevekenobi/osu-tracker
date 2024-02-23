@@ -53,19 +53,18 @@ export default class TrackerServer {
     cron.schedule('0,30 * * * *', () => {
       updateLeaderboard(this.getOsuClient(), this.getSheetClient());
     });
-    updateLeaderboard(this.getOsuClient(), this.getSheetClient());
 
-    cron.schedule('0,30 * * * *', async () => {
+    cron.schedule('0 * * * *', async () => {
       await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
       await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
     });
 
-    cron.schedule('0 */2 * * *', async () => {
+    cron.schedule('10 */2 * * *', async () => {
       await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
       await updateScores(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
       await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
     });
-
+    syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
     if (process.env['ENVIRONMENT'] === 'dev')
       setInterval(() => {
         const used = process.memoryUsage().heapUsed / 1024 / 1024;

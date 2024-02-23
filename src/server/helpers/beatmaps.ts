@@ -55,7 +55,7 @@ export async function syncBeatmapsSheet(databaseClient: DatabaseClient, sheetCli
           .flatMap((s) => s.beatmaps),
       ));
     console.log(`finished ${year}`);
-    const playedBeatmaps = beatmaps.filter((b) => b.score);
+    const playedBeatmaps = beatmaps.filter((b) => b.rank);
     const totalScore = playedBeatmaps.reduce((sum, b) => sum + (b.score ? b.score : 0), 0);
     stats.push({
       Year: year,
@@ -64,6 +64,11 @@ export async function syncBeatmapsSheet(databaseClient: DatabaseClient, sheetCli
       Completion: numeral((100 * playedBeatmaps.length) / beatmaps.length).format('0.00'),
       'Total Score': numeral(totalScore).format('0,0'),
       'Average Score': numeral(totalScore / playedBeatmaps.length).format('0,0'),
+      SSH: numeral(playedBeatmaps.filter(b => b.rank === 'XH').length).format('0,0'),
+      SS: numeral(playedBeatmaps.filter(b => b.rank === 'X').length).format('0,0'),
+      SH: numeral(playedBeatmaps.filter(b => b.rank === 'SH').length).format('0,0'),
+      S: numeral(playedBeatmaps.filter(b => b.rank === 'S').length).format('0,0'),
+      A: numeral(playedBeatmaps.filter(b => b.rank === 'A').length).format('0,0'),
     });
   }
 
@@ -72,6 +77,8 @@ export async function syncBeatmapsSheet(databaseClient: DatabaseClient, sheetCli
   await sheetClient.updateProblematicBeatmaps(createSheetBeatmapsFromApp(await databaseClient.getUnfinishedBeatmaps('problematic')));
   await sheetClient.updateNonSDBeatmaps(createSheetBeatmapsFromApp(await databaseClient.getUnfinishedBeatmaps('non-sd')));
   await sheetClient.updateDtBeatmaps(createSheetBeatmapsFromApp(await databaseClient.getUnfinishedBeatmaps('dt')));
+
+  console.log('finished syncing beatmaps sheet');
 }
 
 export async function findMissingBeatmaps(osuClient: OsuClient, databaseClient: DatabaseClient, sheetClient: SheetClient, userId: number): Promise<void> {
