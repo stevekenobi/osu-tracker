@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "dev:server": "nodemon src/index.ts NODE_OPTIONS='--max-old-space-size=512'",
+    "dev:server": "nodemon src/index.ts NODE_OPTIONS='--max-old-space-size=512' --ignore tests/",
     "start": "node dist/src/index.js",
     "build": "npx tsc",
     "format": "prettier --write src/ tests/",

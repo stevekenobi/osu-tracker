@@ -22,6 +22,7 @@ export default class OsuClient {
       return response.data;
     } catch (err: unknown) {
       const error = err as AxiosError;
+      console.log(error);
       if (error.response?.status === 401) {
         await this.authenticate();
         return await this.getRequest(requestUrl);
