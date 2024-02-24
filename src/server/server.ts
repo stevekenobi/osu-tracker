@@ -64,7 +64,7 @@ export default class TrackerServer {
       await updateScores(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
       await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
     });
-    syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
+
     if (process.env['ENVIRONMENT'] === 'dev')
       setInterval(() => {
         const used = process.memoryUsage().heapUsed / 1024 / 1024;
