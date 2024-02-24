@@ -66,7 +66,7 @@ export default class TrackerServer {
     });
     updateScores(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
 
-    if (process.env['ENVIRONMENT'] === 'dev')
+    if (process.env['ENVIRONMENT'] === 'development')
       setInterval(() => {
         const used = process.memoryUsage().heapUsed / 1024 / 1024;
         console.log(`This app is currently using ${Math.floor(used)} MB of memory.`);
@@ -109,7 +109,7 @@ export default class TrackerServer {
     this.databaseClient = new DatabaseClient(process.env['DATABASE_URL'] ?? '', process.env['DATABASE_SECURE'] ?? '');
     this.getDatabaseClient().initializeDatabase();
 
-    this.sheetClient = new SheetClient(process.env['LEADERBOARD_SHEET_ID'] ?? '', process.env['UNFINISHED_SHEET_ID'] ?? '', process.env['BEATMAPS_SHEET_ID'] ?? '');
+    this.sheetClient = new SheetClient(process.env['LEADERBOARD_SHEET_ID'] ?? '', process.env['UNFINISHED_SHEET_ID'] ?? '', process.env['BEATMAPS_SHEET_ID'] ?? '', process.env['MISSING_BEATMAPS_SHEET_ID'] ?? '');
   }
 
   _initServices(): void {

@@ -1,7 +1,6 @@
 import type DatabaseClient from '../../client/DatabaseClient';
 import type OsuClient from '../../client/OsuClient';
 import type SheetClient from '../../client/SheetClient';
-import type { Beatmaps } from '../../client/models/Beatmaps';
 import type { OsuBeatmapset, AppBeatmap, OsuBeatmap, AppBeatmapset, SheetBeatmap } from '../../types';
 import { isBeatmapRankedApprovedOrLoved, getYearsUntilToday, delay, createBeatmapLinkFromId } from '../../utils';
 import numeral from 'numeral';
@@ -160,7 +159,7 @@ export function createBeatmapModelsFromOsuBeatmaps(beatmaps: OsuBeatmap[]): AppB
     }));
 }
 
-export function createBeatmapsetsFromBeatmaps(beatmaps: Beatmaps[]): AppBeatmapset[] {
+export function createBeatmapsetsFromBeatmaps(beatmaps: AppBeatmap[]): AppBeatmapset[] {
   const beatmapsetIds = Array.from(new Set(beatmaps.map((b) => b.beatmapsetId)));
   const beatmapsets: AppBeatmapset[] = [];
   beatmapsetIds.forEach((i) => {

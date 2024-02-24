@@ -6,7 +6,7 @@ import type { SheetBeatmap, SheetLeaderboard, SheetNoScoreBeatmap, SheetStats } 
 export default class SheetClient {
   private readonly serviceAccountAuth;
 
-  constructor(private readonly leaderboard_sheet_id: string, private readonly unfinished_sheet_id: string, private readonly beatmaps_sheet_id: string) {
+  constructor(private readonly leaderboard_sheet_id: string, private readonly unfinished_sheet_id: string, private readonly beatmaps_sheet_id: string, private readonly missing_beatmaps_sheet_id: string) {
     const SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive.file'];
     this.serviceAccountAuth = new JWT({
       email: creds.client_email,
@@ -77,7 +77,7 @@ export default class SheetClient {
   }
 
   async updateMissingBeatmaps(ids: number[]): Promise<void> {
-    const doc = new GoogleSpreadsheet(process.env['DEV_BEATMAPS_SHEET_ID'] ?? '', this.serviceAccountAuth);
+    const doc = new GoogleSpreadsheet(this.missing_beatmaps_sheet_id, this.serviceAccountAuth);
     await doc.loadInfo();
 
     const sheet = doc.sheetsByTitle['Missing'];
@@ -86,7 +86,7 @@ export default class SheetClient {
   }
 
   async clearMissingBeatmaps(): Promise<void> {
-    const doc = new GoogleSpreadsheet(process.env['DEV_BEATMAPS_SHEET_ID'] ?? '', this.serviceAccountAuth);
+    const doc = new GoogleSpreadsheet(this.missing_beatmaps_sheet_id, this.serviceAccountAuth);
     await doc.loadInfo();
 
     const sheet = doc.sheetsByTitle['Missing'];
@@ -95,7 +95,7 @@ export default class SheetClient {
   }
 
   async getMissingBeatmaps(): Promise<string[]> {
-    const doc = new GoogleSpreadsheet(process.env['DEV_BEATMAPS_SHEET_ID'] ?? '', this.serviceAccountAuth);
+    const doc = new GoogleSpreadsheet(this.missing_beatmaps_sheet_id, this.serviceAccountAuth);
     await doc.loadInfo();
 
     const sheet = doc.sheetsByTitle['Missing'];
