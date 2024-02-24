@@ -56,29 +56,29 @@ export default class DatabaseClient {
     await Beatmaps.bulkCreate(beatmaps, { updateOnDuplicate: ['artist', 'title', 'creator', 'version', 'difficulty', 'AR', 'CS', 'OD', 'HP', 'BPM', 'length', 'status', 'rankedDate'] });
   }
 
-  async getBeatmaps(options?: FindOptions<Beatmaps>): Promise<Beatmaps[]> {
-    return await Beatmaps.findAll(options);
+  async getBeatmaps(options?: FindOptions<Beatmaps>): Promise<AppBeatmap[]> {
+    return (await Beatmaps.findAll(options)).map(b => b.toJSON());
   }
 
-  async getBeatmapsOfYear(year: string): Promise<Beatmaps[]> {
-    return await Beatmaps.findAll({ where: { rankedDate: { [Op.like]: `${year}%` } } });
+  async getBeatmapsOfYear(year: string): Promise<AppBeatmap[]> {
+    return (await Beatmaps.findAll({ where: { rankedDate: { [Op.like]: `${year}%` } } })).map(b => b.toJSON());
   }
 
-  async getUnfinishedBeatmaps(option: 'problematic' | 'non-sd' | 'dt'): Promise<Beatmaps[]> {
+  async getUnfinishedBeatmaps(option: 'problematic' | 'non-sd' | 'dt'): Promise<AppBeatmap[]> {
     const result = option === 'problematic' ? await this.getProblematicBeatmaps() : option === 'non-sd' ? await this.getNonSDBeatmaps() : await this.getDTBeatmaps();
     return result.sort((a, b) => a.difficulty > b.difficulty ? 1 : -1);
   }
 
-  async getProblematicBeatmaps(): Promise<Beatmaps[]> {
-    return await Beatmaps.findAll({ where: { perfect: false } });
+  async getProblematicBeatmaps(): Promise<AppBeatmap[]> {
+    return (await Beatmaps.findAll({ where: { perfect: false } })).map(b => b.toJSON());
   }
 
-  async getNonSDBeatmaps(): Promise<Beatmaps[]> {
-    return await Beatmaps.findAll({ where: { mods: { [Op.notLike]: '%SD%' } } });
+  async getNonSDBeatmaps(): Promise<AppBeatmap[]> {
+    return (await Beatmaps.findAll({ where: { mods: { [Op.notLike]: '%SD%' } } })).map(b => b.toJSON());
   }
 
-  async getDTBeatmaps(): Promise<Beatmaps[]> {
-    return await Beatmaps.findAll({ where: { mods: { [Op.like]: '%DT%' } } });
+  async getDTBeatmaps(): Promise<AppBeatmap[]> {
+    return (await Beatmaps.findAll({ where: { mods: { [Op.like]: '%DT%' } } })).map(b => b.toJSON());
   }
 
   async updateScore(score: AppScore): Promise<void> {
