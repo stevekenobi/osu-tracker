@@ -15,124 +15,90 @@ export default class SheetClient {
     });
   }
 
-  async updateLeaderboard(users: SheetLeaderboard[]): Promise<void> {
-    const doc = new GoogleSpreadsheet(this.leaderboard_sheet_id, this.serviceAccountAuth);
+  private async getRows<T extends Record<string, string | number>>(docId: string, sheetTitle: string): Promise<T[]> {
+    const doc = new GoogleSpreadsheet(docId, this.serviceAccountAuth);
     await doc.loadInfo();
 
-    const sheet = doc.sheetsByTitle['GR'];
+    const sheet = doc.sheetsByTitle[sheetTitle];
 
-    if (!sheet) throw new Error('sheet GR not found in Leaderboard');
+    if (!sheet) throw new Error(`Sheet ${sheetTitle} not found`);
 
-    await sheet.clearRows({ start: 2 });
-    await sheet.addRows(
-      users,
-      { raw: true },
-    );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    return (await sheet.getRows<T>()).map(r => Object.fromEntries(Object.entries(r.toObject()).filter(([_, v]) => v != undefined)) as T);
+  }
+
+  private async addRows<T extends Record<string, string | number>>(rows: T[], docId: string, sheetTitle: string): Promise<void> {
+    const doc = new GoogleSpreadsheet(docId, this.serviceAccountAuth);
+    await doc.loadInfo();
+
+    const sheet = doc.sheetsByTitle[sheetTitle];
+
+    if (!sheet) throw new Error(`Sheet ${sheetTitle} not found`);
+
+    await sheet.addRows(rows);
+  }
+
+  private async clearRows(docId: string, sheetTitle: string, options?: { start?: number, end?: number }): Promise<void> {
+    const doc = new GoogleSpreadsheet(docId, this.serviceAccountAuth);
+    await doc.loadInfo();
+
+    const sheet = doc.sheetsByTitle[sheetTitle];
+
+    if (!sheet) throw new Error(`Sheet ${sheetTitle} not found`);
+
+    await sheet.clearRows(options);
+  }
+
+  async updateLeaderboard(users: SheetLeaderboard[]): Promise<void> {
+    await this.clearRows(this.leaderboard_sheet_id, 'GR', { start: 2 });
+    await this.addRows(users, this.leaderboard_sheet_id, 'GR');
   }
 
   async getLeaderboard(): Promise<SheetLeaderboard[]> {
-    const doc = new GoogleSpreadsheet(this.leaderboard_sheet_id, this.serviceAccountAuth);
-    await doc.loadInfo();
-
-    const sheet = doc.sheetsByTitle['GR'];
-    if (!sheet) throw new Error('sheet GR not found in Leaderboard');
-
-    return (await sheet.getRows<SheetLeaderboard>()).map(r => r.toObject() as SheetLeaderboard);
+    return this.getRows(this.leaderboard_sheet_id, 'GR');
   }
 
   async updateBeatmapsOfYear(year: string, beatmaps: SheetBeatmap[]): Promise<void> {
-    const doc = new GoogleSpreadsheet(this.beatmaps_sheet_id, this.serviceAccountAuth);
-    await doc.loadInfo();
-
-    const sheet = doc.sheetsByTitle[year];
-
-    if (!sheet) throw new Error(`sheet ${year} not found in beatmaps`);
-
-    await sheet.clearRows({ start: 2 });
-    await sheet.addRows(beatmaps);
+    await this.clearRows(this.beatmaps_sheet_id, year, { start: 2 });
+    await this.addRows(beatmaps, this.beatmaps_sheet_id,year);
   }
 
   async getBeatmapsOfYear(year: string): Promise<SheetBeatmap[]> {
-    const doc = new GoogleSpreadsheet(this.beatmaps_sheet_id, this.serviceAccountAuth);
-    await doc.loadInfo();
-
-    const sheet = doc.sheetsByTitle[year];
-
-    if (!sheet) throw new Error(`sheet ${year} not found in beatmaps`);
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    return (await sheet.getRows<SheetBeatmap>()).map(r => Object.fromEntries(Object.entries(r.toObject()).filter(([_, v]) => v != undefined)) as SheetBeatmap);
+    return this.getRows(this.beatmaps_sheet_id,year);
   }
 
   async updateStats(stats: SheetStats[]): Promise<void> {
-    const doc = new GoogleSpreadsheet(this.beatmaps_sheet_id, this.serviceAccountAuth);
-    await doc.loadInfo();
+    await this.clearRows(this.beatmaps_sheet_id, 'Stats', { start: 2, end: 22 });
+    await this.addRows(stats, this.beatmaps_sheet_id,'Stats');
+  }
 
-    const sheet = doc.sheetsByTitle['Stats'];
-    if (!sheet) throw new Error('sheet Stats not found in beatmaps');
-
-    await sheet.clearRows({ start: 2, end: 22 });
-
-    await sheet.addRows(stats);
+  async getStats(): Promise<SheetStats[]> {
+    return this.getRows(this.beatmaps_sheet_id,'Stats');
   }
 
   async updateMissingBeatmaps(ids: number[]): Promise<void> {
-    const doc = new GoogleSpreadsheet(this.missing_beatmaps_sheet_id, this.serviceAccountAuth);
-    await doc.loadInfo();
-
-    const sheet = doc.sheetsByTitle['Missing'];
-    if (!sheet) throw new Error('sheet Missing not found in beatmaps');
-    await sheet.addRows(ids.map((i) => ({ Id: i })));
+    await this.addRows(ids.map(i => ({Id: i})), this.missing_beatmaps_sheet_id,'Missing');
   }
 
   async clearMissingBeatmaps(): Promise<void> {
-    const doc = new GoogleSpreadsheet(this.missing_beatmaps_sheet_id, this.serviceAccountAuth);
-    await doc.loadInfo();
-
-    const sheet = doc.sheetsByTitle['Missing'];
-    if (!sheet) throw new Error('sheet Missing not found in beatmaps');
-    await sheet.clearRows({ start: 2 });
+    await this.clearRows(this.missing_beatmaps_sheet_id, 'Missing', { start: 2 });
   }
 
   async getMissingBeatmaps(): Promise<string[]> {
-    const doc = new GoogleSpreadsheet(this.missing_beatmaps_sheet_id, this.serviceAccountAuth);
-    await doc.loadInfo();
-
-    const sheet = doc.sheetsByTitle['Missing'];
-    if (!sheet) throw new Error('sheet Missing not found in beatmaps');
-
-    return (await sheet.getRows<{ Id: string }>()).map((r) => (r.toObject() as { Id: string }).Id);
+    return (await this.getRows<{Id: string}>(this.missing_beatmaps_sheet_id,'Missing')).map(x => x.Id);
   }
 
   async updateNoScoreBeatmaps(beatmaps: SheetNoScoreBeatmap[]): Promise<void> {
-    const doc = new GoogleSpreadsheet(this.unfinished_sheet_id, this.serviceAccountAuth);
-    await doc.loadInfo();
-
-    const sheet = doc.sheetsByTitle['No Score'];
-    if (!sheet) throw new Error('sheet No Score not found in unfinished');
-
-    await sheet.clearRows({ start: 2 });
-    await sheet.addRows(beatmaps);
+    await this.clearRows(this.unfinished_sheet_id, 'No Score', { start: 2 });
+    await this.addRows(beatmaps, this.unfinished_sheet_id,'No Score');
   }
 
   async getNoScoreBeatmaps(): Promise<SheetNoScoreBeatmap[]> {
-    const doc = new GoogleSpreadsheet(this.unfinished_sheet_id, this.serviceAccountAuth);
-    await doc.loadInfo();
-
-    const sheet = doc.sheetsByTitle['No Score'];
-    if (!sheet) throw new Error('sheet No Score not found in unfinished');
-
-    return (await sheet.getRows()).map((r) => r.toObject() as SheetNoScoreBeatmap);
+    return this.getRows(this.unfinished_sheet_id,'No Score');
   }
 
   async getUnfinishedBeatmaps(title: string): Promise<SheetBeatmap[]> {
-    const doc = new GoogleSpreadsheet(this.unfinished_sheet_id, this.serviceAccountAuth);
-    await doc.loadInfo();
-
-    const sheet = doc.sheetsByTitle[title];
-    if (!sheet) throw new Error(`sheet ${title} not found in unfinished`);
-
-    return (await sheet.getRows<SheetBeatmap>()).map((r) => r.toObject() as SheetBeatmap);
+    return this.getRows(this.unfinished_sheet_id,title);
   }
 
   async updateProblematicBeatmaps(beatmaps: SheetBeatmap[]): Promise<void> {
@@ -148,14 +114,7 @@ export default class SheetClient {
   }
 
   private async updateUnfinishedBeatmaps(beatmaps: SheetBeatmap[], title: string): Promise<void> {
-    const doc = new GoogleSpreadsheet(this.unfinished_sheet_id, this.serviceAccountAuth);
-    await doc.loadInfo();
-
-    const sheet = doc.sheetsByTitle[title];
-    if (!sheet) throw new Error(`sheet ${title} not found in unfinished`);
-
-    await sheet.clearRows({ start: 2 });
-
-    await sheet.addRows(beatmaps);
+    await this.clearRows(this.unfinished_sheet_id, title, { start: 2 });
+    await this.addRows(beatmaps, this.unfinished_sheet_id,title);
   }
 }
