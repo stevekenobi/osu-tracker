@@ -42,6 +42,7 @@ export default class DatabaseClient {
 
   async closeConnection(): Promise<void> {
     await this.getSequelizeSingleton().close();
+    this.sequelizeSingleton = undefined;
   }
 
   getSequelizeSingleton(): Sequelize {
@@ -53,7 +54,7 @@ export default class DatabaseClient {
   }
 
   async updateBeatmaps(beatmaps: AppBeatmap[]): Promise<void> {
-    await Beatmaps.bulkCreate(beatmaps, { updateOnDuplicate: ['artist', 'title', 'creator', 'version', 'difficulty', 'AR', 'CS', 'OD', 'HP', 'BPM', 'length', 'status', 'rankedDate'] });
+    await Beatmaps.bulkCreate(beatmaps as Beatmaps[], { updateOnDuplicate: ['artist', 'title', 'creator', 'version', 'difficulty', 'AR', 'CS', 'OD', 'HP', 'BPM', 'length', 'status', 'rankedDate'] });
   }
 
   async getBeatmaps(options?: FindOptions<Beatmaps>): Promise<AppBeatmap[]> {

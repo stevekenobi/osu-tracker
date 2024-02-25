@@ -15,17 +15,17 @@ export type AppBeatmap = {
   mode: string;
   status: string;
   rankedDate: string;
-  accuracy?: number;
-  max_combo?: number;
-  mods?: string;
-  perfect?: boolean;
-  pp?: number;
-  rank?: string;
-  score?: number;
-  count_100?: number;
-  count_300?: number;
-  count_50?: number;
-  count_miss?: number;
+  accuracy?: number | null;
+  max_combo?: number | null;
+  mods?: string | null;
+  perfect?: boolean | null;
+  pp?: number | null;
+  rank?: string | null;
+  score?: number | null;
+  count_100?: number | null;
+  count_300?: number | null;
+  count_50?: number | null;
+  count_miss?: number | null;
 };
 
 export type AppBeatmapset = {
