@@ -40,5 +40,7 @@ export function createUserLinkFromId(id: number): string {
 }
 
 export function extractIdFromLink(link: string): number {
-  return Number.parseInt(link.split('/').at(-1) ?? '');
+  const num = link.split('/').at(-1);
+  if (!num) return 0;
+  return Number.parseInt(num);
 }

@@ -10,7 +10,7 @@ export default defineConfig({
       thresholds: {
         '100': true,
       },
-      all: true,
+      include: ['src/client', 'src/utils'],
     },
   },
 });

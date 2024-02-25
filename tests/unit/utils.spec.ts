@@ -1,6 +1,12 @@
-import { createBeatmapLinkFromId, createQuery, createUserLinkFromId, extractIdFromLink, getYearsUntilToday, isBeatmapRankedApprovedOrLoved, range } from '../../src/utils';
+import { createBeatmapLinkFromId, createQuery, createUserLinkFromId, delay, extractIdFromLink, getYearsUntilToday, isBeatmapRankedApprovedOrLoved, range } from '../../src/utils';
 
 describe('utils', () => {
+  describe('delay', () => {
+    test('does not throw', async () => {
+      await delay(500);
+    });
+  });
+
   describe('range', () => {
     test('returns simple range', () => {
       const result = range(1,10);
@@ -60,6 +66,7 @@ describe('utils', () => {
       ]);
     });
   });
+
   describe('isBeatmapRankedApprovedOrLoved', () => {
     describe.each([
       {input: {status: 'ranked'}, expected: true},
@@ -74,24 +81,36 @@ describe('utils', () => {
         expect(result).toBe(expected);
       });
     });
-
   });
+
   describe('createBeatmapLinkFromId', () => {
     test('returns correct link', () => {
       const result = createBeatmapLinkFromId(123);
       expect(result).toBe('https://osu.ppy.sh/b/123');
     });
   });
+
   describe('createUserLinkFromId', () => {
     test('returns correct link', () => {
       const result = createUserLinkFromId(456);
       expect(result).toBe('https://osu.ppy.sh/u/456');
     });
   });
+
   describe('extractIdFromLink', () => {
-    test('', () => {
+    test('returns correct id', () => {
       const result = extractIdFromLink('https://osu.ppy.sh/u/123');
       expect(result).toBe(123);
+    });
+
+    test('returns wrong result', () => {
+      const result = extractIdFromLink('https://osu.ppy.sh/u');
+      expect(result).toBe(NaN);
+    });
+
+    test('returns wrong result', () => {
+      const result = extractIdFromLink('');
+      expect(result).toBe(0);
     });
   });
 });

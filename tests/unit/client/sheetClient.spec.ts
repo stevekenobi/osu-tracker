@@ -1,4 +1,4 @@
-import SheetClient from '../../src/client/SheetClient';
+import SheetClient from '../../../src/client/SheetClient';
 
 const sheetClient = new SheetClient('1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc');
 
@@ -230,6 +230,21 @@ describe.concurrent('sheet client', () => {
           Length: '124',
         },
       ]);
+    });
+  });
+
+  describe('errors', () => {
+    const client = new SheetClient('1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro', '1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro', '1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro', '1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro');
+    test('getRows', () => {
+      expect(async () => await client.getNoScoreBeatmaps()).rejects.toThrowError('Sheet No Score not found');
+    });
+
+    test('addRows', () => {
+      expect(async () => await client.updateMissingBeatmaps([])).rejects.toThrowError('Sheet Missing not found');
+    });
+
+    test('clearRows', () => {
+      expect(async () => await client.updateBeatmapsOfYear('234', [])).rejects.toThrowError('Sheet 234 not found');
     });
   });
 });
