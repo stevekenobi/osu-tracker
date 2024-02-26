@@ -18,8 +18,49 @@ describe.sequential('database client', () => {
 
   describe('updateScore', () => {
     test('executes query', async () => {
-      scoreData.forEach(async s =>
-        await client.updateScore(s));
+      for(const s of scoreData) {
+        await client.updateScore(s);
+      }
+    });
+  });
+
+  describe('updating score with less score', () => {
+    test('does not update', async () => {
+      await client.updateScore({
+        'id': 1752,
+        'accuracy': 99.18,
+        'max_combo': 868,
+        'perfect': true,
+        'pp': 155.91,
+        'score': 123,
+        'count_100': 34,
+        'count_300': 3,
+        'count_50': 9,
+        'count_miss': 5432,
+        'mode': 'osu',
+        'mods': 'HD',
+        'rank': 'A',
+      });
+    });
+  });
+
+  describe('updating score with greater score', () => {
+    test('updates score', async () => {
+      await client.updateScore({
+        'id': 319,
+        'accuracy': 98.86,
+        'max_combo': 689,
+        'perfect': false,
+        'pp': 137.19,
+        'score': 23632046,
+        'count_100': 8,
+        'count_300': 1528,
+        'count_50': 0,
+        'count_miss': 0,
+        'mode': 'osu',
+        'mods': 'HD,SD',
+        'rank': 'XH',
+      });
     });
   });
 
@@ -53,7 +94,7 @@ describe.sequential('database client', () => {
   describe('updating score on non-existant map', () => {
     test('throws error', () => {
       expect(async () => await client.updateScore({
-        id: 10, 
+        id: 10,
         'accuracy': 98.86,
         'max_combo': 689,
         'perfect': false,
