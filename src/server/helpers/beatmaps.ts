@@ -1,7 +1,7 @@
 import type DatabaseClient from '../../client/DatabaseClient';
 import type OsuClient from '../../client/OsuClient';
 import type SheetClient from '../../client/SheetClient';
-import type { OsuBeatmapset, AppBeatmap, OsuBeatmap, AppBeatmapset, SheetBeatmap } from '../../types';
+import type { OsuBeatmapset, AppBeatmap, OsuBeatmap, AppBeatmapset, SheetBeatmap, SheetStats } from '../../types';
 import { isBeatmapRankedApprovedOrLoved, getYearsUntilToday, delay, createBeatmapLinkFromId } from '../../utils';
 import numeral from 'numeral';
 
@@ -43,7 +43,7 @@ export async function importAllBeatmaps(osuClient: OsuClient, databaseClient: Da
 
 export async function syncBeatmapsSheet(databaseClient: DatabaseClient, sheetClient: SheetClient): Promise<void> {
   const years = getYearsUntilToday();
-  const stats = [];
+  const stats: SheetStats[] = [];
   for (const year of years) {
     const beatmaps = await databaseClient.getBeatmapsOfYear(year);
     await sheetClient.updateBeatmapsOfYear(
@@ -60,7 +60,7 @@ export async function syncBeatmapsSheet(databaseClient: DatabaseClient, sheetCli
       Year: year,
       'Total Beatmaps': numeral(beatmaps.length).format('0,0'),
       'Played Beatmaps': numeral(playedBeatmaps.length).format('0,0'),
-      Completion: numeral((100 * playedBeatmaps.length) / beatmaps.length).format('0.00'),
+      'Completion (%)': numeral((100 * playedBeatmaps.length) / beatmaps.length).format('0.00'),
       'Total Score': numeral(totalScore).format('0,0'),
       'Average Score': numeral(totalScore / playedBeatmaps.length).format('0,0'),
       SSH: numeral(playedBeatmaps.filter(b => b.rank === 'XH').length).format('0,0'),
