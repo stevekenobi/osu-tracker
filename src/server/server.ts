@@ -64,7 +64,6 @@ export default class TrackerServer {
       await updateScores(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
       await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
     });
-    updateScores(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
 
     if (process.env['ENVIRONMENT'] === 'development')
       setInterval(() => {
