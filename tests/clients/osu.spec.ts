@@ -86,6 +86,18 @@ describe('osu client', () => {
     });
   });
 
+  describe('getUserRecentScores', () => {
+    test('returns undefined user', async () => {
+      const response = await client.getUserRecentScores(4171323);
+      expect(response).toBe(undefined);
+    });
+
+    test('return correct response', async () => {
+      const response = await client.getUserRecentScores(12375044);
+      expect(response?.length).greaterThanOrEqual(0);
+    });
+  });
+
   describe('getUserScoreOnBeatmap', () => {
     test('returns correct score', async () => {
       const response = await client.getUserScoreOnBeatmap(243983, 12375044);
