@@ -8,7 +8,7 @@ export function range(start: number, stop: number, step = 1): number[] {
     .map((x, y) => x + y * step);
 }
 
-export function createQuery(query?: {[key: string]: string | number}): string {
+export function createQuery(query?: { [key: string]: string | number }): string {
   if (query)
     return `?${Object.keys(query)
       .map((x) => `${x}=${query[x]}`)
@@ -27,7 +27,14 @@ export function getYearsUntilToday(): string[] {
   return years;
 }
 
-export function isBeatmapRankedApprovedOrLoved(beatmap: {status: string}): boolean {
+export function getDaysFromToday(firstDate: Date): number {
+  const oneDay = 24 * 60 * 60 * 1000;
+  const secondDate = new Date();
+
+  return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / oneDay));
+}
+
+export function isBeatmapRankedApprovedOrLoved(beatmap: { status: string }): boolean {
   return beatmap.status === 'ranked' || beatmap.status === 'approved' || beatmap.status === 'loved';
 }
 

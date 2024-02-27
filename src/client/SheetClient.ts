@@ -1,7 +1,7 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import creds from '../../google_service_account.json';
 import { JWT } from 'google-auth-library';
-import type { SheetBeatmap, SheetLeaderboard, SheetNoScoreBeatmap, SheetStats } from '../types';
+import type { SheetBeatmap, SheetLeaderboard, SheetNoScoreBeatmap, SheetStats, SheetTarget } from '../types';
 
 export default class SheetClient {
   private readonly serviceAccountAuth;
@@ -116,5 +116,14 @@ export default class SheetClient {
   private async updateUnfinishedBeatmaps(beatmaps: SheetBeatmap[], title: string): Promise<void> {
     await this.clearRows(this.unfinished_sheet_id, title, { start: 2 });
     await this.addRows(beatmaps, this.unfinished_sheet_id,title);
+  }
+
+  async updateTargets(targets: SheetTarget[]): Promise<void> {
+    await this.clearRows(this.leaderboard_sheet_id, 'Targets');
+    await this.addRows(targets, this.leaderboard_sheet_id, 'Targets');
+  }
+
+  async getTargets(): Promise<SheetTarget[]> {
+    return await this.getRows(this.leaderboard_sheet_id, 'Targets');
   }
 }
