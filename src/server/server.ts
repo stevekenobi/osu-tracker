@@ -56,11 +56,6 @@ export default class TrackerServer {
 
     cron.schedule('0 * * * *', async () => {
       await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
-      await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
-    });
-
-    cron.schedule('10 */2 * * *', async () => {
-      await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
       await updateRecentScores(this.getOsuClient(), this.getDatabaseClient());
       await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
     });
