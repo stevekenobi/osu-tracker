@@ -6,7 +6,7 @@ import { createBeatmapLinkFromId, delay, isBeatmapRankedApprovedOrLoved } from '
 import { createBeatmapModelsFromOsuBeatmapsets } from './beatmaps';
 import numeral from 'numeral';
 
-export async function updateScores(osuClient: OsuClient, databaseClient: DatabaseClient, sheetClient: SheetClient): Promise<void> {
+export async function updateAllScores(osuClient: OsuClient, databaseClient: DatabaseClient, sheetClient: SheetClient): Promise<void> {
   console.log('started importing scores');
   const unfinished: OsuUserBeatmap[] = [];
   let j = 0;
@@ -31,44 +31,7 @@ export async function updateScores(osuClient: OsuClient, databaseClient: Databas
     await delay(5000);
     j += 100;
 
-    for (const s of scores) {
-      try {
-        await databaseClient.updateScore({
-          id: s.score.beatmap.id,
-          accuracy: s.score.accuracy * 100,
-          max_combo: s.score.max_combo,
-          mode: s.score.mode,
-          mods: s.score.mods.join(','),
-          perfect: s.score.perfect,
-          pp: s.score.pp,
-          rank: s.score.rank,
-          score: s.score.score,
-          count_100: s.score.statistics.count_100,
-          count_300: s.score.statistics.count_300,
-          count_50: s.score.statistics.count_50,
-          count_miss: s.score.statistics.count_miss,
-        });
-      } catch (error) {
-        const beatmapset = await osuClient.getBeatmapsetById(s.score.beatmap.beatmapset_id);
-        await databaseClient.updateBeatmaps(createBeatmapModelsFromOsuBeatmapsets([beatmapset!]));
-
-        await databaseClient.updateScore({
-          id: s.score.beatmap.id,
-          accuracy: s.score.accuracy * 100,
-          max_combo: s.score.max_combo,
-          mode: s.score.mode,
-          mods: s.score.mods.join(','),
-          perfect: s.score.perfect,
-          pp: s.score.pp,
-          rank: s.score.rank,
-          score: s.score.score,
-          count_100: s.score.statistics.count_100,
-          count_300: s.score.statistics.count_300,
-          count_50: s.score.statistics.count_50,
-          count_miss: s.score.statistics.count_miss,
-        });
-      }
-    }
+    await updateScores(scores, osuClient, databaseClient);
     result = await osuClient.getUserBeatmaps(12375044, 'most_played', { limit: 100, offset: j });
   } while (result!.length > 0);
   await sheetClient.updateNoScoreBeatmaps(unfinished.sort((a, b) => (a.beatmap.difficulty_rating > b.beatmap.difficulty_rating ? 1 : -1)).map(b => ({
@@ -83,4 +46,57 @@ export async function updateScores(osuClient: OsuClient, databaseClient: Databas
     Status: b.beatmap.status,
   })));
   console.log('finished importing scores');
+}
+
+export async function updateRecentScores(osuClient: OsuClient, databaseClient: DatabaseClient): Promise<void> {
+  console.log('started importing recent scores');
+  const result = await osuClient.getUserRecentScores(12375044);
+
+  if (!result) throw new Error('failed to get response for recent scores');
+  if (result.length === 0) { console.log('no recent scores'); return; }
+
+  await updateScores(result.filter((r) => isBeatmapRankedApprovedOrLoved(r.beatmap) && r.beatmap.mode === 'osu').map(s => ({score: s})), osuClient, databaseClient);
+
+  console.log('finished updating recent scores');
+}
+
+export async function updateScores(scores: OsuScore[], osuClient: OsuClient, databaseClient: DatabaseClient): Promise<void> {
+  for (const s of scores) {
+    try {
+      await databaseClient.updateScore({
+        id: s.score.beatmap.id,
+        accuracy: s.score.accuracy * 100,
+        max_combo: s.score.max_combo,
+        mode: s.score.mode,
+        mods: s.score.mods.join(','),
+        perfect: s.score.perfect,
+        pp: s.score.pp,
+        rank: s.score.rank,
+        score: s.score.score,
+        count_100: s.score.statistics.count_100,
+        count_300: s.score.statistics.count_300,
+        count_50: s.score.statistics.count_50,
+        count_miss: s.score.statistics.count_miss,
+      });
+    } catch (error) {
+      const beatmapset = await osuClient.getBeatmapsetById(s.score.beatmap.beatmapset_id);
+      await databaseClient.updateBeatmaps(createBeatmapModelsFromOsuBeatmapsets([beatmapset!]));
+
+      await databaseClient.updateScore({
+        id: s.score.beatmap.id,
+        accuracy: s.score.accuracy * 100,
+        max_combo: s.score.max_combo,
+        mode: s.score.mode,
+        mods: s.score.mods.join(','),
+        perfect: s.score.perfect,
+        pp: s.score.pp,
+        rank: s.score.rank,
+        score: s.score.score,
+        count_100: s.score.statistics.count_100,
+        count_300: s.score.statistics.count_300,
+        count_50: s.score.statistics.count_50,
+        count_miss: s.score.statistics.count_miss,
+      });
+    }
+  }
 }

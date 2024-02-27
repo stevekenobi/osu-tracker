@@ -86,6 +86,13 @@ export default class DatabaseClient {
     const beatmap = await Beatmaps.findByPk(score.id);
     if (!beatmap) throw new Error(`beatmap ${score.id} not found in database`);
 
-    await Beatmaps.update(score, { where: { id: score.id } });
+    if (!beatmap.score || beatmap.score === null) {
+      await Beatmaps.update(score, { where: { id: score.id } });
+      return;
+    }
+
+    if (score.score > beatmap.score) {
+      await Beatmaps.update(score, { where: { id: score.id } });
+    }
   }
 }

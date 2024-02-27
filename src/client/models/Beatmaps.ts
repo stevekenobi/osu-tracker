@@ -1,4 +1,4 @@
-import type { InferAttributes, InferCreationAttributes, Sequelize} from 'sequelize';
+import type { InferAttributes, InferCreationAttributes, Sequelize } from 'sequelize';
 import { DataTypes, Model } from 'sequelize';
 
 export class Beatmaps extends Model<InferAttributes<Beatmaps>, InferCreationAttributes<Beatmaps>> {

@@ -12,7 +12,7 @@ import { updateLeaderboard } from './helpers/leaderboard';
 import { importLatestBeatmaps, syncBeatmapsSheet } from './helpers/beatmaps';
 
 import cron from 'node-cron';
-import { updateScores } from './helpers/scores';
+import { updateRecentScores } from './helpers/scores';
 import type AbstractService from './AbstractService';
 
 interface IAbstractService {
@@ -61,7 +61,7 @@ export default class TrackerServer {
 
     cron.schedule('10 */2 * * *', async () => {
       await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
-      await updateScores(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
+      await updateRecentScores(this.getOsuClient(), this.getDatabaseClient());
       await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
     });
 
