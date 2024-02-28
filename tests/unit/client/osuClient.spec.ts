@@ -27,6 +27,13 @@ describe('osu client', () => {
     });
   });
 
+  describe('getUserById', () => {
+    test('calls getRequest with correct url', async () => {
+      await client.getUserById(123);
+      expect(getRequest).toHaveBeenCalledWith('users/123');
+    });
+  });
+
   describe('getBeatmapsetById', () => {
     test('calls getRequest with correct url', async () => {
       await client.getBeatmapsetById(123);
@@ -52,6 +59,13 @@ describe('osu client', () => {
     test('calls getRequest with correct url', async () => {
       await client.getCountryLeaderboard();
       expect(getRequest).toHaveBeenCalledWith('rankings/osu/performance');
+    });
+  });
+
+  describe('getScoreLeaderboard', () => {
+    test('calls getRequest with correct url', async () => {
+      await client.getScoreLeaderboard();
+      expect(getRequest).toHaveBeenCalledWith('rankings/osu/score');
     });
   });
 

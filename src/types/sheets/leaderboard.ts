@@ -12,3 +12,9 @@ export type SheetLeaderboard = {
   S: string
   A: string
 };
+
+export type SheetTarget = {
+  'Target': string;
+  'Score to Earn': string;
+  'Target Score': string;
+};

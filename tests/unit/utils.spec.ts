@@ -1,4 +1,4 @@
-import { createBeatmapLinkFromId, createQuery, createUserLinkFromId, delay, extractIdFromLink, getYearsUntilToday, isBeatmapRankedApprovedOrLoved, range } from '../../src/utils';
+import { createBeatmapLinkFromId, createQuery, createUserLinkFromId, delay, extractIdFromLink, getDaysFromToday, getYearsUntilToday, isBeatmapRankedApprovedOrLoved, range } from '../../src/utils';
 
 describe('utils', () => {
   describe('delay', () => {
@@ -9,13 +9,13 @@ describe('utils', () => {
 
   describe('range', () => {
     test('returns simple range', () => {
-      const result = range(1,10);
-      expect(result).toStrictEqual([1,2,3,4,5,6,7,8,9,10]);
+      const result = range(1, 10);
+      expect(result).toStrictEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
     });
 
     test('returns range with step', () => {
-      const result = range(1,10, 2);
-      expect(result).toStrictEqual([1,3,5,7,9]);
+      const result = range(1, 10, 2);
+      expect(result).toStrictEqual([1, 3, 5, 7, 9]);
     });
   });
 
@@ -26,17 +26,17 @@ describe('utils', () => {
     });
 
     test('returns simple string', () => {
-      const result = createQuery({name: 'hello'});
+      const result = createQuery({ name: 'hello' });
       expect(result).toBe('?name=hello');
     });
 
     test('returns simple string from number', () => {
-      const result = createQuery({id: 1});
+      const result = createQuery({ id: 1 });
       expect(result).toBe('?id=1');
     });
 
     test('returns complex string', () => {
-      const result = createQuery({name: 'hello', id: 2});
+      const result = createQuery({ name: 'hello', id: 2 });
       expect(result).toBe('?name=hello&id=2');
     });
   });
@@ -67,15 +67,21 @@ describe('utils', () => {
     });
   });
 
+  describe('getDaysFromToday', () => {
+    test('returns correct days', () => {
+      getDaysFromToday(new Date(2025, 0, 1));
+    });
+  });
+
   describe('isBeatmapRankedApprovedOrLoved', () => {
     describe.each([
-      {input: {status: 'ranked'}, expected: true},
-      {input: {status: 'approved'}, expected: true},
-      {input: {status: 'loved'}, expected: true},
-      {input: {status: 'graveyard'}, expected: false},
-      {input: {status: 'wip'}, expected: false},
-      {input: {status: 'pending'}, expected: false},
-    ])('$input.status returns $expected', ({input, expected}) => {
+      { input: { status: 'ranked' }, expected: true },
+      { input: { status: 'approved' }, expected: true },
+      { input: { status: 'loved' }, expected: true },
+      { input: { status: 'graveyard' }, expected: false },
+      { input: { status: 'wip' }, expected: false },
+      { input: { status: 'pending' }, expected: false },
+    ])('$input.status returns $expected', ({ input, expected }) => {
       test('returns correct result', () => {
         const result = isBeatmapRankedApprovedOrLoved(input);
         expect(result).toBe(expected);

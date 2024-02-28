@@ -18,7 +18,7 @@ describe('database', () => {
   });
 
   test('all beatmaps are ranked', async () => {
-    const result = await Beatmaps.findAll({ where: { status: { [Op.notIn]: ['ranked', 'approved', 'loved' ]} } });
+    const result = await Beatmaps.findAll({ where: { status: { [Op.notIn]: ['ranked', 'approved', 'loved'] } } });
     expect(result.length).toBe(0);
   });
 });

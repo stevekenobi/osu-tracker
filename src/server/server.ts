@@ -8,7 +8,7 @@ import OsuClient from '../client/OsuClient';
 import SheetClient from '../client/SheetClient';
 import DatabaseClient from '../client/DatabaseClient';
 
-import { updateLeaderboard } from './helpers/leaderboard';
+import { updateLeaderboard, updateTargets } from './helpers/leaderboard';
 import { importLatestBeatmaps, syncBeatmapsSheet } from './helpers/beatmaps';
 
 import cron from 'node-cron';
@@ -56,13 +56,12 @@ export default class TrackerServer {
 
     cron.schedule('0 * * * *', async () => {
       await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
+      await updateRecentScores(this.getOsuClient(), this.getDatabaseClient());
       await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
     });
 
-    cron.schedule('10 */2 * * *', async () => {
-      await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
-      await updateRecentScores(this.getOsuClient(), this.getDatabaseClient());
-      await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
+    cron.schedule('0 0 * * *', () => {
+      updateTargets(this.getOsuClient(), this.getSheetClient());
     });
 
     if (process.env['ENVIRONMENT'] === 'development')

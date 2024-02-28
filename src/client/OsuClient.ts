@@ -1,7 +1,7 @@
 import { createQuery, delay } from '../utils';
 import type { AxiosError } from 'axios';
 import axios from 'axios';
-import type { OsuLeaderboardResponse, OsuLeaderboardQuery, OsuBeatmapsetSearchResponse, OsuBeatmap, OsuBeatmapset, OsuUserBeatmap, OsuScore, OsuRecentScore } from '../types';
+import type { OsuLeaderboardResponse, OsuLeaderboardQuery, OsuBeatmapsetSearchResponse, OsuBeatmap, OsuBeatmapset, OsuUserBeatmap, OsuScore, OsuRecentScore, OsuUser } from '../types';
 import { type AuthDetails } from '../types';
 const baseUrl = 'https://osu.ppy.sh/api/v2';
 const authUrl = ' https://osu.ppy.sh/oauth/token';
@@ -61,6 +61,10 @@ export default class OsuClient {
     this.authToken = response.data.access_token;
   }
 
+  async getUserById(id: number): Promise<OsuUser | undefined> {
+    return await this.getRequest(`users/${id}`);
+  }
+
   async getBeatmapsetById(id: number | string): Promise<OsuBeatmapset | undefined> {
     return await this.getRequest(`beatmapsets/${id}`);
   }
@@ -75,6 +79,10 @@ export default class OsuClient {
 
   async getCountryLeaderboard(query?: Partial<OsuLeaderboardQuery>): Promise<OsuLeaderboardResponse | undefined> {
     return await this.getRequest<OsuLeaderboardResponse>(`rankings/osu/performance${createQuery(query)}`);
+  }
+
+  async getScoreLeaderboard(query?: Partial<OsuLeaderboardQuery>): Promise<OsuLeaderboardResponse | undefined> {
+    return await this.getRequest(`rankings/osu/score${createQuery(query)}`);
   }
 
   async getUserBeatmaps(id: number, type: 'most_played', query?: Partial<{ limit: number, offset: number }>): Promise<OsuUserBeatmap[] | undefined> {

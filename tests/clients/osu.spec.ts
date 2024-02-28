@@ -6,6 +6,22 @@ const client = new OsuClient({
 });
 
 describe('osu client', () => {
+  describe('getUserById', () => {
+    test('returns correct user', async () => {
+      const response = await client.getUserById(12375044);
+      expect(response?.country_code).toBe('GR');
+      expect(response?.id).toBe(12375044);
+      expect(response?.username).toBe('Steve Kenobi');
+      expect(response?.country.code).toBe('GR');
+      expect(response?.country.name).toBe('Greece');
+    });
+
+    test('returns undefined user', async () => {
+      const response = await client.getUserById(4171323);
+      expect(response).toBeUndefined();
+    });
+  });
+
   describe('getBeatmapsetById', () => {
     test('returns correct beatmapset', async () => {
       const response = await client.getBeatmapsetById(89810);
@@ -22,26 +38,26 @@ describe('osu client', () => {
 
     test('returns undefined beatmapset', async () => {
       const response = await client.getBeatmapsetById(212357);
-      expect(response);
+      expect(response).toBeUndefined();
     });
   });
 
   describe('getBeatmapById', () => {
     test('returns correct beatmap', async () => {
       const response = await client.getBeatmapById(1158162);
-      expect (response?.beatmapset_id).toBe(546794);
-      expect (response?.difficulty_rating).toBe(4.87);
-      expect (response?.id).toBe(1158162);
-      expect (response?.mode).toBe('osu');
-      expect (response?.status).toBe('ranked');
-      expect (response?.total_length).toBe(228);
-      expect (response?.user_id).toBe(270377);
-      expect (response?.version).toBe('Countless');
-      expect (response?.accuracy).toBe(8);
-      expect (response?.ar).toBe(9);
-      expect (response?.bpm).toBe(82);
-      expect (response?.cs).toBe(4);
-      expect (response?.drain).toBe(6.7);
+      expect(response?.beatmapset_id).toBe(546794);
+      expect(response?.difficulty_rating).toBe(4.87);
+      expect(response?.id).toBe(1158162);
+      expect(response?.mode).toBe('osu');
+      expect(response?.status).toBe('ranked');
+      expect(response?.total_length).toBe(228);
+      expect(response?.user_id).toBe(270377);
+      expect(response?.version).toBe('Countless');
+      expect(response?.accuracy).toBe(8);
+      expect(response?.ar).toBe(9);
+      expect(response?.bpm).toBe(82);
+      expect(response?.cs).toBe(4);
+      expect(response?.drain).toBe(6.7);
     });
 
     test('returns undefined beatmap', async () => {
@@ -69,6 +85,13 @@ describe('osu client', () => {
     });
   });
 
+  describe('getScoreLeaderboard', () => {
+    test('returns the first 50 users', async () => {
+      const response = await client.getScoreLeaderboard();
+      expect(response?.ranking.length).toBe(50);
+    });
+  });
+
   describe('getUserBeatmaps', () => {
     test('returns undefined user', async () => {
       const response = await client.getUserBeatmaps(4171323, 'most_played');
@@ -81,7 +104,7 @@ describe('osu client', () => {
     });
 
     test('returns most_played beatmaps with correct length', async () => {
-      const response = await client.getUserBeatmaps(12375044, 'most_played', {limit: 100});
+      const response = await client.getUserBeatmaps(12375044, 'most_played', { limit: 100 });
       expect(response?.length).toBe(100);
     });
   });
