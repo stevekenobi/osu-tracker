@@ -232,4 +232,13 @@ describe.concurrent('sheet client', () => {
       ]);
     });
   });
+
+  describe('updateTargets', () => {
+    test('updates targets', async () => {
+      await sheetClient.updateTargets([{ Target: 'some target', 'Score to Earn': '123456', 'Target Score': '123456789' }]);
+
+      const result = await sheetClient.getTargets();
+      expect(result).toStrictEqual([{ Target: 'some target', 'Score to Earn': '123456', 'Target Score': '123456789' }]);
+    });
+  });
 });
