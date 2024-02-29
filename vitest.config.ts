@@ -11,6 +11,7 @@ export default defineConfig({
         '100': true,
       },
       include: ['src/client', 'src/utils'],
+      reporter: ['lcov', 'text'],
     },
   },
 });

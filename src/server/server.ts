@@ -1,4 +1,3 @@
-import cors from 'cors';
 import type { Application, Router } from 'express';
 import express from 'express';
 import type { Server } from 'http';
@@ -9,15 +8,12 @@ import SheetClient from '../client/SheetClient';
 import DatabaseClient from '../client/DatabaseClient';
 
 import { updateLeaderboard, updateTargets } from './helpers/leaderboard';
-import { importLatestBeatmaps, syncBeatmapsSheet } from './helpers/beatmaps';
 
 import cron from 'node-cron';
-import { updateRecentScores } from './helpers/scores';
 import type AbstractService from './AbstractService';
+import { importNewScoresJob } from './helpers/cronJobs';
 
-interface IAbstractService {
-  new(server: TrackerServer): AbstractService;
-}
+type IAbstractService = new(server: TrackerServer) => AbstractService;
 
 export default class TrackerServer {
   private services: AbstractService[] = [];
@@ -43,7 +39,6 @@ export default class TrackerServer {
   _initExpress(): void {
     this.app = express();
     this.router = express.Router();
-    this.app.use(cors());
     this.app.use(express.json());
   }
 
@@ -54,10 +49,8 @@ export default class TrackerServer {
       updateLeaderboard(this.getOsuClient(), this.getSheetClient());
     });
 
-    cron.schedule('0 * * * *', async () => {
-      await importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
-      await updateRecentScores(this.getOsuClient(), this.getDatabaseClient());
-      await syncBeatmapsSheet(this.getDatabaseClient(), this.getSheetClient());
+    cron.schedule('0 * * * *', () => {
+      importNewScoresJob(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
     });
 
     cron.schedule('0 0 * * *', () => {
@@ -84,7 +77,7 @@ export default class TrackerServer {
       console.log('Received kill signall, trying to shutdown server gracefully');
       const timeoutRef = setTimeout(() => {
         console.log('Shutdown timeout reached');
-        reject('Shutdown timeout reached');
+        reject(new Error('Shutdown timeout reached'));
       }, 5000);
 
       this.getServer().close((err) => {

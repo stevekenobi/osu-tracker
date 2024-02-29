@@ -66,7 +66,14 @@ export default class DatabaseClient {
   }
 
   async getUnfinishedBeatmaps(option: 'problematic' | 'non-sd' | 'dt'): Promise<AppBeatmap[]> {
-    const result = option === 'problematic' ? await this.getProblematicBeatmaps() : option === 'non-sd' ? await this.getNonSDBeatmaps() : await this.getDTBeatmaps();
+    let result: AppBeatmap[] = [];
+    if (option === 'problematic') {
+      result = await this.getProblematicBeatmaps();
+    } else if (option === 'non-sd') {
+      result = await this.getNonSDBeatmaps();
+    } else if (option === 'dt') {
+      result = await this.getDTBeatmaps();
+    }
     return result.sort((a, b) => a.difficulty > b.difficulty ? 1 : -1);
   }
 

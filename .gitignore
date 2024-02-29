@@ -13,6 +13,8 @@ dist
 dist-ssr
 coverage
 *.local
+.scannerwork
+sonarqube.sh
 
 /cypress/videos/
 /cypress/screenshots/
