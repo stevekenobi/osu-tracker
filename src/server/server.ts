@@ -12,6 +12,7 @@ import { updateLeaderboard, updateTargets } from './helpers/leaderboard';
 import cron from 'node-cron';
 import type AbstractService from './AbstractService';
 import { importNewScoresJob } from './helpers/cronJobs';
+import { importLatestBeatmaps } from './helpers/beatmaps';
 
 type IAbstractService = new(server: TrackerServer) => AbstractService;
 
@@ -52,6 +53,8 @@ export default class TrackerServer {
     cron.schedule('0 * * * *', () => {
       importNewScoresJob(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
     });
+    importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
+
 
     cron.schedule('0 0 * * *', () => {
       updateTargets(this.getOsuClient(), this.getSheetClient());
