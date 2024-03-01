@@ -12,7 +12,6 @@ import { updateLeaderboard, updateTargets } from './helpers/leaderboard';
 import cron from 'node-cron';
 import type AbstractService from './AbstractService';
 import { importNewScoresJob } from './helpers/cronJobs';
-import { importLatestBeatmaps } from './helpers/beatmaps';
 
 type IAbstractService = new(server: TrackerServer) => AbstractService;
 
@@ -53,8 +52,6 @@ export default class TrackerServer {
     cron.schedule('0 * * * *', () => {
       importNewScoresJob(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
     });
-    importLatestBeatmaps(this.getOsuClient(), this.getDatabaseClient());
-
 
     cron.schedule('0 0 * * *', () => {
       updateTargets(this.getOsuClient(), this.getSheetClient());
@@ -67,7 +64,7 @@ export default class TrackerServer {
     if (process.env['ENVIRONMENT'] === 'development')
       setInterval(() => {
         const used = process.memoryUsage().heapUsed / 1024 / 1024;
-        console.log(`This app is currently using ${Math.floor(used)} MB of memory.`);
+        if (used > 300) console.log(`This app is currently using ${Math.floor(used)} MB of memory.`);
       }, 5000);
 
     this.server = http.createServer(this.getApp()).listen('5173', () => {

@@ -11,8 +11,8 @@ export default class LeaderboardService extends AbstractService {
   }
 
   override registerRoutes(): void {
-    this.app.post('/api/leaderboard', () => {
-      this._updateCountryLeaderboardRequestHandler.bind(this);
+    this.app.post('/api/leaderboard', (req: Request, res: Response) => {
+      this._updateCountryLeaderboardRequestHandler(req, res);
     });
   }
 

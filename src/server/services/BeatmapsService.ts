@@ -12,14 +12,14 @@ export default class BeatmapsService extends AbstractService {
   }
 
   override registerRoutes(): void {
-    this.app.post('/api/beatmaps', () => {
-      this._importAllBeatmapsRequestHandler.bind(this);
+    this.app.post('/api/beatmaps', (req: Request, res: Response) => {
+      this._importAllBeatmapsRequestHandler(req, res);
     });
-    this.app.post('/api/beatmaps/missing', () => {
-      this._findAllMissingBeatmapsRequestHandler.bind(this);
+    this.app.post('/api/beatmaps/missing', (req: Request, res: Response) => {
+      this._findAllMissingBeatmapsRequestHandler(req, res);
     });
-    this.app.post('/api/beatmaps/recent', () => {
-      this._updateRecentBeatmapsRequestHandler.bind(this);
+    this.app.post('/api/beatmaps/recent', (req: Request, res: Response) => {
+      this._updateRecentBeatmapsRequestHandler(req, res);
     });
   }
 

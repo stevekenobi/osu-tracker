@@ -2,7 +2,7 @@ import type DatabaseClient from '../../client/DatabaseClient';
 import type OsuClient from '../../client/OsuClient';
 import type SheetClient from '../../client/SheetClient';
 import type { OsuUserBeatmap, OsuScore } from '../../types';
-import { createBeatmapLinkFromId, isBeatmapRankedApprovedOrLoved } from '../../utils';
+import { createBeatmapLinkFromId, delay, isBeatmapRankedApprovedOrLoved } from '../../utils';
 import { createBeatmapModelsFromOsuBeatmapsets } from './beatmaps';
 import numeral from 'numeral';
 
@@ -18,14 +18,15 @@ export async function updateAllScores(osuClient: OsuClient, databaseClient: Data
       continue;
     }
 
-    for (const beatmap of result.filter((r) => isBeatmapRankedApprovedOrLoved(r.beatmap) && r.beatmap.mode === 'osu')) {
+    result.filter((r) => isBeatmapRankedApprovedOrLoved(r.beatmap) && r.beatmap.mode === 'osu').forEach(async beatmap => {
       const score = await osuClient.getUserScoreOnBeatmap(beatmap.beatmap_id, 12375044);
       console.log(`${j + 1} - ${j + 100} score on ${beatmap.beatmap_id} ${score ? 'found' : 'not found'}`);
       if (score) {
         scores.push(score);
       } else unfinished.push(beatmap);
-    }
+    });
 
+    await delay(5000);
     j += 100;
 
     await updateScores(scores, osuClient, databaseClient);

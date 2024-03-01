@@ -1,6 +1,8 @@
 import TrackerServer from './server/server';
+
 import LeaderboardService from './server/services/LeaderboardService';
 import BeatmapsService from './server/services/BeatmapsService';
+import ScoresService from './server/services/ScoresService';
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -9,6 +11,7 @@ const server = new TrackerServer();
 
 server.registerService(LeaderboardService);
 server.registerService(BeatmapsService);
+server.registerService(ScoresService);
 
 function shutDownServer(): void {
   server

@@ -93,6 +93,7 @@ export async function findMissingBeatmaps(osuClient: OsuClient, databaseClient: 
       continue;
     }
     j += 100;
+    console.log(`getting ${j} out of about 115,000`);
 
     missingIds.push(...result.filter((b) => b.beatmap.mode === 'osu' && isBeatmapRankedApprovedOrLoved(b.beatmap)).filter((b) => !allBeatmapIds.includes(b.beatmap_id)).map(b => b.beatmapset.id));
 
