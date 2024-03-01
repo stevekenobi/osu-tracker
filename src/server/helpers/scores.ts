@@ -2,7 +2,7 @@ import type DatabaseClient from '../../client/DatabaseClient';
 import type OsuClient from '../../client/OsuClient';
 import type SheetClient from '../../client/SheetClient';
 import type { OsuUserBeatmap, OsuScore } from '../../types';
-import { createBeatmapLinkFromId, delay, isBeatmapRankedApprovedOrLoved } from '../../utils';
+import { createBeatmapLinkFromId, isBeatmapRankedApprovedOrLoved } from '../../utils';
 import { createBeatmapModelsFromOsuBeatmapsets } from './beatmaps';
 import numeral from 'numeral';
 
@@ -18,23 +18,21 @@ export async function updateAllScores(osuClient: OsuClient, databaseClient: Data
       continue;
     }
 
-    result
-      .filter((r) => isBeatmapRankedApprovedOrLoved(r.beatmap) && r.beatmap.mode === 'osu')
-      .forEach(async (beatmap) => {
-        const score = await osuClient.getUserScoreOnBeatmap(beatmap.beatmap_id, 12375044);
-        console.log(`${j + 1} - ${j + 100} score on ${beatmap.beatmap_id} ${score ? 'found' : 'not found'}`);
-        if (score) {
-          scores.push(score);
-        } else unfinished.push(beatmap);
-      });
+    for (const beatmap of result.filter((r) => isBeatmapRankedApprovedOrLoved(r.beatmap) && r.beatmap.mode === 'osu')) {
+      const score = await osuClient.getUserScoreOnBeatmap(beatmap.beatmap_id, 12375044);
+      console.log(`${j + 1} - ${j + 100} score on ${beatmap.beatmap_id} ${score ? 'found' : 'not found'}`);
+      if (score) {
+        scores.push(score);
+      } else unfinished.push(beatmap);
+    }
 
-    await delay(5000);
     j += 100;
 
     await updateScores(scores, osuClient, databaseClient);
     result = await osuClient.getUserBeatmaps(12375044, 'most_played', { limit: 100, offset: j });
   } while (result!.length > 0);
-  await sheetClient.updateNoScoreBeatmaps(unfinished.sort((a, b) => (a.beatmap.difficulty_rating > b.beatmap.difficulty_rating ? 1 : -1)).map(b => ({
+  unfinished.sort((a, b) => (a.beatmap.difficulty_rating > b.beatmap.difficulty_rating ? 1 : -1));
+  await sheetClient.updateNoScoreBeatmaps(unfinished.map(b => ({
     Link: createBeatmapLinkFromId(b.beatmap_id),
     Artist: b.beatmapset.artist,
     Title: b.beatmapset.title,
@@ -55,7 +53,7 @@ export async function updateRecentScores(osuClient: OsuClient, databaseClient: D
   if (!result) throw new Error('failed to get response for recent scores');
   if (result.length === 0) { console.log('no recent scores'); return; }
 
-  await updateScores(result.filter((r) => isBeatmapRankedApprovedOrLoved(r.beatmap) && r.beatmap.mode === 'osu').map(s => ({score: s})), osuClient, databaseClient);
+  await updateScores(result.filter((r) => isBeatmapRankedApprovedOrLoved(r.beatmap) && r.beatmap.mode === 'osu').map(s => ({ score: s })), osuClient, databaseClient);
 
   console.log('finished updating recent scores');
 }
@@ -81,22 +79,7 @@ export async function updateScores(scores: OsuScore[], osuClient: OsuClient, dat
     } catch (error) {
       const beatmapset = await osuClient.getBeatmapsetById(s.score.beatmap.beatmapset_id);
       await databaseClient.updateBeatmaps(createBeatmapModelsFromOsuBeatmapsets([beatmapset!]));
-
-      await databaseClient.updateScore({
-        id: s.score.beatmap.id,
-        accuracy: s.score.accuracy * 100,
-        max_combo: s.score.max_combo,
-        mode: s.score.mode,
-        mods: s.score.mods.join(','),
-        perfect: s.score.perfect,
-        pp: s.score.pp,
-        rank: s.score.rank,
-        score: s.score.score,
-        count_100: s.score.statistics.count_100,
-        count_300: s.score.statistics.count_300,
-        count_50: s.score.statistics.count_50,
-        count_miss: s.score.statistics.count_miss,
-      });
+      await updateScores(scores, osuClient, databaseClient);
     }
   }
 }

@@ -1,8 +1,8 @@
 import { createQuery, delay } from '../utils';
 import type { AxiosError } from 'axios';
 import axios from 'axios';
-import type { OsuLeaderboardResponse, OsuLeaderboardQuery, OsuBeatmapsetSearchResponse, OsuBeatmap, OsuBeatmapset, OsuUserBeatmap, OsuScore, OsuRecentScore, OsuUser } from '../types';
-import { type AuthDetails } from '../types';
+import type { OsuLeaderboardResponse, OsuLeaderboardQuery, OsuBeatmapsetSearchResponse, OsuBeatmap, OsuBeatmapset, OsuUserBeatmap, OsuScore, OsuRecentScore, OsuUser, AuthDetails } from '../types';
+
 const baseUrl = 'https://osu.ppy.sh/api/v2';
 const authUrl = ' https://osu.ppy.sh/oauth/token';
 
