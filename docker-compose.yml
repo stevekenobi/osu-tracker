@@ -1,5 +1,22 @@
 version: "3.5"
 services:
+  sonarqube:
+    image: sonarqube:community
+    hostname: sonarqube
+    container_name: sonarqube
+    depends_on:
+      - postgres
+    environment:
+      - SONAR_JDBC_URL=jdbc:postgresql://postgres:5432/dev
+      - SONAR_JDBC_USERNAME=user
+      - SONAR_JDBC_PASSWORD=password
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+    ports:
+      - "9000:9000"
+
   postgres:
     container_name: postgres_container
     image: postgres:15
@@ -9,6 +26,8 @@ services:
       - POSTGRES_DB=dev
     volumes:
       - postgres:/data/postgres
+      - postgresql:/var/lib/postgresql
+      - postgresql_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
 
