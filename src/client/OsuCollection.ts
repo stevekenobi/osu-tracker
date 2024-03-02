@@ -35,6 +35,7 @@ export class OsuCollection {
   }
 
   async write(): Promise<Buffer> {
+    // TODO calculate allocation
     const buffer = Buffer.allocUnsafe(1072);
     console.log('collection length', buffer.length);
     console.log('collection length', this.collectionCount);
