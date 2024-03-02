@@ -89,7 +89,6 @@ export async function findMissingBeatmaps(osuClient: OsuClient, databaseClient: 
   do {
     if (!result) {
       result = await osuClient.getUserBeatmaps(userId, 'most_played', { limit: 100, offset: j });
-      console.log('got here');
       continue;
     }
     j += 100;
