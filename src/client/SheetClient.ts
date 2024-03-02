@@ -24,7 +24,7 @@ export default class SheetClient {
     if (!sheet) throw new Error(`Sheet ${sheetTitle} not found`);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    return (await sheet.getRows<T>()).map(r => Object.fromEntries(Object.entries(r.toObject()).filter(([_, v]) => v != undefined)) as T);
+    return (await sheet.getRows<T>()).map(r => Object.fromEntries(Object.entries(r.toObject()).filter(([_, v]) => v !== undefined)) as T);
   }
 
   private async addRows<T extends Record<string, string | number>>(rows: T[], docId: string, sheetTitle: string): Promise<void> {
