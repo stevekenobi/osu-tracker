@@ -3,6 +3,7 @@ import type { AppBeatmap } from '../../src/types';
 export const beatmapData: AppBeatmap[] = [
   {
     'id': 1752,
+    'checksum': '1752',
     'beatmapsetId': 118,
     'artist': 'Kaufman',
     'title': 'Florida',
@@ -21,6 +22,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1404,
+    'checksum': '1404',
     'beatmapsetId': 1335,
     'artist': 'Castillo',
     'title': 'Northern Mariana Islands',
@@ -39,6 +41,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 319,
+    'checksum': '319',
     'beatmapsetId': 826,
     'artist': 'Middleton',
     'title': 'Idaho',
@@ -57,6 +60,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1099,
+    'checksum': '1099',
     'beatmapsetId': 2487,
     'artist': 'Short',
     'title': 'Wisconsin',
@@ -75,6 +79,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2348,
+    'checksum': '2348',
     'beatmapsetId': 2039,
     'artist': 'Miranda',
     'title': 'Connecticut',
@@ -93,6 +98,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 483,
+    'checksum': '483',
     'beatmapsetId': 2454,
     'artist': 'James',
     'title': 'North Dakota',
@@ -111,6 +117,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 685,
+    'checksum': '685',
     'beatmapsetId': 1774,
     'artist': 'Whitney',
     'title': 'Massachusetts',
@@ -129,6 +136,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2176,
+    'checksum': '2176',
     'beatmapsetId': 777,
     'artist': 'Monroe',
     'title': 'Mississippi',
@@ -147,6 +155,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1386,
+    'checksum': '1386',
     'beatmapsetId': 1949,
     'artist': 'Huffman',
     'title': 'Hawaii',
@@ -165,6 +174,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2852,
+    'checksum': '2852',
     'beatmapsetId': 1160,
     'artist': 'Giles',
     'title': 'New Hampshire',
@@ -183,6 +193,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1431,
+    'checksum': '1431',
     'beatmapsetId': 2389,
     'artist': 'Sherman',
     'title': 'Colorado',
@@ -201,6 +212,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2875,
+    'checksum': '2875',
     'beatmapsetId': 1913,
     'artist': 'Fuller',
     'title': 'Maine',
@@ -219,6 +231,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 583,
+    'checksum': '583',
     'beatmapsetId': 2845,
     'artist': 'Carson',
     'title': 'Palau',
@@ -237,6 +250,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 871,
+    'checksum': '871',
     'beatmapsetId': 3000,
     'artist': 'Kent',
     'title': 'Oregon',
@@ -255,6 +269,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1883,
+    'checksum': '1883',
     'beatmapsetId': 2797,
     'artist': 'Stone',
     'title': 'West Virginia',
@@ -273,6 +288,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2686,
+    'checksum': '2686',
     'beatmapsetId': 1801,
     'artist': 'White',
     'title': 'Alabama',
@@ -291,6 +307,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 388,
+    'checksum': '388',
     'beatmapsetId': 929,
     'artist': 'Blackwell',
     'title': 'Virginia',
@@ -309,6 +326,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2291,
+    'checksum': '2291',
     'beatmapsetId': 1244,
     'artist': 'Tillman',
     'title': 'Nebraska',
@@ -327,6 +345,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2938,
+    'checksum': '2938',
     'beatmapsetId': 1951,
     'artist': 'Thompson',
     'title': 'Washington',
@@ -345,6 +364,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1098,
+    'checksum': '1098',
     'beatmapsetId': 2810,
     'artist': 'Benjamin',
     'title': 'New York',
@@ -363,6 +383,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 221,
+    'checksum': '221',
     'beatmapsetId': 2361,
     'artist': 'Rodriguez',
     'title': 'Vermont',
@@ -381,6 +402,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 372,
+    'checksum': '372',
     'beatmapsetId': 1507,
     'artist': 'Bolton',
     'title': 'Tennessee',
@@ -399,6 +421,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 755,
+    'checksum': '755',
     'beatmapsetId': 276,
     'artist': 'Carver',
     'title': 'New Mexico',
@@ -417,6 +440,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 785,
+    'checksum': '785',
     'beatmapsetId': 2325,
     'artist': 'Wiley',
     'title': 'Montana',
@@ -435,6 +459,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2710,
+    'checksum': '2710',
     'beatmapsetId': 2924,
     'artist': 'Drake',
     'title': 'Alaska',
@@ -453,6 +478,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1809,
+    'checksum': '1809',
     'beatmapsetId': 216,
     'artist': 'Ryan',
     'title': 'Kentucky',
@@ -471,6 +497,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2123,
+    'checksum': '2123',
     'beatmapsetId': 1005,
     'artist': 'Mckenzie',
     'title': 'Arizona',
@@ -489,6 +516,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 809,
+    'checksum': '809',
     'beatmapsetId': 821,
     'artist': 'Moore',
     'title': 'Virgin Islands',
@@ -507,6 +535,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 444,
+    'checksum': '444',
     'beatmapsetId': 1485,
     'artist': 'Wells',
     'title': 'Ohio',
@@ -525,6 +554,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 831,
+    'checksum': '831',
     'beatmapsetId': 1920,
     'artist': 'Hendrix',
     'title': 'Guam',
@@ -543,6 +573,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 307,
+    'checksum': '307',
     'beatmapsetId': 2515,
     'artist': 'West',
     'title': 'Puerto Rico',
@@ -561,6 +592,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 936,
+    'checksum': '936',
     'beatmapsetId': 1185,
     'artist': 'Higgins',
     'title': 'South Carolina',
@@ -579,6 +611,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 351,
+    'checksum': '351',
     'beatmapsetId': 197,
     'artist': 'Macias',
     'title': 'Marshall Islands',
@@ -597,6 +630,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2207,
+    'checksum': '2207',
     'beatmapsetId': 677,
     'artist': 'Mckinney',
     'title': 'Kansas',
@@ -615,6 +649,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1940,
+    'checksum': '1940',
     'beatmapsetId': 1155,
     'artist': 'Bass',
     'title': 'Michigan',
@@ -633,6 +668,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1906,
+    'checksum': '1906',
     'beatmapsetId': 2660,
     'artist': 'Knight',
     'title': 'Missouri',
@@ -651,6 +687,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 107,
+    'checksum': '107',
     'beatmapsetId': 58,
     'artist': 'Cabrera',
     'title': 'Louisiana',
@@ -669,6 +706,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1470,
+    'checksum': '1470',
     'beatmapsetId': 2748,
     'artist': 'Jenkins',
     'title': 'District Of Columbia',
@@ -687,6 +725,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2286,
+    'checksum': '2286',
     'beatmapsetId': 2150,
     'artist': 'Sims',
     'title': 'Illinois',
@@ -705,6 +744,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2822,
+    'checksum': '2822',
     'beatmapsetId': 2072,
     'artist': 'Moss',
     'title': 'Delaware',
@@ -723,6 +763,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 520,
+    'checksum': '520',
     'beatmapsetId': 1641,
     'artist': 'Raymond',
     'title': 'Pennsylvania',
@@ -741,6 +782,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1544,
+    'checksum': '1544',
     'beatmapsetId': 2525,
     'artist': 'Harrington',
     'title': 'Oklahoma',
@@ -759,6 +801,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 119,
+    'checksum': '119',
     'beatmapsetId': 2591,
     'artist': 'Fitzgerald',
     'title': 'American Samoa',
@@ -777,6 +820,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2175,
+    'checksum': '2175',
     'beatmapsetId': 1563,
     'artist': 'Garrison',
     'title': 'Texas',
@@ -795,6 +839,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2156,
+    'checksum': '2156',
     'beatmapsetId': 2681,
     'artist': 'Lewis',
     'title': 'New Jersey',
@@ -813,6 +858,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1712,
+    'checksum': '1712',
     'beatmapsetId': 2382,
     'artist': 'Lloyd',
     'title': 'Indiana',
@@ -831,6 +877,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 900,
+    'checksum': '900',
     'beatmapsetId': 2003,
     'artist': 'Steele',
     'title': 'California',
@@ -849,6 +896,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1778,
+    'checksum': '1778',
     'beatmapsetId': 495,
     'artist': 'Barnett',
     'title': 'Minnesota',
@@ -867,6 +915,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2811,
+    'checksum': '2811',
     'beatmapsetId': 2995,
     'artist': 'Frye',
     'title': 'Rhode Island',
@@ -885,6 +934,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2328,
+    'checksum': '2328',
     'beatmapsetId': 1142,
     'artist': 'Doyle',
     'title': 'Arkansas',
@@ -903,6 +953,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1895,
+    'checksum': '1895',
     'beatmapsetId': 1048,
     'artist': 'Mathews',
     'title': 'Georgia',
@@ -921,6 +972,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1961,
+    'checksum': '1961',
     'beatmapsetId': 2828,
     'artist': 'Lancaster',
     'title': 'Federated States Of Micronesia',
@@ -939,6 +991,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2047,
+    'checksum': '2047',
     'beatmapsetId': 2751,
     'artist': 'Richardson',
     'title': 'North Carolina',
@@ -957,6 +1010,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 90,
+    'checksum': '90',
     'beatmapsetId': 2103,
     'artist': 'Campbell',
     'title': 'Wyoming',
@@ -975,6 +1029,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1563,
+    'checksum': '1563',
     'beatmapsetId': 1244,
     'artist': 'Bonner',
     'title': 'South Dakota',
@@ -993,6 +1048,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2559,
+    'checksum': '2559',
     'beatmapsetId': 1306,
     'artist': 'Odonnell',
     'title': 'Nevada',
@@ -1011,6 +1067,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2396,
+    'checksum': '2396',
     'beatmapsetId': 291,
     'artist': 'Simmons',
     'title': 'Iowa',
@@ -1029,6 +1086,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 3000,
+    'checksum': '3000',
     'beatmapsetId': 1981,
     'artist': 'Waller',
     'title': 'Maryland',
@@ -1047,6 +1105,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1144,
+    'checksum': '1144',
     'beatmapsetId': 499,
     'artist': 'Pope',
     'title': 'Utah',
@@ -1065,6 +1124,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2503,
+    'checksum': '2503',
     'beatmapsetId': 2286,
     'artist': 'Herring',
     'title': 'Florida',
@@ -1083,6 +1143,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2500,
+    'checksum': '2500',
     'beatmapsetId': 1360,
     'artist': 'Meyers',
     'title': 'Northern Mariana Islands',
@@ -1101,6 +1162,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1333,
+    'checksum': '1333',
     'beatmapsetId': 1094,
     'artist': 'Tyson',
     'title': 'Idaho',
@@ -1119,6 +1181,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 480,
+    'checksum': '480',
     'beatmapsetId': 1523,
     'artist': 'Tate',
     'title': 'Wisconsin',
@@ -1137,6 +1200,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 323,
+    'checksum': '323',
     'beatmapsetId': 1915,
     'artist': 'Booker',
     'title': 'Connecticut',
@@ -1155,6 +1219,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 313,
+    'checksum': '313',
     'beatmapsetId': 2922,
     'artist': 'Contreras',
     'title': 'North Dakota',
@@ -1173,6 +1238,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 384,
+    'checksum': '384',
     'beatmapsetId': 1423,
     'artist': 'Craft',
     'title': 'Massachusetts',
@@ -1191,6 +1257,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2350,
+    'checksum': '2350',
     'beatmapsetId': 1458,
     'artist': 'Gutierrez',
     'title': 'Mississippi',
@@ -1209,6 +1276,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2527,
+    'checksum': '2527',
     'beatmapsetId': 1488,
     'artist': 'Mathis',
     'title': 'Hawaii',
@@ -1227,6 +1295,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2949,
+    'checksum': '2949',
     'beatmapsetId': 848,
     'artist': 'Chang',
     'title': 'New Hampshire',
@@ -1245,6 +1314,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 404,
+    'checksum': '404',
     'beatmapsetId': 174,
     'artist': 'Alexander',
     'title': 'Colorado',
@@ -1263,6 +1333,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2293,
+    'checksum': '2293',
     'beatmapsetId': 114,
     'artist': 'Sexton',
     'title': 'Maine',
@@ -1281,6 +1352,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2964,
+    'checksum': '2964',
     'beatmapsetId': 1586,
     'artist': 'Chase',
     'title': 'Palau',
@@ -1299,6 +1371,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1394,
+    'checksum': '1394',
     'beatmapsetId': 327,
     'artist': 'Barr',
     'title': 'Oregon',
@@ -1317,6 +1390,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2610,
+    'checksum': '2610',
     'beatmapsetId': 2139,
     'artist': 'Shepard',
     'title': 'West Virginia',
@@ -1335,6 +1409,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1610,
+    'checksum': '1610',
     'beatmapsetId': 255,
     'artist': 'Rodriquez',
     'title': 'Alabama',
@@ -1353,6 +1428,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 395,
+    'checksum': '395',
     'beatmapsetId': 1161,
     'artist': 'Beasley',
     'title': 'Virginia',
@@ -1371,6 +1447,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 347,
+    'checksum': '347',
     'beatmapsetId': 1261,
     'artist': 'Lyons',
     'title': 'Nebraska',
@@ -1389,6 +1466,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1254,
+    'checksum': '1254',
     'beatmapsetId': 1005,
     'artist': 'Mcclain',
     'title': 'Washington',
@@ -1407,6 +1485,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1892,
+    'checksum': '1892',
     'beatmapsetId': 1841,
     'artist': 'Torres',
     'title': 'New York',
@@ -1425,6 +1504,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 48,
+    'checksum': '48',
     'beatmapsetId': 436,
     'artist': 'Mendoza',
     'title': 'Vermont',
@@ -1443,6 +1523,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1498,
+    'checksum': '1498',
     'beatmapsetId': 1747,
     'artist': 'Levy',
     'title': 'Tennessee',
@@ -1461,6 +1542,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1118,
+    'checksum': '1118',
     'beatmapsetId': 463,
     'artist': 'Glass',
     'title': 'New Mexico',
@@ -1479,6 +1561,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 794,
+    'checksum': '794',
     'beatmapsetId': 884,
     'artist': 'Cruz',
     'title': 'Montana',
@@ -1497,6 +1580,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 184,
+    'checksum': '184',
     'beatmapsetId': 405,
     'artist': 'Donovan',
     'title': 'Alaska',
@@ -1515,6 +1599,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2288,
+    'checksum': '2288',
     'beatmapsetId': 1840,
     'artist': 'Pena',
     'title': 'Kentucky',
@@ -1533,6 +1618,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 622,
+    'checksum': '622',
     'beatmapsetId': 44,
     'artist': 'Strickland',
     'title': 'Arizona',
@@ -1551,6 +1637,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2189,
+    'checksum': '2189',
     'beatmapsetId': 592,
     'artist': 'Griffin',
     'title': 'Virgin Islands',
@@ -1569,6 +1656,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 910,
+    'checksum': '910',
     'beatmapsetId': 1796,
     'artist': 'Hodge',
     'title': 'Ohio',
@@ -1587,6 +1675,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 535,
+    'checksum': '535',
     'beatmapsetId': 2532,
     'artist': 'Mcknight',
     'title': 'Guam',
@@ -1605,6 +1694,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1331,
+    'checksum': '1331',
     'beatmapsetId': 2195,
     'artist': 'Faulkner',
     'title': 'Puerto Rico',
@@ -1623,6 +1713,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1226,
+    'checksum': '1226',
     'beatmapsetId': 2844,
     'artist': 'Witt',
     'title': 'South Carolina',
@@ -1641,6 +1732,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1393,
+    'checksum': '1393',
     'beatmapsetId': 1351,
     'artist': 'Mcclure',
     'title': 'Marshall Islands',
@@ -1659,6 +1751,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2864,
+    'checksum': '2864',
     'beatmapsetId': 2448,
     'artist': 'Gomez',
     'title': 'Kansas',
@@ -1677,6 +1770,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 719,
+    'checksum': '719',
     'beatmapsetId': 2279,
     'artist': 'David',
     'title': 'Michigan',
@@ -1695,6 +1789,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 20,
+    'checksum': '20',
     'beatmapsetId': 544,
     'artist': 'Barnes',
     'title': 'Missouri',
@@ -1713,6 +1808,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2985,
+    'checksum': '2985',
     'beatmapsetId': 2087,
     'artist': 'Woods',
     'title': 'Louisiana',
@@ -1731,6 +1827,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 1575,
+    'checksum': '1575',
     'beatmapsetId': 2173,
     'artist': 'Watkins',
     'title': 'District Of Columbia',
@@ -1749,6 +1846,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 2007,
+    'checksum': '2007',
     'beatmapsetId': 2579,
     'artist': 'Walters',
     'title': 'Illinois',
@@ -1767,6 +1865,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 569,
+    'checksum': '569',
     'beatmapsetId': 98,
     'artist': 'Nielsen',
     'title': 'Delaware',
@@ -1785,6 +1884,7 @@ export const beatmapData: AppBeatmap[] = [
   },
   {
     'id': 342,
+    'checksum': '342',
     'beatmapsetId': 816,
     'artist': 'Cooley',
     'title': 'Pennsylvania',
