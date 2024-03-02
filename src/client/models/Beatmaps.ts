@@ -15,6 +15,7 @@ export class Beatmaps extends Model<InferAttributes<Beatmaps>, InferCreationAttr
   public declare HP: number;
   public declare BPM: number;
   public declare length: number;
+  public declare checksum: string;
   public declare status: string;
   public declare mode: string;
   public declare rankedDate: string;
@@ -86,6 +87,11 @@ export function initBeatmaps(sequelize: Sequelize): void {
       length: {
         type: DataTypes.INTEGER,
         allowNull: false,
+      },
+      checksum: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
       },
       status: {
         type: DataTypes.STRING,

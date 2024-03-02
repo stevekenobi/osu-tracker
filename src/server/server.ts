@@ -64,7 +64,7 @@ export default class TrackerServer {
     if (process.env['ENVIRONMENT'] === 'development')
       setInterval(() => {
         const used = process.memoryUsage().heapUsed / 1024 / 1024;
-        console.log(`This app is currently using ${Math.floor(used)} MB of memory.`);
+        if (used > 300) console.log(`This app is currently using ${Math.floor(used)} MB of memory.`);
       }, 5000);
 
     this.server = http.createServer(this.getApp()).listen('5173', () => {

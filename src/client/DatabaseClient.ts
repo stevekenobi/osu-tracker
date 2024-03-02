@@ -27,6 +27,7 @@ export default class DatabaseClient {
       logging: false,
     };
 
+    /* istanbul ignore next @preserve */
     if (databaseSecure === 'false') {
       delete options.dialectOptions.ssl;
     }
@@ -71,7 +72,7 @@ export default class DatabaseClient {
       result = await this.getProblematicBeatmaps();
     } else if (option === 'non-sd') {
       result = await this.getNonSDBeatmaps();
-    } else if (option === 'dt') {
+    } else {
       result = await this.getDTBeatmaps();
     }
     return result.sort((a, b) => a.difficulty > b.difficulty ? 1 : -1);

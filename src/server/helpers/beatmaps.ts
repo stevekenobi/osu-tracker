@@ -89,10 +89,10 @@ export async function findMissingBeatmaps(osuClient: OsuClient, databaseClient: 
   do {
     if (!result) {
       result = await osuClient.getUserBeatmaps(userId, 'most_played', { limit: 100, offset: j });
-      console.log('got here');
       continue;
     }
     j += 100;
+    console.log(`getting ${j} out of about 115,000`);
 
     missingIds.push(...result.filter((b) => b.beatmap.mode === 'osu' && isBeatmapRankedApprovedOrLoved(b.beatmap)).filter((b) => !allBeatmapIds.includes(b.beatmap_id)).map(b => b.beatmapset.id));
 
@@ -127,6 +127,7 @@ export function createBeatmapModelsFromOsuBeatmapsets(beatmapsets: OsuBeatmapset
           BPM: b.bpm,
           length: b.total_length,
           mode: b.mode,
+          checksum: b.checksum,
           status: b.status,
           rankedDate: s.ranked_date,
         })),
@@ -153,6 +154,7 @@ export function createBeatmapModelsFromOsuBeatmaps(beatmaps: OsuBeatmap[]): AppB
       HP: b.drain,
       BPM: b.bpm,
       length: b.total_length,
+      checksum: b.checksum,
       mode: b.mode,
       status: b.status,
       rankedDate: b.beatmapset.ranked_date,

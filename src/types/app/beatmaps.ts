@@ -13,6 +13,7 @@ export type AppBeatmap = {
   BPM: number;
   length: number;
   mode: string;
+  checksum: string;
   status: string;
   rankedDate: string;
   accuracy?: number | null;

@@ -29,6 +29,7 @@ export type OsuBeatmap = {
   mode: string,
   status: string,
   beatmapset: OsuBeatmapset;
+  checksum: string;
 };
 
 export type OsuUserBeatmap = {
