@@ -1,9 +1,16 @@
 import OsuBuffer from './OsuBuffer';
 
 export class OsuCollection {
-  public version: number = 0;
   public collectionCount: number = 0;
   public collections: OsuCollectionBeatmap[] = [];
+
+  constructor(public version: number = 0) {
+  }
+
+  addCollection(collection: OsuCollectionBeatmap): void {
+    this.collections.push(collection);
+    this.collectionCount++;
+  }
 
   async read(input: Buffer): Promise<void> {
     const buffer = new OsuBuffer(input);
@@ -25,6 +32,43 @@ export class OsuCollection {
 
       this.collections.push({ ...collection, beatmaps });
     }
+  }
+
+  async write(): Promise<Buffer> {
+    const buffer = Buffer.allocUnsafe(1072);
+    console.log('collection length', buffer.length);
+    console.log('collection length', this.collectionCount);
+    let position = 0;
+
+    buffer.writeInt32LE(this.version, position);
+    position += 4;
+
+    buffer.writeInt32LE(this.collectionCount, position);
+    position += 4;
+
+    for(const collection of this.collections) {
+
+      buffer[position++] = 11;
+
+      buffer[position++] = collection.name.length;
+
+      buffer.write(collection.name, position, 'utf-8');
+      position += collection.name.length;
+
+      buffer.writeInt32LE(collection.beatmapCount, position);
+      position += 4;
+
+      for(const b of collection.beatmaps) {
+        buffer[position++] = 11;
+  
+        buffer[position++] = b.length;
+  
+        buffer.write(b, position, 'utf-8');
+        position += b.length;
+      }
+    }
+
+    return buffer;
   }
 }
 
