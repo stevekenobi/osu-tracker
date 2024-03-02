@@ -91,6 +91,7 @@ export function initBeatmaps(sequelize: Sequelize): void {
       checksum: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
       status: {
         type: DataTypes.STRING,
