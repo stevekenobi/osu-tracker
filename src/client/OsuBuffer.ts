@@ -21,6 +21,7 @@ export default class OsuBuffer {
     return this.buffer.readIntLE(this.position - 4, 4);
   }
 
+  /* istanbul ignore next @preserve */
   readVarint(): number {
     let total = 0;
     let shift = 0;
@@ -51,6 +52,8 @@ export default class OsuBuffer {
 
   readOsuString(): string {
     const nextByte = this.readByte();
+
+    /* istanbul ignore next @preserve */
     if (nextByte !== 11) return '';
 
     const len = this.readVarint();

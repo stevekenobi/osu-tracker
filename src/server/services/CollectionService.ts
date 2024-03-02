@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import AbstractService from '../AbstractService';
 import fs from 'fs/promises';
-import { OsuCollection } from '../../client/OsuCollection';
+import { OsuCollectionFile } from '../../client/OsuCollection';
 import { getCollections } from '../helpers/collection';
 import path from 'path';
 
@@ -21,7 +21,7 @@ export default class CollectionService extends AbstractService {
 
   private async _getCollectionRequestHandler(_req: Request, res: Response): Promise<void> {
     const collections = await getCollections(this.databaseClient, this.sheetClient);
-    const osuCollection = new OsuCollection(20240123);
+    const osuCollection = new OsuCollectionFile(20240123);
     collections.forEach(c => {
       osuCollection.addCollection(c);
     });

@@ -1,13 +1,13 @@
 import OsuBuffer from './OsuBuffer';
 
-export class OsuCollection {
+export class OsuCollectionFile {
   public collectionCount: number = 0;
-  public collections: OsuCollectionBeatmap[] = [];
+  public collections: OsuCollection[] = [];
 
   constructor(public version: number = 0) {
   }
 
-  addCollection(collection: OsuCollectionBeatmap): void {
+  addCollection(collection: OsuCollection): void {
     this.collections.push(collection);
     this.collectionCount++;
   }
@@ -19,7 +19,7 @@ export class OsuCollection {
     this.collectionCount = buffer.readInt();
 
     for (let i = 0; i < this.collectionCount; i++) {
-      const collection: OsuCollectionBeatmap = {
+      const collection: OsuCollection = {
         name: buffer.readOsuString(),
         beatmapCount: buffer.readInt(),
         beatmaps: [],
@@ -70,7 +70,7 @@ export class OsuCollection {
   }
 }
 
-export type OsuCollectionBeatmap = {
+export type OsuCollection = {
   name: string;
   beatmapCount: number,
   beatmaps: string[]

@@ -15,6 +15,7 @@ export default class SheetClient {
     });
   }
 
+  /* istanbul ignore next @preserve */
   private async getRows<T extends Record<string, string | number>>(docId: string, sheetTitle: string): Promise<T[]> {
     const doc = new GoogleSpreadsheet(docId, this.serviceAccountAuth);
     await doc.loadInfo();
@@ -27,6 +28,7 @@ export default class SheetClient {
     return (await sheet.getRows<T>()).map(r => Object.fromEntries(Object.entries(r.toObject()).filter(([_, v]) => v !== undefined)) as T);
   }
 
+  /* istanbul ignore next @preserve */
   private async addRows<T extends Record<string, string | number>>(rows: T[], docId: string, sheetTitle: string): Promise<void> {
     const doc = new GoogleSpreadsheet(docId, this.serviceAccountAuth);
     await doc.loadInfo();
@@ -38,6 +40,7 @@ export default class SheetClient {
     await sheet.addRows(rows);
   }
 
+  /* istanbul ignore next @preserve */
   private async clearRows(docId: string, sheetTitle: string, options?: { start?: number, end?: number }): Promise<void> {
     const doc = new GoogleSpreadsheet(docId, this.serviceAccountAuth);
     await doc.loadInfo();

@@ -1,11 +1,11 @@
 import type DatabaseClient from '../../client/DatabaseClient';
 import type SheetClient from '../../client/SheetClient';
-import type { OsuCollectionBeatmap } from '../../client/OsuCollection';
+import type { OsuCollection } from '../../client/OsuCollection';
 import { extractIdFromLink } from '../../utils';
 import { Op } from 'sequelize';
 
-export async function getCollections(databaseClient: DatabaseClient, sheetClient: SheetClient): Promise<OsuCollectionBeatmap[]> {
-  const collections: OsuCollectionBeatmap[] = [];
+export async function getCollections(databaseClient: DatabaseClient, sheetClient: SheetClient): Promise<OsuCollection[]> {
+  const collections: OsuCollection[] = [];
 
   const dtBeatmaps = await databaseClient.getDTBeatmaps();
   collections.push({

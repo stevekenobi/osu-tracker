@@ -6,7 +6,7 @@ export default defineConfig({
     globals: true,
     setupFiles: ['./tests/setup.ts'],
     coverage: {
-      provider: 'v8',
+      provider: 'istanbul',
       thresholds: {
         '100': true,
       },
