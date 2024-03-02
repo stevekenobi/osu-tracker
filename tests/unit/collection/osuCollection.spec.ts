@@ -22,10 +22,9 @@ describe('osuCollection', () => {
       const result = await osuCollection.write();
 
       const buffer = await fs.readFile(path.join(__dirname, '../../data/collection.db'));
-      console.log(buffer);
-      console.log(result);
 
       expect(result).toStrictEqual(buffer);
+      expect(result.length).toBe(buffer.length);
     });
   });
 });
