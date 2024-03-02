@@ -60,24 +60,24 @@ export default class SheetClient {
 
   async updateBeatmapsOfYear(year: string, beatmaps: SheetBeatmap[]): Promise<void> {
     await this.clearRows(this.beatmaps_sheet_id, year, { start: 2 });
-    await this.addRows(beatmaps, this.beatmaps_sheet_id,year);
+    await this.addRows(beatmaps, this.beatmaps_sheet_id, year);
   }
 
   async getBeatmapsOfYear(year: string): Promise<SheetBeatmap[]> {
-    return this.getRows(this.beatmaps_sheet_id,year);
+    return this.getRows(this.beatmaps_sheet_id, year);
   }
 
   async updateStats(stats: SheetStats[]): Promise<void> {
     await this.clearRows(this.beatmaps_sheet_id, 'Stats', { start: 2, end: 22 });
-    await this.addRows(stats, this.beatmaps_sheet_id,'Stats');
+    await this.addRows(stats, this.beatmaps_sheet_id, 'Stats');
   }
 
   async getStats(): Promise<SheetStats[]> {
-    return this.getRows(this.beatmaps_sheet_id,'Stats');
+    return this.getRows(this.beatmaps_sheet_id, 'Stats');
   }
 
   async updateMissingBeatmaps(ids: number[]): Promise<void> {
-    await this.addRows(ids.map(i => ({Id: i})), this.missing_beatmaps_sheet_id,'Missing');
+    await this.addRows(ids.map(i => ({ Id: i })), this.missing_beatmaps_sheet_id, 'Missing');
   }
 
   async clearMissingBeatmaps(): Promise<void> {
@@ -85,20 +85,20 @@ export default class SheetClient {
   }
 
   async getMissingBeatmaps(): Promise<string[]> {
-    return (await this.getRows<{Id: string}>(this.missing_beatmaps_sheet_id,'Missing')).map(x => x.Id);
+    return (await this.getRows<{ Id: string }>(this.missing_beatmaps_sheet_id, 'Missing')).map(x => x.Id);
   }
 
   async updateNoScoreBeatmaps(beatmaps: SheetNoScoreBeatmap[]): Promise<void> {
     await this.clearRows(this.unfinished_sheet_id, 'No Score', { start: 2 });
-    await this.addRows(beatmaps, this.unfinished_sheet_id,'No Score');
+    await this.addRows(beatmaps, this.unfinished_sheet_id, 'No Score');
   }
 
   async getNoScoreBeatmaps(): Promise<SheetNoScoreBeatmap[]> {
-    return this.getRows(this.unfinished_sheet_id,'No Score');
+    return this.getRows(this.unfinished_sheet_id, 'No Score');
   }
 
   async getUnfinishedBeatmaps(title: string): Promise<SheetBeatmap[]> {
-    return this.getRows(this.unfinished_sheet_id,title);
+    return this.getRows(this.unfinished_sheet_id, title);
   }
 
   async updateProblematicBeatmaps(beatmaps: SheetBeatmap[]): Promise<void> {
@@ -115,7 +115,7 @@ export default class SheetClient {
 
   private async updateUnfinishedBeatmaps(beatmaps: SheetBeatmap[], title: string): Promise<void> {
     await this.clearRows(this.unfinished_sheet_id, title, { start: 2 });
-    await this.addRows(beatmaps, this.unfinished_sheet_id,title);
+    await this.addRows(beatmaps, this.unfinished_sheet_id, title);
   }
 
   async updateTargets(targets: SheetTarget[]): Promise<void> {

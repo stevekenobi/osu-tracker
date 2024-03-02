@@ -36,8 +36,6 @@ export class OsuCollection {
 
   async write(): Promise<Buffer> {
     const buffer = Buffer.allocUnsafe(8 + this.collections.reduce((a, b) => a + 2 + b.name.length + 4 + b.beatmaps.reduce((c, d) => c + 2 + d.length, 0), 0));
-    console.log('collection length', buffer.length);
-    console.log('collection length', this.collectionCount);
     let position = 0;
 
     buffer.writeInt32LE(this.version, position);
