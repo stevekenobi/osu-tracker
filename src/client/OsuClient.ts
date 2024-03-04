@@ -17,6 +17,7 @@ export default class OsuClient {
       const response = await axios.get<T>(`${baseUrl}/${requestUrl}`, {
         headers: {
           Authorization: `Bearer ${this.authToken}`,
+          'x-api-version': '20240130',
         },
       });
       return response.data;
