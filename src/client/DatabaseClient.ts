@@ -14,7 +14,7 @@ type TrackerOptions = {
 };
 
 export default class DatabaseClient {
-  private sequelizeSingleton: Sequelize | undefined = undefined;
+  private sequelizeSingleton: Sequelize | null = null;
 
   constructor(databaseUrl: string, databaseSecure: string) {
     const options: TrackerOptions = {
@@ -43,7 +43,7 @@ export default class DatabaseClient {
 
   async closeConnection(): Promise<void> {
     await this.getSequelizeSingleton().close();
-    this.sequelizeSingleton = undefined;
+    this.sequelizeSingleton = null;
   }
 
   getSequelizeSingleton(): Sequelize {
@@ -92,7 +92,9 @@ export default class DatabaseClient {
 
   async updateScore(score: AppScore): Promise<void> {
     const beatmap = await Beatmaps.findByPk(score.id);
-    if (!beatmap) throw new Error(`beatmap ${score.id} not found in database`);
+    if (!beatmap) {
+      throw new Error(`beatmap ${score.id} not found in database`);
+    }
 
     if (!beatmap.score || beatmap.score === null) {
       await Beatmaps.update(score, { where: { id: score.id } });

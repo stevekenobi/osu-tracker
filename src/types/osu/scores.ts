@@ -3,15 +3,12 @@ import type { OsuBeatmap, OsuBeatmapset } from './beatmaps';
 export type OsuScore = {
   score: {
     id: number;
-    mods: {
-      acronym: string,
-      settings: {
-        speed_change: string
-      }
-    }[]
+    mods: OsuMod[]
     statistics: {
       ok: number
       great: number
+      meh: number
+      miss: number
       ignore_hit: number
       ignore_miss: number
       large_bonus: number
@@ -25,7 +22,7 @@ export type OsuScore = {
     accuracy: number,
     is_perfect_combo: boolean,
     max_combo: number,
-    pp: number | null,
+    pp: number,
     total_score: number,
     beatmap: {
       beatmapset_id: number,
@@ -37,22 +34,35 @@ export type OsuScore = {
 
 export type OsuRecentScore = {
   id: number;
-  accuracy: number;
-  score: number;
-  max_combo: number;
-  mode: string;
-  mods: string[];
-  pp: number;
-  perfect: boolean;
-  rank: string;
-  created_at: string;
-  user_id: number;
+  mods: OsuMod[]
   statistics: {
-    count_100: number,
-    count_300: number,
-    count_50: number,
-    count_miss: number
+    ok: number
+    great: number
+    meh: number
+    miss: number
+    ignore_hit: number
+    ignore_miss: number
+    large_bonus: number
+    small_bonus: number
+    large_tick_hit: number
+    slider_tail_hit: number
   },
+  ruleset_id: number
+  ended_at: string
+  rank: string,
+  accuracy: number,
+  is_perfect_combo: boolean,
+  max_combo: number,
+  pp: number,
+  total_score: number,
+  user_id: number;
   beatmap: OsuBeatmap;
   beatmapset: OsuBeatmapset;
+};
+
+export type OsuMod = {
+  acronym: string,
+  settings?: {
+    [key:string]: number | string
+  }
 };

@@ -34,7 +34,9 @@ export async function importAllBeatmaps(osuClient: OsuClient, databaseClient: Da
 
   for (const id of missingBeatmapIds) {
     const beatmapset = await osuClient.getBeatmapsetById(id);
-    if (!beatmapset) throw new Error(`Did not find ${id}`);
+    if (!beatmapset) {
+      throw new Error(`Did not find ${id}`);
+    }
     await databaseClient.updateBeatmaps(createBeatmapModelsFromOsuBeatmapsets([beatmapset]));
   }
 
@@ -46,6 +48,7 @@ export async function syncBeatmapsSheet(databaseClient: DatabaseClient, sheetCli
   const stats: SheetStats[] = [];
   for (const year of years) {
     const beatmaps = await databaseClient.getBeatmapsOfYear(year);
+    console.log(beatmaps.length)
     await sheetClient.updateBeatmapsOfYear(
       year,
       createSheetBeatmapsFromApp(

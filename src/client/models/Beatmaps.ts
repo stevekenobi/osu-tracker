@@ -26,9 +26,9 @@ export class Beatmaps extends Model<InferAttributes<Beatmaps>, InferCreationAttr
   public declare pp?: number;
   public declare rank?: string;
   public declare score?: number;
-  public declare count_100?: number;
-  public declare count_300?: number;
-  public declare count_50?: number;
+  public declare count_ok?: number;
+  public declare count_great?: number;
+  public declare count_meh?: number;
   public declare count_miss?: number;
 }
 
@@ -133,15 +133,15 @@ export function initBeatmaps(sequelize: Sequelize): void {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      count_100: {
+      count_ok: {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      count_300: {
+      count_great: {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      count_50: {
+      count_meh: {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
