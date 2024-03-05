@@ -157,6 +157,10 @@ export default class SheetClient {
     await this.updateUnfinishedBeatmaps(beatmaps, 'DT');
   }
 
+  async updateArankBeatmaps(beatmaps: SheetBeatmap[]): Promise<void> {
+    await this.updateUnfinishedBeatmaps(beatmaps, 'A Ranks');
+  }
+
   private async updateUnfinishedBeatmaps(beatmaps: SheetBeatmap[], title: string): Promise<void> {
     await this.clearRows(this.unfinished_sheet_id, title, { start: 2 });
     await this.addRows(beatmaps, this.unfinished_sheet_id, title);

@@ -52,10 +52,7 @@ export default class TrackerServer {
     cron.schedule('0 * * * *', () => {
       importNewScoresJob(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
     });
-
-    cron.schedule('0 0 * * *', () => {
-      updateTargets(this.getOsuClient(), this.getSheetClient());
-    });
+    importNewScoresJob(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
 
     cron.schedule('0 0 * * *', () => {
       updateTargets(this.getOsuClient(), this.getSheetClient());

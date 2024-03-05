@@ -1,8 +1,8 @@
 import type DatabaseClient from '../../client/DatabaseClient';
 import type OsuClient from '../../client/OsuClient';
 import type SheetClient from '../../client/SheetClient';
-import type { OsuBeatmapset, AppBeatmap, OsuBeatmap, AppBeatmapset, SheetBeatmap, SheetStats } from '../../types';
-import { isBeatmapRankedApprovedOrLoved, getYearsUntilToday, delay, createBeatmapLinkFromId } from '../../utils';
+import type { SheetStats, OsuBeatmapset, AppBeatmap, OsuBeatmap, AppBeatmapset, SheetBeatmap } from '../../types';
+import { getYearsUntilToday, isBeatmapRankedApprovedOrLoved, delay, createBeatmapLinkFromId } from '../../utils';
 import numeral from 'numeral';
 
 export async function importLatestBeatmaps(osuClient: OsuClient, databaseClient: DatabaseClient): Promise<void> {
@@ -59,6 +59,8 @@ export async function syncBeatmapsSheet(databaseClient: DatabaseClient, sheetCli
           .sort((a, b) => (a.beatmaps[0]!.rankedDate > b.beatmaps[0]!.rankedDate ? 1 : -1))
           .flatMap((s) => s.beatmaps),
       ));
+
+    await sheetClient.updateStats(stats);
     console.log(`finished ${year}`);
     const playedBeatmaps = beatmaps.filter((b) => b.rank);
     const totalScore = playedBeatmaps.reduce((sum, b) => sum + (b.score ? b.score : 0), 0);
@@ -82,6 +84,7 @@ export async function syncBeatmapsSheet(databaseClient: DatabaseClient, sheetCli
   await sheetClient.updateProblematicBeatmaps(createSheetBeatmapsFromApp(await databaseClient.getUnfinishedBeatmaps('problematic')));
   await sheetClient.updateNonSDBeatmaps(createSheetBeatmapsFromApp(await databaseClient.getUnfinishedBeatmaps('non-sd')));
   await sheetClient.updateDtBeatmaps(createSheetBeatmapsFromApp(await databaseClient.getUnfinishedBeatmaps('dt')));
+  await sheetClient.updateArankBeatmaps(createSheetBeatmapsFromApp(await databaseClient.getUnfinishedBeatmaps('a-ranks')));
 
   console.log('finished syncing beatmaps sheet');
 }

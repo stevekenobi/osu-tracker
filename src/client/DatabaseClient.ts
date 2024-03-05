@@ -66,28 +66,34 @@ export default class DatabaseClient {
     return (await Beatmaps.findAll({ where: { rankedDate: { [Op.like]: `${year}%` } } })).map(b => b.toJSON());
   }
 
-  async getUnfinishedBeatmaps(option: 'problematic' | 'non-sd' | 'dt'): Promise<AppBeatmap[]> {
+  async getUnfinishedBeatmaps(option: 'problematic' | 'non-sd' | 'dt' | 'a-ranks'): Promise<AppBeatmap[]> {
     let result: AppBeatmap[] = [];
     if (option === 'problematic') {
       result = await this.getProblematicBeatmaps();
     } else if (option === 'non-sd') {
       result = await this.getNonSDBeatmaps();
-    } else {
+    } else if (option === 'dt') {
       result = await this.getDTBeatmaps();
+    } else {
+      result = await this.getArankBeatmaps();
     }
     return result.sort((a, b) => a.difficulty > b.difficulty ? 1 : -1);
   }
 
-  async getProblematicBeatmaps(): Promise<AppBeatmap[]> {
+  private async getProblematicBeatmaps(): Promise<AppBeatmap[]> {
     return (await Beatmaps.findAll({ where: { perfect: false } })).map(b => b.toJSON());
   }
 
-  async getNonSDBeatmaps(): Promise<AppBeatmap[]> {
+  private async getNonSDBeatmaps(): Promise<AppBeatmap[]> {
     return (await Beatmaps.findAll({ where: { mods: { [Op.notLike]: '%SD%' } } })).map(b => b.toJSON());
   }
 
-  async getDTBeatmaps(): Promise<AppBeatmap[]> {
+  private async getDTBeatmaps(): Promise<AppBeatmap[]> {
     return (await Beatmaps.findAll({ where: { mods: { [Op.like]: '%DT%' } } })).map(b => b.toJSON());
+  }
+
+  private async getArankBeatmaps(): Promise<AppBeatmap[]> {
+    return (await Beatmaps.findAll({ where: { rank: 'A' } })).map(b => b.toJSON());
   }
 
   async updateScore(score: AppScore): Promise<void> {

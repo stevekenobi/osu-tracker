@@ -7,25 +7,32 @@ import { Op } from 'sequelize';
 export async function getCollections(databaseClient: DatabaseClient, sheetClient: SheetClient): Promise<OsuCollection[]> {
   const collections: OsuCollection[] = [];
 
-  const dtBeatmaps = await databaseClient.getDTBeatmaps();
+  const dtBeatmaps = await databaseClient.getUnfinishedBeatmaps('dt');
   collections.push({
     name: 'DT',
     beatmapCount: dtBeatmaps.length,
     beatmaps: dtBeatmaps.map(b => b.checksum),
   });
 
-  const nonSdBeatmaps = await databaseClient.getNonSDBeatmaps();
+  const nonSdBeatmaps = await databaseClient.getUnfinishedBeatmaps('non-sd');
   collections.push({
     name: 'Non SD',
     beatmapCount: nonSdBeatmaps.length,
     beatmaps: nonSdBeatmaps.map(b => b.checksum),
   });
 
-  const nonFcBeatmaps = await databaseClient.getProblematicBeatmaps();
+  const nonFcBeatmaps = await databaseClient.getUnfinishedBeatmaps('problematic');
   collections.push({
     name: 'Non FC',
     beatmapCount: nonFcBeatmaps.length,
     beatmaps: nonFcBeatmaps.map(b => b.checksum),
+  });
+
+  const aRankBeatmaps = await databaseClient.getUnfinishedBeatmaps('a-ranks');
+  collections.push({
+    name: 'A ranks',
+    beatmapCount: aRankBeatmaps.length,
+    beatmaps: aRankBeatmaps.map(b => b.checksum),
   });
 
   const unfinishedBeatmaps = await sheetClient.getNoScoreBeatmaps();
