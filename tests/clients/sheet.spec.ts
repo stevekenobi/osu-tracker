@@ -1,4 +1,5 @@
 import SheetClient from '../../src/client/SheetClient';
+import { delay } from '../../src/utils';
 
 const sheetClient = new SheetClient('1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc');
 
@@ -195,7 +196,7 @@ describe.concurrent('sheet client', () => {
       ${'updateDtBeatmaps'}          | ${'DT'}
       ${'updateArankBeatmaps'}       | ${'A Ranks'}
       ${'updateSuboptimalBeatmaps'}  | ${'Sub Optimal'}
-    `('updates unfinished', async (obj: { method: 'updateProblematicBeatmaps' | 'updateNonSDBeatmaps' | 'updateDtBeatmaps' | 'updateArankBeatmaps' | 'updateSuboptimalBeatmaps', title: 'Problematic' | 'Non SD' | 'DT' | 'A Ranks' | 'Sub Optimal' }) => {
+    `('updates $title', async (obj: { method: 'updateProblematicBeatmaps' | 'updateNonSDBeatmaps' | 'updateDtBeatmaps' | 'updateArankBeatmaps' | 'updateSuboptimalBeatmaps', title: 'Problematic' | 'Non SD' | 'DT' | 'A Ranks' | 'Sub Optimal' }) => {
       await sheetClient[obj.method]([
         {
           Link: 'https://osu.ppy.sh/b/123',
@@ -213,6 +214,8 @@ describe.concurrent('sheet client', () => {
           Length: '124',
         },
       ]);
+
+      await delay(3000);
 
       const result = await sheetClient.getUnfinishedBeatmaps(obj.title);
       expect(result).toStrictEqual([
