@@ -108,7 +108,8 @@ export default class TrackerServer {
 
   _initServices(): void {
     this.services.forEach((service: AbstractService) => {
-      console.log(`initializing ${typeof service}`);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+      console.log(`initializing ${(service as any).constructor.name}`);
       service.init();
       service.registerRoutes();
     });
