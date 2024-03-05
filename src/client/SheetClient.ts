@@ -33,8 +33,8 @@ export default class SheetClient {
       return (await sheet.getRows<T>()).map(r => Object.fromEntries(Object.entries(r.toObject()).filter(([_, v]) => v !== undefined)) as T);
     } catch (err: unknown) {
       const error = err as AxiosError;
-      if (error.code === 'ERR_BAD_RESPONSE') {
-        console.log(`ERR_BAD_RESPONSE at getting ${sheetTitle}`);
+      if (error.code === 'ERR_BAD_RESPONSE' || error.code === 'ERR_BAD_REQUEST') {
+        console.log(`${error.code} at getting ${sheetTitle}`);
         await delay(10000);
         const response = await this.getRows<T>(docId, sheetTitle);
         return response;
@@ -58,8 +58,8 @@ export default class SheetClient {
       await sheet.addRows(rows);
     } catch (err: unknown) {
       const error = err as AxiosError;
-      if (error.code === 'ERR_BAD_RESPONSE') {
-        console.log(`ERR_BAD_RESPONSE at adding in ${sheetTitle}`);
+      if (error.code === 'ERR_BAD_RESPONSE' || error.code === 'ERR_BAD_REQUEST') {
+        console.log(`${error.code} at adding in ${sheetTitle}`);
         await delay(10000);
         const response = await this.addRows<T>(rows, docId, sheetTitle);
         return response;
@@ -83,8 +83,8 @@ export default class SheetClient {
       await sheet.clearRows(options);
     } catch (err: unknown) {
       const error = err as AxiosError;
-      if (error.code === 'ERR_BAD_RESPONSE') {
-        console.log(`ERR_BAD_RESPONSE at adding in ${sheetTitle}`);
+      if (error.code === 'ERR_BAD_RESPONSE' || error.code === 'ERR_BAD_REQUEST') {
+        console.log(`${error.code} at clearing in ${sheetTitle}`);
         await delay(10000);
         const response = await this.clearRows(docId, sheetTitle, options);
         return response;
