@@ -12,11 +12,12 @@ export default class OsuClient {
   constructor(private readonly authDetails: AuthDetails) {
   }
 
-  private async getRequest<T>(requestUrl: string): Promise<T | undefined> {
+  private async getRequest<T>(requestUrl: string): Promise<T | null> {
     try {
       const response = await axios.get<T>(`${baseUrl}/${requestUrl}`, {
         headers: {
           Authorization: `Bearer ${this.authToken}`,
+          'x-api-version': '20240130',
         },
       });
       return response.data;
@@ -24,16 +25,19 @@ export default class OsuClient {
       const error = err as AxiosError;
       if (error.response?.status === 401) {
         await this.authenticate();
-        return await this.getRequest(requestUrl);
+        const response = await this.getRequest<T>(requestUrl);
+        return response;
       } else if (error.response?.status === 404) {
-        return undefined;
+        return null;
       } else if (error.response?.status === 429) {
         console.log(`osu returned a 429 on ${requestUrl}`);
         await delay(60000);
-        return await this.getRequest(requestUrl);
+        const response = await this.getRequest<T>(requestUrl);
+        return response;
       } else if (error.response?.status === 502 || error.response?.status === 504) {
         await delay(1000);
-        return await this.getRequest(requestUrl);
+        const response = await this.getRequest<T>(requestUrl);
+        return response;
       }
       console.log(error);
       throw error;
@@ -61,39 +65,48 @@ export default class OsuClient {
     this.authToken = response.data.access_token;
   }
 
-  async getUserById(id: number): Promise<OsuUser | undefined> {
-    return await this.getRequest(`users/${id}`);
+  async getUserById(id: number): Promise<OsuUser | null> {
+    const response = await this.getRequest<OsuUser>(`users/${id}`);
+    return response;
   }
 
-  async getBeatmapsetById(id: number | string): Promise<OsuBeatmapset | undefined> {
-    return await this.getRequest(`beatmapsets/${id}`);
+  async getBeatmapsetById(id: number | string): Promise<OsuBeatmapset | null> {
+    const response = await this.getRequest<OsuBeatmapset>(`beatmapsets/${id}`);
+    return response;
   }
 
-  async getBeatmapById(id: number | string): Promise<OsuBeatmap | undefined> {
-    return await this.getRequest(`beatmaps/${id}`);
+  async getBeatmapById(id: number | string): Promise<OsuBeatmap | null> {
+    const response = await this.getRequest<OsuBeatmap>(`beatmaps/${id}`);
+    return response;
   }
 
-  async getBeatmapsetSearch(query?: {cursor_string: string}): Promise<OsuBeatmapsetSearchResponse | undefined> {
-    return await this.getRequest(`beatmapsets/search${createQuery(query)}`);
+  async getBeatmapsetSearch(query?: {cursor_string: string}): Promise<OsuBeatmapsetSearchResponse | null> {
+    const response = await this.getRequest<OsuBeatmapsetSearchResponse>(`beatmapsets/search${createQuery(query)}`);
+    return response;
   }
 
-  async getCountryLeaderboard(query?: Partial<OsuLeaderboardQuery>): Promise<OsuLeaderboardResponse | undefined> {
-    return await this.getRequest<OsuLeaderboardResponse>(`rankings/osu/performance${createQuery(query)}`);
+  async getCountryLeaderboard(query?: Partial<OsuLeaderboardQuery>): Promise<OsuLeaderboardResponse | null> {
+    const response = await this.getRequest<OsuLeaderboardResponse>(`rankings/osu/performance${createQuery(query)}`);
+    return response;
   }
 
-  async getScoreLeaderboard(query?: Partial<OsuLeaderboardQuery>): Promise<OsuLeaderboardResponse | undefined> {
-    return await this.getRequest(`rankings/osu/score${createQuery(query)}`);
+  async getScoreLeaderboard(query?: Partial<OsuLeaderboardQuery>): Promise<OsuLeaderboardResponse | null> {
+    const response = await this.getRequest<OsuLeaderboardResponse>(`rankings/osu/score${createQuery(query)}`);
+    return response;
   }
 
-  async getUserBeatmaps(id: number, type: 'most_played', query?: Partial<{ limit: number, offset: number }>): Promise<OsuUserBeatmap[] | undefined> {
-    return await this.getRequest(`users/${id}/beatmapsets/${type}${createQuery(query)}`);
+  async getUserBeatmaps(id: number, type: 'most_played', query?: Partial<{ limit: number, offset: number }>): Promise<OsuUserBeatmap[] | null> {
+    const response = await this.getRequest<OsuUserBeatmap[]>(`users/${id}/beatmapsets/${type}${createQuery(query)}`);
+    return response;
   }
 
-  async getUserRecentScores(id: number): Promise<OsuRecentScore[] | undefined> {
-    return await this.getRequest(`users/${id}/scores/recent`);
+  async getUserRecentScores(id: number): Promise<OsuRecentScore[] | null> {
+    const response = await this.getRequest<OsuRecentScore[]>(`users/${id}/scores/recent`);
+    return response;
   }
 
-  async getUserScoreOnBeatmap(beatmapId: number, userId: number): Promise<OsuScore | undefined> {
-    return await this.getRequest(`beatmaps/${beatmapId}/scores/users/${userId}`);
+  async getUserScoreOnBeatmap(beatmapId: number, userId: number): Promise<OsuScore | null> {
+    const response = await this.getRequest<OsuScore>(`beatmaps/${beatmapId}/scores/users/${userId}`);
+    return response;
   }
 }

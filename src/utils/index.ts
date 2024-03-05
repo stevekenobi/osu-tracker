@@ -1,3 +1,5 @@
+import type { OsuMod } from '../types';
+
 export function delay(ms: number): Promise<void> {
   return new Promise((res) => setTimeout(res, ms));
 }
@@ -9,10 +11,11 @@ export function range(start: number, stop: number, step = 1): number[] {
 }
 
 export function createQuery(query?: { [key: string]: string | number }): string {
-  if (query)
+  if (query) {
     return `?${Object.keys(query)
       .map((x) => `${x}=${query[x]}`)
       .join('&')}`;
+  }
 
   return '';
 }
@@ -38,6 +41,26 @@ export function isBeatmapRankedApprovedOrLoved(beatmap: { status: string }): boo
   return beatmap.status === 'ranked' || beatmap.status === 'approved' || beatmap.status === 'loved';
 }
 
+export function getRulesetFromInt(i: number): string {
+  return i === 0 ? 'osu' : 'unknown';
+}
+
+export function getModsString(mods: OsuMod[]): string {
+  if (mods.length === 0) {
+    return '';
+  }
+
+  const s = mods.map(m => {
+    if (m.settings) {
+      return `${m.acronym}(${Object.keys(m.settings).map(x => m.settings![x])})`;
+    } else {
+      return m.acronym;
+    }
+  });
+
+  return s.join(',');
+}
+
 export function createBeatmapLinkFromId(id: number): string {
   return `https://osu.ppy.sh/b/${id}`;
 }
@@ -48,6 +71,8 @@ export function createUserLinkFromId(id: number): string {
 
 export function extractIdFromLink(link: string): number {
   const num = link.split('/').at(-1);
-  if (!num) return 0;
+  if (!num) {
+    return 0;
+  }
   return Number.parseInt(num);
 }

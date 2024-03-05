@@ -16,9 +16,9 @@ describe('osu client', () => {
       expect(response?.country.name).toBe('Greece');
     });
 
-    test('returns undefined user', async () => {
+    test('returns Null user', async () => {
       const response = await client.getUserById(4171323);
-      expect(response).toBeUndefined();
+      expect(response).toBeNull();
     });
   });
 
@@ -36,9 +36,9 @@ describe('osu client', () => {
       expect(response?.beatmaps.length).toBe(3);
     });
 
-    test('returns undefined beatmapset', async () => {
+    test('returns Null beatmapset', async () => {
       const response = await client.getBeatmapsetById(212357);
-      expect(response).toBeUndefined();
+      expect(response).toBeNull();
     });
   });
 
@@ -60,7 +60,7 @@ describe('osu client', () => {
       expect(response?.drain).toBe(6.7);
     });
 
-    test('returns undefined beatmap', async () => {
+    test('returns Null beatmap', async () => {
       const response = await client.getBeatmapById(1158662);
       expect(response);
     });
@@ -93,9 +93,9 @@ describe('osu client', () => {
   });
 
   describe('getUserBeatmaps', () => {
-    test('returns undefined user', async () => {
+    test('returns Null user', async () => {
       const response = await client.getUserBeatmaps(4171323, 'most_played');
-      expect(response).toBe(undefined);
+      expect(response).toBeNull();
     });
 
     test('returns most_played beatmaps', async () => {
@@ -110,9 +110,9 @@ describe('osu client', () => {
   });
 
   describe('getUserRecentScores', () => {
-    test('returns undefined user', async () => {
+    test('returns Null user', async () => {
       const response = await client.getUserRecentScores(4171323);
-      expect(response).toBe(undefined);
+      expect(response).toBeNull();
     });
 
     test('return correct response', async () => {
@@ -122,18 +122,51 @@ describe('osu client', () => {
   });
 
   describe('getUserScoreOnBeatmap', () => {
-    test('returns correct score', async () => {
+    test('returns Null user', async () => {
+      const response = await client.getUserScoreOnBeatmap(243983, 4171323);
+      expect(response).toBeNull();
+    });
+
+    test('returns correct legacy score', async () => {
       const response = await client.getUserScoreOnBeatmap(243983, 12375044);
-      expect(response?.score.accuracy).toBe(0.9948119325551232);
-      expect(response?.score.created_at).toBe('2024-02-10T08:29:05Z');
-      expect(response?.score.id).toBe(4582637925);
+      expect(response?.score.accuracy).toBe(0.994812);
+      expect(response?.score.ended_at).toBe('2024-02-10T08:29:05Z');
+      expect(response?.score.id).toBe(2320392923);
       expect(response?.score.max_combo).toBe(657);
-      expect(response?.score.mode).toBe('osu');
-      expect(response?.score.mods).toEqual(['HD', 'SD']);
-      expect(response?.score.perfect).toBe(true);
+      expect(response?.score.ruleset_id).toBe(0);
+      expect(response?.score.mods).toEqual([
+        { acronym: 'SD' },
+        { acronym: 'HD' },
+        { acronym: 'CL' },
+      ]);
+      expect(response?.score.is_perfect_combo).toBe(true);
       expect(response?.score.pp).toBe(202.276);
       expect(response?.score.rank).toBe('SH');
-      expect(response?.score.score).toBe(11150569);
+      expect(response?.score.total_score).toBe(1003528);
+      expect(response?.score.user_id).toBe(12375044);
+    });
+
+    test('returns correct lazer score', async () => {
+      const response = await client.getUserScoreOnBeatmap(3704686, 12375044);
+      expect(response?.score.accuracy).toBe(0.981059);
+      expect(response?.score.ended_at).toBe('2024-01-30T18:28:05Z');
+      expect(response?.score.id).toBe(2262693566);
+      expect(response?.score.max_combo).toBe(1262);
+      expect(response?.score.ruleset_id).toBe(0);
+      expect(response?.score.mods).toEqual([
+        { acronym: 'SD' },
+        {
+          acronym: 'NC',
+          settings: {
+            speed_change: 1.33,
+          },
+        },
+        { acronym: 'HD' },
+      ]);
+      expect(response?.score.is_perfect_combo).toBe(false);
+      expect(response?.score.pp).toBe(null);
+      expect(response?.score.rank).toBe('SH');
+      expect(response?.score.total_score).toBe(1061280);
       expect(response?.score.user_id).toBe(12375044);
     });
   });

@@ -18,13 +18,13 @@ type IAbstractService = new(server: TrackerServer) => AbstractService;
 export default class TrackerServer {
   private services: AbstractService[] = [];
 
-  private app: Application | undefined = undefined;
-  private router: Router | undefined = undefined;
-  private server: Server | undefined = undefined;
+  private app: Application | null = null;
+  private router: Router | null = null;
+  private server: Server | null = null;
 
-  private databaseClient: DatabaseClient | undefined = undefined;
-  private osuClient: OsuClient | undefined = undefined;
-  private sheetClient: SheetClient | undefined = undefined;
+  private databaseClient: DatabaseClient | null = null;
+  private osuClient: OsuClient | null = null;
+  private sheetClient: SheetClient | null = null;
 
   constructor() {
     this.services = [];
@@ -61,11 +61,14 @@ export default class TrackerServer {
       updateTargets(this.getOsuClient(), this.getSheetClient());
     });
 
-    if (process.env['ENVIRONMENT'] === 'development')
+    if (process.env['ENVIRONMENT'] === 'development') {
       setInterval(() => {
         const used = process.memoryUsage().heapUsed / 1024 / 1024;
-        if (used > 300) console.log(`This app is currently using ${Math.floor(used)} MB of memory.`);
+        if (used > 300) {
+          console.log(`This app is currently using ${Math.floor(used)} MB of memory.`);
+        }
       }, 5000);
+    }
 
     this.server = http.createServer(this.getApp()).listen('5173', () => {
       console.log('⚡️[server]: Server is running at http://localhost:5173');

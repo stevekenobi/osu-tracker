@@ -1,4 +1,4 @@
-import { createBeatmapLinkFromId, createQuery, createUserLinkFromId, delay, extractIdFromLink, getDaysFromToday, getYearsUntilToday, isBeatmapRankedApprovedOrLoved, range } from '../../src/utils';
+import { createBeatmapLinkFromId, createQuery, createUserLinkFromId, delay, extractIdFromLink, getDaysFromToday, getModsString, getRulesetFromInt, getYearsUntilToday, isBeatmapRankedApprovedOrLoved, range } from '../../src/utils';
 
 describe('utils', () => {
   describe('delay', () => {
@@ -86,6 +86,40 @@ describe('utils', () => {
         const result = isBeatmapRankedApprovedOrLoved(input);
         expect(result).toBe(expected);
       });
+    });
+  });
+
+  describe('getRulesetFromInt', () => {
+    test('returns osu mode', () => {
+      const result = getRulesetFromInt(0);
+      expect(result).toBe('osu');
+    });
+
+    test('returns unknown mode', () => {
+      const result = getRulesetFromInt(1);
+      expect(result).toBe('unknown');
+    });
+  });
+
+  describe('getModsString', () => {
+    test('returns empty string', () => {
+      const result = getModsString([]);
+      expect(result).toBe('');
+    });
+
+    test('returns normal string', () => {
+      const result = getModsString([{ acronym: 'HD' }, { acronym: 'SD' }, { acronym: 'CL' }]);
+      expect(result).toBe('HD,SD,CL');
+    });
+
+    test('returns lazer string', () => {
+      const result = getModsString([{ acronym: 'HD' }, { acronym: 'SD' }, { acronym: 'NC', settings: { speed_change: 1.23 } }]);
+      expect(result).toBe('HD,SD,NC(1.23)');
+    });
+
+    test('returns random string', () => {
+      const result = getModsString([{ acronym: 'HD' }, { acronym: 'SD', settings: {some_setting: 123, other_setting: 'other'} }, { acronym: 'NC', settings: { speed_change: 1.23 } }]);
+      expect(result).toBe('HD,SD(123,other),NC(1.23)');
     });
   });
 

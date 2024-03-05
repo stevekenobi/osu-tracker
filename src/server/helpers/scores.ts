@@ -2,7 +2,7 @@ import type DatabaseClient from '../../client/DatabaseClient';
 import type OsuClient from '../../client/OsuClient';
 import type SheetClient from '../../client/SheetClient';
 import type { OsuUserBeatmap, OsuScore } from '../../types';
-import { createBeatmapLinkFromId, delay, isBeatmapRankedApprovedOrLoved } from '../../utils';
+import { createBeatmapLinkFromId, delay, getModsString, getRulesetFromInt, isBeatmapRankedApprovedOrLoved } from '../../utils';
 import { createBeatmapModelsFromOsuBeatmapsets } from './beatmaps';
 import numeral from 'numeral';
 
@@ -24,7 +24,9 @@ export async function updateAllScores(osuClient: OsuClient, databaseClient: Data
         console.log(`${j + 1} - ${j + 100} score on ${beatmap.beatmap_id} ${score ? 'found' : 'not found'}`);
         if (score) {
           scores.push(score);
-        } else unfinished.push(beatmap);
+        } else {
+          unfinished.push(beatmap);
+        }
       })();
     });
 
@@ -53,8 +55,14 @@ export async function updateRecentScores(osuClient: OsuClient, databaseClient: D
   console.log('started importing recent scores');
   const result = await osuClient.getUserRecentScores(12375044);
 
-  if (!result) throw new Error('failed to get response for recent scores');
-  if (result.length === 0) { console.log('no recent scores'); return; }
+  if (!result) {
+    throw new Error('failed to get response for recent scores');
+  }
+
+  if (result.length === 0) {
+    console.log('no recent scores');
+    return;
+  }
 
   await updateScores(result.filter((r) => isBeatmapRankedApprovedOrLoved(r.beatmap) && r.beatmap.mode === 'osu').map(s => ({ score: s })), osuClient, databaseClient);
 
@@ -68,16 +76,16 @@ export async function updateScores(scores: OsuScore[], osuClient: OsuClient, dat
         id: s.score.beatmap.id,
         accuracy: s.score.accuracy * 100,
         max_combo: s.score.max_combo,
-        mode: s.score.mode,
-        mods: s.score.mods.join(','),
-        perfect: s.score.perfect,
+        mode: getRulesetFromInt(s.score.ruleset_id),
+        mods: getModsString(s.score.mods),
+        perfect: s.score.is_perfect_combo,
         pp: s.score.pp,
         rank: s.score.rank,
-        score: s.score.score,
-        count_100: s.score.statistics.count_100,
-        count_300: s.score.statistics.count_300,
-        count_50: s.score.statistics.count_50,
-        count_miss: s.score.statistics.count_miss,
+        score: s.score.total_score,
+        count_ok: s.score.statistics.ok,
+        count_great: s.score.statistics.great,
+        count_meh: s.score.statistics.meh,
+        count_miss: s.score.statistics.miss,
       });
     } catch (error) {
       const beatmapset = await osuClient.getBeatmapsetById(s.score.beatmap.beatmapset_id);
