@@ -43,7 +43,7 @@ export async function updateAllScores(osuClient: OsuClient, databaseClient: Data
     Title: b.beatmapset.title,
     Creator: b.beatmapset.creator,
     Version: b.beatmap.version,
-    Difficulty: numeral(b.beatmap.difficulty_rating).format('0,0'),
+    Difficulty: numeral(b.beatmap.difficulty_rating).format('0.00'),
     Length: numeral(b.beatmap.total_length).format('0,0'),
     Playcount: numeral(b.count).format('0,0'),
     Status: b.beatmap.status,

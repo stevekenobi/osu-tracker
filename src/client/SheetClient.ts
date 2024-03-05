@@ -161,7 +161,11 @@ export default class SheetClient {
     await this.updateUnfinishedBeatmaps(beatmaps, 'A Ranks');
   }
 
-  private async updateUnfinishedBeatmaps(beatmaps: SheetBeatmap[], title: string): Promise<void> {
+  async updateSuboptimalBeatmaps(beatmaps: SheetBeatmap[]): Promise<void> {
+    await this.updateUnfinishedBeatmaps(beatmaps, 'Sub Optimal');
+  }
+
+  private async updateUnfinishedBeatmaps(beatmaps: SheetBeatmap[], title: 'Problematic' | 'Non SD' | 'DT' | 'A Ranks' | 'Sub Optimal'): Promise<void> {
     await this.clearRows(this.unfinished_sheet_id, title, { start: 2 });
     await this.addRows(beatmaps, this.unfinished_sheet_id, title);
   }

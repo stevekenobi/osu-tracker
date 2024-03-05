@@ -66,7 +66,7 @@ export default class DatabaseClient {
     return (await Beatmaps.findAll({ where: { rankedDate: { [Op.like]: `${year}%` } } })).map(b => b.toJSON());
   }
 
-  async getUnfinishedBeatmaps(option: 'problematic' | 'non-sd' | 'dt' | 'a-ranks'): Promise<AppBeatmap[]> {
+  async getUnfinishedBeatmaps(option: 'problematic' | 'non-sd' | 'dt' | 'a-ranks' | 'sub-optimal'): Promise<AppBeatmap[]> {
     let result: AppBeatmap[] = [];
     if (option === 'problematic') {
       result = await this.getProblematicBeatmaps();
@@ -74,8 +74,10 @@ export default class DatabaseClient {
       result = await this.getNonSDBeatmaps();
     } else if (option === 'dt') {
       result = await this.getDTBeatmaps();
-    } else {
+    } else if (option === 'a-ranks') {
       result = await this.getArankBeatmaps();
+    } else if (option === 'sub-optimal') {
+      result = await this.getSubOptimalBeatmaps();
     }
     return result.sort((a, b) => a.difficulty > b.difficulty ? 1 : -1);
   }
@@ -94,6 +96,10 @@ export default class DatabaseClient {
 
   private async getArankBeatmaps(): Promise<AppBeatmap[]> {
     return (await Beatmaps.findAll({ where: { rank: 'A' } })).map(b => b.toJSON());
+  }
+
+  private async getSubOptimalBeatmaps(): Promise<AppBeatmap[]> {
+    return (await Beatmaps.findAll({ where: { score: { [Op.lt]: 1000000} } })).map(b => b.toJSON());
   }
 
   async updateScore(score: AppScore): Promise<void> {

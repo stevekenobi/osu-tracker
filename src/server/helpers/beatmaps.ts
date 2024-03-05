@@ -85,6 +85,7 @@ export async function syncBeatmapsSheet(databaseClient: DatabaseClient, sheetCli
   await sheetClient.updateNonSDBeatmaps(createSheetBeatmapsFromApp(await databaseClient.getUnfinishedBeatmaps('non-sd')));
   await sheetClient.updateDtBeatmaps(createSheetBeatmapsFromApp(await databaseClient.getUnfinishedBeatmaps('dt')));
   await sheetClient.updateArankBeatmaps(createSheetBeatmapsFromApp(await databaseClient.getUnfinishedBeatmaps('a-ranks')));
+  await sheetClient.updateSuboptimalBeatmaps(createSheetBeatmapsFromApp(await databaseClient.getUnfinishedBeatmaps('sub-optimal')));
 
   console.log('finished syncing beatmaps sheet');
 }

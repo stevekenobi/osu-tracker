@@ -317,7 +317,8 @@ describe.sequential('sheet client', () => {
       ${'updateNonSDBeatmaps'}       | ${'Non SD'}
       ${'updateDtBeatmaps'}          | ${'DT'}
       ${'updateArankBeatmaps'}       | ${'A Ranks'}
-    `('updates unfinished', async (obj: { method: 'updateProblematicBeatmaps' | 'updateNonSDBeatmaps' | 'updateDtBeatmaps' | 'updateArankBeatmaps', title: 'Problematic' | 'Non SD' | 'DT' | 'A Ranks' }) => {
+      ${'updateSuboptimalBeatmaps'}  | ${'Sub Optimal'}
+    `('updates unfinished', async (obj: { method: 'updateProblematicBeatmaps' | 'updateNonSDBeatmaps' | 'updateDtBeatmaps' | 'updateArankBeatmaps' | 'updateSuboptimalBeatmaps', title: 'Problematic' | 'Non SD' | 'DT' | 'A Ranks' | 'Sub Optimal' }) => {
       await sheetClient[obj.method]([
         {
           Link: 'https://osu.ppy.sh/b/123',
