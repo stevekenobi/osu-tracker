@@ -57,10 +57,6 @@ export default class TrackerServer {
       updateTargets(this.getOsuClient(), this.getSheetClient());
     });
 
-    cron.schedule('0 0 * * *', () => {
-      updateTargets(this.getOsuClient(), this.getSheetClient());
-    });
-
     if (process.env['ENVIRONMENT'] === 'development') {
       setInterval(() => {
         const used = process.memoryUsage().heapUsed / 1024 / 1024;

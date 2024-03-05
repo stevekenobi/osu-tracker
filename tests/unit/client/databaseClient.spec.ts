@@ -1,5 +1,5 @@
 import DatabaseClient from '../../../src/client/DatabaseClient';
-import { beatmapsOfYearResult, beatmapsResult, dtBeatmapsResult, nonSDBeatmapsResult, problematicBeatmapsResult } from '../../data/allBeatmaps';
+import { beatmapsResult, beatmapsOfYearResult, problematicBeatmapsResult, nonSDBeatmapsResult, dtBeatmapsResult, aRanksResult, suboptimalResult } from '../../data/allBeatmaps';
 import { beatmapData } from '../../data/beatmaps';
 import { scoreData } from '../../data/scores';
 
@@ -83,9 +83,12 @@ describe.sequential('database client', () => {
       { input: 'problematic', expected: problematicBeatmapsResult },
       { input: 'non-sd', expected: nonSDBeatmapsResult },
       { input: 'dt', expected: dtBeatmapsResult },
+      { input: 'a-ranks', expected: aRanksResult },
+      { input: 'sub-optimal', expected: suboptimalResult },
+      { input: 'unknown', expected: [] },
     ])('$input', ({ input, expected }) => {
       test('returns correct result', async () => {
-        const result = await client.getUnfinishedBeatmaps(input as 'problematic' | 'non-sd' | 'dt');
+        const result = await client.getUnfinishedBeatmaps(input as 'problematic' | 'non-sd' | 'dt' | 'a-ranks' | 'sub-optimal');
         expect(result).toEqual(expected);
       });
     });
