@@ -2,7 +2,7 @@
 import SheetClient from '../../../src/client/SheetClient';
 import { delay } from '../../../src/utils';
 
-const sheetClient = new SheetClient('1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc');
+const sheetClient = new SheetClient('1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc');
 
 const getRows = vi.spyOn(sheetClient as any, 'getRows');
 const addRows = vi.spyOn(sheetClient as any, 'addRows');
@@ -14,13 +14,13 @@ clearRows.mockImplementation(() => {});
 
 describe.sequential('sheet client', () => {
   describe('errors', () => {
-    const client = new SheetClient('1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro', '1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro', '1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro', '1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro');
+    const client = new SheetClient('1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro', '1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro', '1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro');
     test('getRows', () => {
       expect(async () => await client.getNoScoreBeatmaps()).rejects.toThrowError('Sheet No Score not found');
     });
 
     test('addRows', () => {
-      expect(async () => await client.updateMissingBeatmaps([])).rejects.toThrowError('Sheet Missing not found');
+      expect(async () => await client.updateNoScoreBeatmaps([])).rejects.toThrowError('Sheet No Score not found');
     });
 
     test('clearRows', () => {
@@ -262,32 +262,6 @@ describe.sequential('sheet client', () => {
           Length: '154',
         },
       ]);
-    });
-  });
-
-  describe('updateMissingBeatmaps', () => {
-    test('updates missing beatmaps', async () => {
-      await sheetClient.clearMissingBeatmaps();
-      expect(clearRows).toHaveBeenCalled();
-
-      await sheetClient.updateMissingBeatmaps([1, 2, 3, 4, 5, 6, 7]);
-      expect(addRows).toHaveBeenCalled();
-    });
-  });
-
-  describe('getMissingBeatmaps', () => {
-    test('returns missing beatmap ids', async () => {
-      getRows.mockResolvedValue([
-        { Id: '1' },
-        { Id: '2' },
-        { Id: '3' },
-        { Id: '4' },
-        { Id: '5' },
-        { Id: '6' },
-        { Id: '7' },
-      ]);
-      const result = await sheetClient.getMissingBeatmaps();
-      expect(result).toEqual(['1', '2', '3', '4', '5', '6', '7']);
     });
   });
 

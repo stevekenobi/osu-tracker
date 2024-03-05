@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 import AbstractService from '../AbstractService';
-import { importAllBeatmaps, importLatestBeatmaps, findMissingBeatmaps } from '../helpers/beatmaps';
+import { importAllBeatmaps, importLatestBeatmaps, addMissingBeatmaps } from '../helpers/beatmaps';
 
 export default class BeatmapsService extends AbstractService {
 
@@ -24,7 +24,7 @@ export default class BeatmapsService extends AbstractService {
   }
 
   private async _importAllBeatmapsRequestHandler(_req: Request, res: Response): Promise<void> {
-    importAllBeatmaps(this.osuClient, this.databaseClient, this.sheetClient);
+    importAllBeatmaps(this.osuClient, this.databaseClient);
     res.status(200).json({
       meta: {
         status: 200,
@@ -34,7 +34,7 @@ export default class BeatmapsService extends AbstractService {
   }
 
   private async _findAllMissingBeatmapsRequestHandler(req: Request<unknown, unknown, { userId: number }>, res: Response): Promise<void> {
-    findMissingBeatmaps(this.osuClient, this.databaseClient, this.sheetClient, req.body.userId);
+    addMissingBeatmaps(this.osuClient, this.databaseClient, req.body.userId);
     res.status(200).json({
       meta: {
         status: 200,

@@ -17,7 +17,7 @@ export async function importLatestBeatmaps(osuClient: OsuClient, databaseClient:
   console.log('finished importing new beatmaps');
 }
 
-export async function importAllBeatmaps(osuClient: OsuClient, databaseClient: DatabaseClient, sheetClient: SheetClient): Promise<void> {
+export async function importAllBeatmaps(osuClient: OsuClient, databaseClient: DatabaseClient): Promise<void> {
   console.log('importing all beatmaps');
   let cursor_string = '';
   do {
@@ -33,16 +33,8 @@ export async function importAllBeatmaps(osuClient: OsuClient, databaseClient: Da
 
   console.log('finished importing all beatmaps');
 
-  const missingBeatmapIds = await sheetClient.getMissingBeatmaps();
-  console.log('total missing maps', missingBeatmapIds);
-
-  for (const id of missingBeatmapIds) {
-    const beatmapset = await osuClient.getBeatmapsetById(id);
-    if (!beatmapset) {
-      throw new Error(`Did not find ${id}`);
-    }
-    await databaseClient.updateBeatmaps(createBeatmapModelsFromOsuBeatmapsets([beatmapset]));
-  }
+  await addMissingBeatmaps(osuClient,databaseClient, 2927048);
+  await addMissingBeatmaps(osuClient,databaseClient, 6699330);
 
   console.log('finished importing missing beatmaps');
 }
@@ -90,8 +82,9 @@ export async function syncBeatmapsSheet(databaseClient: DatabaseClient, sheetCli
   console.log('finished syncing beatmaps sheet');
 }
 
-export async function findMissingBeatmaps(osuClient: OsuClient, databaseClient: DatabaseClient, sheetClient: SheetClient, userId: number): Promise<void> {
-  console.log('starting finding missing beatmaps');
+export async function addMissingBeatmaps(osuClient: OsuClient, databaseClient: DatabaseClient, userId: number): Promise<void> {
+  console.log(`starting finding missing beatmaps of user ${userId}`);
+
   let j = 0;
   const allBeatmapIds = (await databaseClient.getBeatmaps()).map((b) => b.id);
   const missingIds: number[] = [];
@@ -111,7 +104,16 @@ export async function findMissingBeatmaps(osuClient: OsuClient, databaseClient: 
     await delay(500);
   } while (result!.length > 0);
 
-  await sheetClient.updateMissingBeatmaps(Array.from(new Set(missingIds)));
+  const missingSet = Array.from(new Set(missingIds));
+
+  for (const id of missingSet) {
+    const beatmapset = await osuClient.getBeatmapsetById(id);
+    if (!beatmapset) {
+      throw new Error(`Did not find ${id}`);
+    }
+    await databaseClient.updateBeatmaps(createBeatmapModelsFromOsuBeatmapsets([beatmapset]));
+  }
+
   console.log('finished finding missing beatmaps');
 }
 

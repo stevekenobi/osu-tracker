@@ -8,7 +8,7 @@ import { delay } from '../utils';
 export default class SheetClient {
   private readonly serviceAccountAuth;
 
-  constructor(private readonly leaderboard_sheet_id: string, private readonly unfinished_sheet_id: string, private readonly beatmaps_sheet_id: string, private readonly missing_beatmaps_sheet_id: string) {
+  constructor(private readonly leaderboard_sheet_id: string, private readonly unfinished_sheet_id: string, private readonly beatmaps_sheet_id: string) {
     const SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive.file'];
     this.serviceAccountAuth = new JWT({
       email: creds.client_email,
@@ -118,18 +118,6 @@ export default class SheetClient {
 
   async getStats(): Promise<SheetStats[]> {
     return this.getRows(this.beatmaps_sheet_id, 'Stats');
-  }
-
-  async updateMissingBeatmaps(ids: number[]): Promise<void> {
-    await this.addRows(ids.map(i => ({ Id: i })), this.missing_beatmaps_sheet_id, 'Missing');
-  }
-
-  async clearMissingBeatmaps(): Promise<void> {
-    await this.clearRows(this.missing_beatmaps_sheet_id, 'Missing', { start: 2 });
-  }
-
-  async getMissingBeatmaps(): Promise<string[]> {
-    return (await this.getRows<{ Id: string }>(this.missing_beatmaps_sheet_id, 'Missing')).map(x => x.Id);
   }
 
   async updateNoScoreBeatmaps(beatmaps: SheetNoScoreBeatmap[]): Promise<void> {
