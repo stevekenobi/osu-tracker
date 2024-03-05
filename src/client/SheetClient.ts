@@ -2,6 +2,8 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 import creds from '../../google_service_account.json';
 import { JWT } from 'google-auth-library';
 import type { SheetBeatmap, SheetLeaderboard, SheetNoScoreBeatmap, SheetStats, SheetTarget } from '../types';
+import type { AxiosError } from 'axios';
+import { delay } from '../utils';
 
 export default class SheetClient {
   private readonly serviceAccountAuth;
@@ -17,39 +19,78 @@ export default class SheetClient {
 
   /* istanbul ignore next @preserve */
   private async getRows<T extends Record<string, string | number>>(docId: string, sheetTitle: string): Promise<T[]> {
-    const doc = new GoogleSpreadsheet(docId, this.serviceAccountAuth);
-    await doc.loadInfo();
+    try {
+      const doc = new GoogleSpreadsheet(docId, this.serviceAccountAuth);
+      await doc.loadInfo();
 
-    const sheet = doc.sheetsByTitle[sheetTitle];
+      const sheet = doc.sheetsByTitle[sheetTitle];
 
-    if (!sheet) throw new Error(`Sheet ${sheetTitle} not found`);
+      if (!sheet) {
+        throw new Error(`Sheet ${sheetTitle} not found`);
+      }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    return (await sheet.getRows<T>()).map(r => Object.fromEntries(Object.entries(r.toObject()).filter(([_, v]) => v !== undefined)) as T);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      return (await sheet.getRows<T>()).map(r => Object.fromEntries(Object.entries(r.toObject()).filter(([_, v]) => v !== undefined)) as T);
+    } catch (err: unknown) {
+      const error = err as AxiosError;
+      if (error.code === 'ERR_BAD_RESPONSE') {
+        console.log(`ERR_BAD_RESPONSE at getting ${sheetTitle}`);
+        await delay(10000);
+        const response = await this.getRows<T>(docId, sheetTitle);
+        return response;
+      }
+      throw error;
+    }
   }
 
   /* istanbul ignore next @preserve */
   private async addRows<T extends Record<string, string | number>>(rows: T[], docId: string, sheetTitle: string): Promise<void> {
-    const doc = new GoogleSpreadsheet(docId, this.serviceAccountAuth);
-    await doc.loadInfo();
+    try {
+      const doc = new GoogleSpreadsheet(docId, this.serviceAccountAuth);
+      await doc.loadInfo();
 
-    const sheet = doc.sheetsByTitle[sheetTitle];
+      const sheet = doc.sheetsByTitle[sheetTitle];
 
-    if (!sheet) throw new Error(`Sheet ${sheetTitle} not found`);
+      if (!sheet) {
+        throw new Error(`Sheet ${sheetTitle} not found`);
+      }
 
-    await sheet.addRows(rows);
+      await sheet.addRows(rows);
+    } catch (err: unknown) {
+      const error = err as AxiosError;
+      if (error.code === 'ERR_BAD_RESPONSE') {
+        console.log(`ERR_BAD_RESPONSE at adding in ${sheetTitle}`);
+        await delay(10000);
+        const response = await this.addRows<T>(rows, docId, sheetTitle);
+        return response;
+      }
+      throw error;
+    }
   }
 
   /* istanbul ignore next @preserve */
   private async clearRows(docId: string, sheetTitle: string, options?: { start?: number, end?: number }): Promise<void> {
-    const doc = new GoogleSpreadsheet(docId, this.serviceAccountAuth);
-    await doc.loadInfo();
+    try {
+      const doc = new GoogleSpreadsheet(docId, this.serviceAccountAuth);
+      await doc.loadInfo();
 
-    const sheet = doc.sheetsByTitle[sheetTitle];
+      const sheet = doc.sheetsByTitle[sheetTitle];
 
-    if (!sheet) throw new Error(`Sheet ${sheetTitle} not found`);
+      if (!sheet) {
+        throw new Error(`Sheet ${sheetTitle} not found`);
+      }
 
-    await sheet.clearRows(options);
+      await sheet.clearRows(options);
+    } catch (err: unknown) {
+      const error = err as AxiosError;
+      if (error.code === 'ERR_BAD_RESPONSE') {
+        console.log(`ERR_BAD_RESPONSE at adding in ${sheetTitle}`);
+        await delay(10000);
+        const response = await this.clearRows(docId, sheetTitle, options);
+        return response;
+      }
+      throw error;
+    }
   }
 
   async updateLeaderboard(users: SheetLeaderboard[]): Promise<void> {
@@ -127,6 +168,7 @@ export default class SheetClient {
   }
 
   async getTargets(): Promise<SheetTarget[]> {
-    return await this.getRows(this.leaderboard_sheet_id, 'Targets');
+    const response = await this.getRows<SheetTarget>(this.leaderboard_sheet_id, 'Targets');
+    return response;
   }
 }

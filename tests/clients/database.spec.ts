@@ -1,7 +1,7 @@
 import { Op } from 'sequelize';
 import DatabaseClient from '../../src/client/DatabaseClient';
 import { Beatmaps } from '../../src/client/models/Beatmaps';
-let databaseClient: DatabaseClient | undefined = undefined;
+let databaseClient: DatabaseClient | null = null;
 
 describe('database', () => {
   beforeAll(async () => {

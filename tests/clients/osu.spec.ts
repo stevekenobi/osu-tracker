@@ -16,9 +16,9 @@ describe('osu client', () => {
       expect(response?.country.name).toBe('Greece');
     });
 
-    test('returns undefined user', async () => {
+    test('returns Null user', async () => {
       const response = await client.getUserById(4171323);
-      expect(response).toBeUndefined();
+      expect(response).toBeNull();
     });
   });
 
@@ -36,9 +36,9 @@ describe('osu client', () => {
       expect(response?.beatmaps.length).toBe(3);
     });
 
-    test('returns undefined beatmapset', async () => {
+    test('returns Null beatmapset', async () => {
       const response = await client.getBeatmapsetById(212357);
-      expect(response).toBeUndefined();
+      expect(response).toBeNull();
     });
   });
 
@@ -60,7 +60,7 @@ describe('osu client', () => {
       expect(response?.drain).toBe(6.7);
     });
 
-    test('returns undefined beatmap', async () => {
+    test('returns Null beatmap', async () => {
       const response = await client.getBeatmapById(1158662);
       expect(response);
     });
@@ -93,9 +93,9 @@ describe('osu client', () => {
   });
 
   describe('getUserBeatmaps', () => {
-    test('returns undefined user', async () => {
+    test('returns Null user', async () => {
       const response = await client.getUserBeatmaps(4171323, 'most_played');
-      expect(response).toBe(undefined);
+      expect(response).toBeNull();
     });
 
     test('returns most_played beatmaps', async () => {
@@ -110,9 +110,9 @@ describe('osu client', () => {
   });
 
   describe('getUserRecentScores', () => {
-    test('returns undefined user', async () => {
+    test('returns Null user', async () => {
       const response = await client.getUserRecentScores(4171323);
-      expect(response).toBe(undefined);
+      expect(response).toBeNull();
     });
 
     test('return correct response', async () => {
@@ -122,9 +122,9 @@ describe('osu client', () => {
   });
 
   describe('getUserScoreOnBeatmap', () => {
-    test('returns undefined user', async () => {
+    test('returns Null user', async () => {
       const response = await client.getUserScoreOnBeatmap(243983, 4171323);
-      expect(response).toBe(undefined);
+      expect(response).toBeNull();
     });
 
     test('returns correct legacy score', async () => {

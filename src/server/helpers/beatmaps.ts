@@ -9,7 +9,9 @@ export async function importLatestBeatmaps(osuClient: OsuClient, databaseClient:
   console.log('importing new beatmaps');
   const recentBeatmaps = await osuClient.getBeatmapsetSearch();
 
-  if (!recentBeatmaps) throw new Error('could not find recent beatmaps');
+  if (!recentBeatmaps) {
+    throw new Error('could not find recent beatmaps');
+  }
 
   await databaseClient.updateBeatmaps(createBeatmapModelsFromOsuBeatmapsets(recentBeatmaps.beatmapsets));
   console.log('finished importing new beatmaps');
@@ -21,7 +23,9 @@ export async function importAllBeatmaps(osuClient: OsuClient, databaseClient: Da
   do {
     const beatmapSearch = await osuClient.getBeatmapsetSearch({ cursor_string });
 
-    if (!beatmapSearch) continue;
+    if (!beatmapSearch) {
+      continue;
+    }
 
     await databaseClient.updateBeatmaps(createBeatmapModelsFromOsuBeatmapsets(beatmapSearch.beatmapsets));
     cursor_string = beatmapSearch.cursor_string;
@@ -48,7 +52,6 @@ export async function syncBeatmapsSheet(databaseClient: DatabaseClient, sheetCli
   const stats: SheetStats[] = [];
   for (const year of years) {
     const beatmaps = await databaseClient.getBeatmapsOfYear(year);
-    console.log(beatmaps.length)
     await sheetClient.updateBeatmapsOfYear(
       year,
       createSheetBeatmapsFromApp(

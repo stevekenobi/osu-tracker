@@ -77,7 +77,7 @@ describe('osu client', () => {
   });
 
   describe('getUserRecentScores', () => {
-    test('returns undefined user', async () => {
+    test('returns Null user', async () => {
       await client.getUserRecentScores(4171323);
       expect(getRequest).toHaveBeenCalledWith('users/4171323/scores/recent');
     });
@@ -121,7 +121,7 @@ describe('osu client', () => {
     test('returns 404', async () => {
       axiosGetMock.mockRejectedValue({ response: { status: 404 } });
       const result = await getClient.getCountryLeaderboard();
-      expect(result).toBeUndefined();
+      expect(result).toBeNull();
     });
 
     test('returns 429', async () => {

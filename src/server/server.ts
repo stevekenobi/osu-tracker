@@ -18,13 +18,13 @@ type IAbstractService = new(server: TrackerServer) => AbstractService;
 export default class TrackerServer {
   private services: AbstractService[] = [];
 
-  private app: Application | undefined = undefined;
-  private router: Router | undefined = undefined;
-  private server: Server | undefined = undefined;
+  private app: Application | null = null;
+  private router: Router | null = null;
+  private server: Server | null = null;
 
-  private databaseClient: DatabaseClient | undefined = undefined;
-  private osuClient: OsuClient | undefined = undefined;
-  private sheetClient: SheetClient | undefined = undefined;
+  private databaseClient: DatabaseClient | null = null;
+  private osuClient: OsuClient | null = null;
+  private sheetClient: SheetClient | null = null;
 
   constructor() {
     this.services = [];
@@ -52,7 +52,6 @@ export default class TrackerServer {
     cron.schedule('0 * * * *', () => {
       importNewScoresJob(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
     });
-    importNewScoresJob(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
 
     cron.schedule('0 0 * * *', () => {
       updateTargets(this.getOsuClient(), this.getSheetClient());
