@@ -1,10 +1,7 @@
 import type DatabaseClient from '../../client/DatabaseClient';
-import type SheetClient from '../../client/SheetClient';
 import type { OsuCollection } from '../../client/OsuCollection';
-import { extractIdFromLink } from '../../utils';
-import { Op } from 'sequelize';
 
-export async function getCollections(databaseClient: DatabaseClient, sheetClient: SheetClient): Promise<OsuCollection[]> {
+export async function getCollections(databaseClient: DatabaseClient): Promise<OsuCollection[]> {
   const collections: OsuCollection[] = [];
 
   const dtBeatmaps = await databaseClient.getUnfinishedBeatmaps('dt');
@@ -42,12 +39,11 @@ export async function getCollections(databaseClient: DatabaseClient, sheetClient
     beatmaps: suboptimalBeatmaps.map(b => b.checksum),
   });
 
-  const unfinishedBeatmaps = await sheetClient.getNoScoreBeatmaps();
-  const beatmaps = await databaseClient.getBeatmaps({where: {id: {[Op.in]: unfinishedBeatmaps.map(u => extractIdFromLink(u.Link))}}});
+  const unfinishedBeatmaps = await databaseClient.getUnfinishedBeatmaps('no-score');
   collections.push({
     name: 'Unfinished',
-    beatmapCount: beatmaps.length,
-    beatmaps: beatmaps.map(b => b.checksum),
+    beatmapCount: unfinishedBeatmaps.length,
+    beatmaps: unfinishedBeatmaps.map(b => b.checksum),
   });
 
   return collections;

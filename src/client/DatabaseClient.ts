@@ -54,7 +54,11 @@ export default class DatabaseClient {
     return this.sequelizeSingleton;
   }
 
-  async addUnfinishedBeatmap(id: number): Promise<void> {
+  async addUnfinishedBeatmap(id: number): Promise<void> {    
+    const beatmap = await Beatmaps.findByPk(id);
+    if (!beatmap) {
+      throw new Error(`beatmap ${id} not found in database`);
+    }
     await Beatmaps.update({ unfinished: true }, { where: { id } });
   }
 
@@ -70,9 +74,11 @@ export default class DatabaseClient {
     return (await Beatmaps.findAll({ where: { rankedDate: { [Op.like]: `${year}%` } } })).map(b => b.toJSON());
   }
 
-  async getUnfinishedBeatmaps(option: 'problematic' | 'non-sd' | 'dt' | 'a-ranks' | 'sub-optimal'): Promise<AppBeatmap[]> {
+  async getUnfinishedBeatmaps(option: 'no-score' | 'problematic' | 'non-sd' | 'dt' | 'a-ranks' | 'sub-optimal'): Promise<AppBeatmap[]> {
     let result: AppBeatmap[] = [];
-    if (option === 'problematic') {
+    if (option === 'no-score') {
+      result = await this.getNoScoreBeatmaps();
+    } else if (option === 'problematic') {
       result = await this.getProblematicBeatmaps();
     } else if (option === 'non-sd') {
       result = await this.getNonSDBeatmaps();
@@ -84,6 +90,10 @@ export default class DatabaseClient {
       result = await this.getSubOptimalBeatmaps();
     }
     return result.sort((a, b) => a.difficulty > b.difficulty ? 1 : -1);
+  }
+
+  private async getNoScoreBeatmaps(): Promise<AppBeatmap[]> {
+    return (await Beatmaps.findAll({ where: { unfinished: true } })).map(b => b.toJSON());
   }
 
   private async getProblematicBeatmaps(): Promise<AppBeatmap[]> {

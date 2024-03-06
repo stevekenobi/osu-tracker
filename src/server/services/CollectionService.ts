@@ -20,7 +20,7 @@ export default class CollectionService extends AbstractService {
   }
 
   private async _getCollectionRequestHandler(_req: Request, res: Response): Promise<void> {
-    const collections = await getCollections(this.databaseClient, this.sheetClient);
+    const collections = await getCollections(this.databaseClient);
     const osuCollection = new OsuCollectionFile(20240123);
     collections.forEach(c => {
       osuCollection.addCollection(c);
