@@ -2,6 +2,7 @@ import type { FindOptions } from 'sequelize';
 import { Sequelize, Op } from 'sequelize';
 import { initBeatmaps, Beatmaps } from './models/Beatmaps';
 import type { AppBeatmap, AppScore } from '../types';
+import { initUnfinished } from './models/Unfinished';
 
 type TrackerOptions = {
   dialectOptions: {
@@ -37,6 +38,7 @@ export default class DatabaseClient {
 
   async initializeDatabase(): Promise<void> {
     initBeatmaps(this.getSequelizeSingleton());
+    initUnfinished(this.getSequelizeSingleton());
 
     await this.getSequelizeSingleton().sync({ alter: true });
   }
