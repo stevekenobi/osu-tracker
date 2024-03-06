@@ -35,6 +35,13 @@ export async function getCollections(databaseClient: DatabaseClient, sheetClient
     beatmaps: aRankBeatmaps.map(b => b.checksum),
   });
 
+  const suboptimalBeatmaps = await databaseClient.getUnfinishedBeatmaps('sub-optimal');
+  collections.push({
+    name: 'Sub-Optimal',
+    beatmapCount: suboptimalBeatmaps.length,
+    beatmaps: suboptimalBeatmaps.map(b => b.checksum),
+  });
+
   const unfinishedBeatmaps = await sheetClient.getNoScoreBeatmaps();
   const beatmaps = await databaseClient.getBeatmaps({where: {id: {[Op.in]: unfinishedBeatmaps.map(u => extractIdFromLink(u.Link))}}});
   collections.push({
