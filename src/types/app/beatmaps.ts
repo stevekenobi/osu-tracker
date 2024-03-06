@@ -49,3 +49,7 @@ export type AppScore = {
   count_meh: number
   count_miss: number
 };
+
+export type AppUnfinished = {
+  checksum: string;
+};

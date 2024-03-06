@@ -1,8 +1,8 @@
 import type { FindOptions } from 'sequelize';
 import { Sequelize, Op } from 'sequelize';
 import { initBeatmaps, Beatmaps } from './models/Beatmaps';
-import type { AppBeatmap, AppScore } from '../types';
-import { initUnfinished } from './models/Unfinished';
+import type { AppBeatmap, AppScore, AppUnfinished } from '../types';
+import { Unfinished, initUnfinished } from './models/Unfinished';
 
 type TrackerOptions = {
   dialectOptions: {
@@ -40,6 +40,9 @@ export default class DatabaseClient {
     initBeatmaps(this.getSequelizeSingleton());
     initUnfinished(this.getSequelizeSingleton());
 
+    Beatmaps.hasOne(Unfinished);
+    Unfinished.belongsTo(Beatmaps);
+
     await this.getSequelizeSingleton().sync({ alter: true });
   }
 
@@ -54,6 +57,10 @@ export default class DatabaseClient {
     }
 
     return this.sequelizeSingleton;
+  }
+
+  async addUnfinishedBeatmaps(beatmaps: AppUnfinished[]): Promise<void> {
+    await Unfinished.bulkCreate(beatmaps);
   }
 
   async updateBeatmaps(beatmaps: AppBeatmap[]): Promise<void> {

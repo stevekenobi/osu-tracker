@@ -27,5 +27,4 @@ export type SheetNoScoreBeatmap = {
   Difficulty: string
   Status: string
   Length: string
-  Playcount: string
 };
