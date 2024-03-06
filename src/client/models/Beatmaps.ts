@@ -19,6 +19,7 @@ export class Beatmaps extends Model<InferAttributes<Beatmaps>, InferCreationAttr
   public declare status: string;
   public declare mode: string;
   public declare rankedDate: string;
+  public declare unfinished: boolean;
   public declare accuracy?: number;
   public declare max_combo?: number;
   public declare mods?: string;
@@ -104,6 +105,11 @@ export function initBeatmaps(sequelize: Sequelize): void {
       rankedDate: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      unfinished: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
       },
       accuracy: {
         type: DataTypes.DOUBLE,

@@ -1,8 +1,7 @@
 import type { FindOptions } from 'sequelize';
 import { Sequelize, Op } from 'sequelize';
 import { initBeatmaps, Beatmaps } from './models/Beatmaps';
-import type { AppBeatmap, AppScore, AppUnfinished } from '../types';
-import { Unfinished, initUnfinished } from './models/Unfinished';
+import type { AppBeatmap, AppScore } from '../types';
 
 type TrackerOptions = {
   dialectOptions: {
@@ -38,12 +37,8 @@ export default class DatabaseClient {
 
   async initializeDatabase(): Promise<void> {
     initBeatmaps(this.getSequelizeSingleton());
-    initUnfinished(this.getSequelizeSingleton());
 
-    Beatmaps.hasOne(Unfinished);
-    Unfinished.belongsTo(Beatmaps);
-
-    await this.getSequelizeSingleton().sync({ alter: true });
+    await this.getSequelizeSingleton().sync({ force: true });
   }
 
   async closeConnection(): Promise<void> {
@@ -59,8 +54,8 @@ export default class DatabaseClient {
     return this.sequelizeSingleton;
   }
 
-  async addUnfinishedBeatmaps(beatmaps: AppUnfinished[]): Promise<void> {
-    await Unfinished.bulkCreate(beatmaps);
+  async addUnfinishedBeatmap(id: number): Promise<void> {
+    await Beatmaps.update({ unfinished: true }, { where: { id } });
   }
 
   async updateBeatmaps(beatmaps: AppBeatmap[]): Promise<void> {
@@ -108,7 +103,7 @@ export default class DatabaseClient {
   }
 
   private async getSubOptimalBeatmaps(): Promise<AppBeatmap[]> {
-    return (await Beatmaps.findAll({ where: { score: { [Op.lt]: 1000000} } })).map(b => b.toJSON());
+    return (await Beatmaps.findAll({ where: { score: { [Op.lt]: 1000000 } } })).map(b => b.toJSON());
   }
 
   async updateScore(score: AppScore): Promise<void> {

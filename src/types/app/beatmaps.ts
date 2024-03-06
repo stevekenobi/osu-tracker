@@ -16,6 +16,7 @@ export type AppBeatmap = {
   checksum: string;
   status: string;
   rankedDate: string;
+  unfinished?: boolean;
   accuracy?: number | null;
   max_combo?: number | null;
   mods?: string | null;
@@ -36,6 +37,7 @@ export type AppBeatmapset = {
 
 export type AppScore = {
   id: number
+  unfinished: boolean;
   accuracy: number
   max_combo: number
   mode: string
@@ -48,8 +50,4 @@ export type AppScore = {
   count_great: number
   count_meh: number
   count_miss: number
-};
-
-export type AppUnfinished = {
-  checksum: string;
 };
