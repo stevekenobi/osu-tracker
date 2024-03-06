@@ -265,35 +265,16 @@ describe.sequential('sheet client', () => {
     });
   });
 
-  describe('updateNoScoreBeatmaps', () => {
-    test('updates no score beatmaps', async () => {
-      await sheetClient.updateNoScoreBeatmaps([
-        { Link: 'https://osu.ppy.sh/b/123', Artist: 'artist', Title: 'title', Creator: 'creator', Version: 'version', Difficulty: '1.23', Status: 'ranked', Length: '150', Playcount: '12' },
-      ]);
-
-      expect(clearRows).toHaveBeenCalled();
-      expect(addRows).toHaveBeenCalled();
-
-      getRows.mockResolvedValue([
-        { Link: 'https://osu.ppy.sh/b/123', Artist: 'artist', Title: 'title', Creator: 'creator', Version: 'version', Difficulty: '1.23', Status: 'ranked', Length: '150', Playcount: '12' },
-      ]);
-
-      const result = await sheetClient.getNoScoreBeatmaps();
-      expect(result).toEqual([
-        { Link: 'https://osu.ppy.sh/b/123', Artist: 'artist', Title: 'title', Creator: 'creator', Version: 'version', Difficulty: '1.23', Status: 'ranked', Length: '150', Playcount: '12' },
-      ]);
-    });
-  });
-
   describe('update unfinished beatmaps', () => {
     test.each`
       method                         | title
+      ${'updateNoScoreBeatmaps'}     | ${'No Score'}
       ${'updateProblematicBeatmaps'} | ${'Problematic'}
       ${'updateNonSDBeatmaps'}       | ${'Non SD'}
       ${'updateDtBeatmaps'}          | ${'DT'}
       ${'updateArankBeatmaps'}       | ${'A Ranks'}
       ${'updateSuboptimalBeatmaps'}  | ${'Sub Optimal'}
-    `('updates $title', async (obj: { method: 'updateProblematicBeatmaps' | 'updateNonSDBeatmaps' | 'updateDtBeatmaps' | 'updateArankBeatmaps' | 'updateSuboptimalBeatmaps', title: 'Problematic' | 'Non SD' | 'DT' | 'A Ranks' | 'Sub Optimal' }) => {
+    `('updates $title', async (obj: { method: 'updateNoScoreBeatmaps' | 'updateProblematicBeatmaps' | 'updateNonSDBeatmaps' | 'updateDtBeatmaps' | 'updateArankBeatmaps' | 'updateSuboptimalBeatmaps', title: 'Problematic' | 'Non SD' | 'DT' | 'A Ranks' | 'Sub Optimal' }) => {
       await sheetClient[obj.method]([
         {
           Link: 'https://osu.ppy.sh/b/123',

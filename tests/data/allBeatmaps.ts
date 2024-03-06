@@ -3,6 +3,7 @@ import type { AppBeatmap } from '../../src/types';
 export const beatmapsResult: AppBeatmap[] = [
   {
     id: 20,
+    unfinished: false,
     checksum: '20',
     beatmapsetId: 544,
     artist: 'Barnes',
@@ -33,6 +34,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 48,
+    unfinished: false,
     checksum: '48',
     beatmapsetId: 436,
     artist: 'Mendoza',
@@ -63,6 +65,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 90,
+    unfinished: false,
     checksum: '90',
     beatmapsetId: 2103,
     artist: 'Campbell',
@@ -93,6 +96,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 107,
+    unfinished: false,
     checksum: '107',
     beatmapsetId: 58,
     artist: 'Cabrera',
@@ -123,6 +127,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 119,
+    unfinished: false,
     checksum: '119',
     beatmapsetId: 2591,
     artist: 'Fitzgerald',
@@ -153,6 +158,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 184,
+    unfinished: false,
     checksum: '184',
     beatmapsetId: 405,
     artist: 'Donovan',
@@ -183,6 +189,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 221,
+    unfinished: false,
     checksum: '221',
     beatmapsetId: 2361,
     artist: 'Rodriguez',
@@ -213,6 +220,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 307,
+    unfinished: false,
     checksum: '307',
     beatmapsetId: 2515,
     artist: 'West',
@@ -243,6 +251,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 313,
+    unfinished: false,
     checksum: '313',
     beatmapsetId: 2922,
     artist: 'Contreras',
@@ -273,6 +282,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 319,
+    unfinished: false,
     checksum: '319',
     beatmapsetId: 826,
     artist: 'Middleton',
@@ -303,6 +313,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 323,
+    unfinished: false,
     checksum: '323',
     beatmapsetId: 1915,
     artist: 'Booker',
@@ -333,6 +344,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 342,
+    unfinished: false,
     checksum: '342',
     beatmapsetId: 816,
     artist: 'Cooley',
@@ -363,6 +375,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 347,
+    unfinished: false,
     checksum: '347',
     beatmapsetId: 1261,
     artist: 'Lyons',
@@ -393,6 +406,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 351,
+    unfinished: false,
     checksum: '351',
     beatmapsetId: 197,
     artist: 'Macias',
@@ -423,6 +437,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 372,
+    unfinished: false,
     checksum: '372',
     beatmapsetId: 1507,
     artist: 'Bolton',
@@ -453,6 +468,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 384,
+    unfinished: false,
     checksum: '384',
     beatmapsetId: 1423,
     artist: 'Craft',
@@ -483,6 +499,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 388,
+    unfinished: false,
     checksum: '388',
     beatmapsetId: 929,
     artist: 'Blackwell',
@@ -513,6 +530,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 395,
+    unfinished: false,
     checksum: '395',
     beatmapsetId: 1161,
     artist: 'Beasley',
@@ -543,6 +561,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 404,
+    unfinished: false,
     checksum: '404',
     beatmapsetId: 174,
     artist: 'Alexander',
@@ -573,6 +592,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 444,
+    unfinished: false,
     checksum: '444',
     beatmapsetId: 1485,
     artist: 'Wells',
@@ -603,6 +623,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 480,
+    unfinished: false,
     checksum: '480',
     beatmapsetId: 1523,
     artist: 'Tate',
@@ -633,6 +654,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 483,
+    unfinished: false,
     checksum: '483',
     beatmapsetId: 2454,
     artist: 'James',
@@ -663,6 +685,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 520,
+    unfinished: false,
     checksum: '520',
     beatmapsetId: 1641,
     artist: 'Raymond',
@@ -693,6 +716,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 535,
+    unfinished: false,
     checksum: '535',
     beatmapsetId: 2532,
     artist: 'Mcknight',
@@ -723,6 +747,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 569,
+    unfinished: false,
     checksum: '569',
     beatmapsetId: 98,
     artist: 'Nielsen',
@@ -753,6 +778,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 583,
+    unfinished: false,
     checksum: '583',
     beatmapsetId: 2845,
     artist: 'Carson',
@@ -783,6 +809,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 622,
+    unfinished: false,
     checksum: '622',
     beatmapsetId: 44,
     artist: 'Strickland',
@@ -813,6 +840,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 685,
+    unfinished: false,
     checksum: '685',
     beatmapsetId: 1774,
     artist: 'Whitney',
@@ -843,6 +871,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 719,
+    unfinished: false,
     checksum: '719',
     beatmapsetId: 2279,
     artist: 'David',
@@ -873,6 +902,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 755,
+    unfinished: false,
     checksum: '755',
     beatmapsetId: 276,
     artist: 'Carver',
@@ -903,6 +933,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 785,
+    unfinished: false,
     checksum: '785',
     beatmapsetId: 2325,
     artist: 'Wiley',
@@ -933,6 +964,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 794,
+    unfinished: false,
     checksum: '794',
     beatmapsetId: 884,
     artist: 'Cruz',
@@ -963,6 +995,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 809,
+    unfinished: false,
     checksum: '809',
     beatmapsetId: 821,
     artist: 'Moore',
@@ -993,6 +1026,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 831,
+    unfinished: false,
     checksum: '831',
     beatmapsetId: 1920,
     artist: 'Hendrix',
@@ -1023,6 +1057,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 871,
+    unfinished: false,
     checksum: '871',
     beatmapsetId: 3000,
     artist: 'Kent',
@@ -1053,6 +1088,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 900,
+    unfinished: false,
     checksum: '900',
     beatmapsetId: 2003,
     artist: 'Steele',
@@ -1083,6 +1119,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 910,
+    unfinished: false,
     checksum: '910',
     beatmapsetId: 1796,
     artist: 'Hodge',
@@ -1113,6 +1150,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 936,
+    unfinished: false,
     checksum: '936',
     beatmapsetId: 1185,
     artist: 'Higgins',
@@ -1143,6 +1181,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1098,
+    unfinished: false,
     checksum: '1098',
     beatmapsetId: 2810,
     artist: 'Benjamin',
@@ -1173,6 +1212,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1099,
+    unfinished: false,
     checksum: '1099',
     beatmapsetId: 2487,
     artist: 'Short',
@@ -1203,6 +1243,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1118,
+    unfinished: false,
     checksum: '1118',
     beatmapsetId: 463,
     artist: 'Glass',
@@ -1233,6 +1274,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1144,
+    unfinished: false,
     checksum: '1144',
     beatmapsetId: 499,
     artist: 'Pope',
@@ -1263,6 +1305,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1226,
+    unfinished: false,
     checksum: '1226',
     beatmapsetId: 2844,
     artist: 'Witt',
@@ -1293,6 +1336,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1254,
+    unfinished: false,
     checksum: '1254',
     beatmapsetId: 1005,
     artist: 'Mcclain',
@@ -1323,6 +1367,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1331,
+    unfinished: false,
     checksum: '1331',
     beatmapsetId: 2195,
     artist: 'Faulkner',
@@ -1353,6 +1398,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1333,
+    unfinished: false,
     checksum: '1333',
     beatmapsetId: 1094,
     artist: 'Tyson',
@@ -1383,6 +1429,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1386,
+    unfinished: false,
     checksum: '1386',
     beatmapsetId: 1949,
     artist: 'Huffman',
@@ -1413,6 +1460,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1393,
+    unfinished: false,
     checksum: '1393',
     beatmapsetId: 1351,
     artist: 'Mcclure',
@@ -1443,6 +1491,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1394,
+    unfinished: false,
     checksum: '1394',
     beatmapsetId: 327,
     artist: 'Barr',
@@ -1473,6 +1522,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1404,
+    unfinished: false,
     checksum: '1404',
     beatmapsetId: 1335,
     artist: 'Castillo',
@@ -1503,6 +1553,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1431,
+    unfinished: false,
     checksum: '1431',
     beatmapsetId: 2389,
     artist: 'Sherman',
@@ -1533,6 +1584,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1470,
+    unfinished: false,
     checksum: '1470',
     beatmapsetId: 2748,
     artist: 'Jenkins',
@@ -1563,6 +1615,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1498,
+    unfinished: false,
     checksum: '1498',
     beatmapsetId: 1747,
     artist: 'Levy',
@@ -1593,6 +1646,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1544,
+    unfinished: false,
     checksum: '1544',
     beatmapsetId: 2525,
     artist: 'Harrington',
@@ -1623,6 +1677,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1563,
+    unfinished: false,
     checksum: '1563',
     beatmapsetId: 1244,
     artist: 'Bonner',
@@ -1653,6 +1708,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1575,
+    unfinished: false,
     checksum: '1575',
     beatmapsetId: 2173,
     artist: 'Watkins',
@@ -1683,6 +1739,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1610,
+    unfinished: false,
     checksum: '1610',
     beatmapsetId: 255,
     artist: 'Rodriquez',
@@ -1713,6 +1770,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1712,
+    unfinished: false,
     checksum: '1712',
     beatmapsetId: 2382,
     artist: 'Lloyd',
@@ -1743,6 +1801,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1752,
+    unfinished: false,
     checksum: '1752',
     beatmapsetId: 118,
     artist: 'Kaufman',
@@ -1773,6 +1832,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1778,
+    unfinished: false,
     checksum: '1778',
     beatmapsetId: 495,
     artist: 'Barnett',
@@ -1803,6 +1863,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1809,
+    unfinished: false,
     checksum: '1809',
     beatmapsetId: 216,
     artist: 'Ryan',
@@ -1833,6 +1894,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1883,
+    unfinished: false,
     checksum: '1883',
     beatmapsetId: 2797,
     artist: 'Stone',
@@ -1863,6 +1925,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1892,
+    unfinished: false,
     checksum: '1892',
     beatmapsetId: 1841,
     artist: 'Torres',
@@ -1893,6 +1956,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1895,
+    unfinished: false,
     checksum: '1895',
     beatmapsetId: 1048,
     artist: 'Mathews',
@@ -1923,6 +1987,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1906,
+    unfinished: false,
     checksum: '1906',
     beatmapsetId: 2660,
     artist: 'Knight',
@@ -1953,6 +2018,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1940,
+    unfinished: false,
     checksum: '1940',
     beatmapsetId: 1155,
     artist: 'Bass',
@@ -1983,6 +2049,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1961,
+    unfinished: false,
     checksum: '1961',
     beatmapsetId: 2828,
     artist: 'Lancaster',
@@ -2013,6 +2080,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2007,
+    unfinished: false,
     checksum: '2007',
     beatmapsetId: 2579,
     artist: 'Walters',
@@ -2043,6 +2111,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2047,
+    unfinished: false,
     checksum: '2047',
     beatmapsetId: 2751,
     artist: 'Richardson',
@@ -2073,6 +2142,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2123,
+    unfinished: false,
     checksum: '2123',
     beatmapsetId: 1005,
     artist: 'Mckenzie',
@@ -2103,6 +2173,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2156,
+    unfinished: false,
     checksum: '2156',
     beatmapsetId: 2681,
     artist: 'Lewis',
@@ -2133,6 +2204,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2175,
+    unfinished: false,
     checksum: '2175',
     beatmapsetId: 1563,
     artist: 'Garrison',
@@ -2163,6 +2235,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2176,
+    unfinished: false,
     checksum: '2176',
     beatmapsetId: 777,
     artist: 'Monroe',
@@ -2193,6 +2266,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2189,
+    unfinished: false,
     checksum: '2189',
     beatmapsetId: 592,
     artist: 'Griffin',
@@ -2223,6 +2297,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2207,
+    unfinished: false,
     checksum: '2207',
     beatmapsetId: 677,
     artist: 'Mckinney',
@@ -2253,6 +2328,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2286,
+    unfinished: false,
     checksum: '2286',
     beatmapsetId: 2150,
     artist: 'Sims',
@@ -2283,6 +2359,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2288,
+    unfinished: false,
     checksum: '2288',
     beatmapsetId: 1840,
     artist: 'Pena',
@@ -2313,6 +2390,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2291,
+    unfinished: false,
     checksum: '2291',
     beatmapsetId: 1244,
     artist: 'Tillman',
@@ -2343,6 +2421,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2293,
+    unfinished: false,
     checksum: '2293',
     beatmapsetId: 114,
     artist: 'Sexton',
@@ -2373,6 +2452,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2328,
+    unfinished: true,
     checksum: '2328',
     beatmapsetId: 1142,
     artist: 'Doyle',
@@ -2403,6 +2483,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2348,
+    unfinished: false,
     checksum: '2348',
     beatmapsetId: 2039,
     artist: 'Miranda',
@@ -2433,6 +2514,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2350,
+    unfinished: false,
     checksum: '2350',
     beatmapsetId: 1458,
     artist: 'Gutierrez',
@@ -2463,6 +2545,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2396,
+    unfinished: false,
     checksum: '2396',
     beatmapsetId: 291,
     artist: 'Simmons',
@@ -2493,6 +2576,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2500,
+    unfinished: false,
     checksum: '2500',
     beatmapsetId: 1360,
     artist: 'Meyers',
@@ -2523,6 +2607,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2503,
+    unfinished: false,
     checksum: '2503',
     beatmapsetId: 2286,
     artist: 'Herring',
@@ -2553,6 +2638,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2527,
+    unfinished: false,
     checksum: '2527',
     beatmapsetId: 1488,
     artist: 'Mathis',
@@ -2583,6 +2669,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2559,
+    unfinished: false,
     checksum: '2559',
     beatmapsetId: 1306,
     artist: 'Odonnell',
@@ -2613,6 +2700,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2610,
+    unfinished: false,
     checksum: '2610',
     beatmapsetId: 2139,
     artist: 'Shepard',
@@ -2643,6 +2731,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2686,
+    unfinished: false,
     checksum: '2686',
     beatmapsetId: 1801,
     artist: 'White',
@@ -2673,6 +2762,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2710,
+    unfinished: false,
     checksum: '2710',
     beatmapsetId: 2924,
     artist: 'Drake',
@@ -2703,6 +2793,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2811,
+    unfinished: false,
     checksum: '2811',
     beatmapsetId: 2995,
     artist: 'Frye',
@@ -2733,6 +2824,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2822,
+    unfinished: false,
     checksum: '2822',
     beatmapsetId: 2072,
     artist: 'Moss',
@@ -2763,6 +2855,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2852,
+    unfinished: false,
     checksum: '2852',
     beatmapsetId: 1160,
     artist: 'Giles',
@@ -2793,6 +2886,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2864,
+    unfinished: false,
     checksum: '2864',
     beatmapsetId: 2448,
     artist: 'Gomez',
@@ -2823,6 +2917,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2875,
+    unfinished: false,
     checksum: '2875',
     beatmapsetId: 1913,
     artist: 'Fuller',
@@ -2853,6 +2948,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2938,
+    unfinished: false,
     checksum: '2938',
     beatmapsetId: 1951,
     artist: 'Thompson',
@@ -2883,6 +2979,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2949,
+    unfinished: false,
     checksum: '2949',
     beatmapsetId: 848,
     artist: 'Chang',
@@ -2913,6 +3010,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2964,
+    unfinished: false,
     checksum: '2964',
     beatmapsetId: 1586,
     artist: 'Chase',
@@ -2943,6 +3041,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2985,
+    unfinished: false,
     checksum: '2985',
     beatmapsetId: 2087,
     artist: 'Woods',
@@ -2973,6 +3072,7 @@ export const beatmapsResult: AppBeatmap[] = [
   },
   {
     id: 3000,
+    unfinished: false,
     checksum: '3000',
     beatmapsetId: 1981,
     artist: 'Waller',
@@ -3006,6 +3106,7 @@ export const beatmapsResult: AppBeatmap[] = [
 export const beatmapsOfYearResult: AppBeatmap[] = [
   {
     id: 20,
+    unfinished: false,
     checksum: '20',
     beatmapsetId: 544,
     artist: 'Barnes',
@@ -3036,6 +3137,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 119,
+    unfinished: false,
     checksum: '119',
     beatmapsetId: 2591,
     artist: 'Fitzgerald',
@@ -3066,6 +3168,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 221,
+    unfinished: false,
     checksum: '221',
     beatmapsetId: 2361,
     artist: 'Rodriguez',
@@ -3096,6 +3199,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 313,
+    unfinished: false,
     checksum: '313',
     beatmapsetId: 2922,
     artist: 'Contreras',
@@ -3126,6 +3230,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 319,
+    unfinished: false,
     checksum: '319',
     beatmapsetId: 826,
     artist: 'Middleton',
@@ -3156,6 +3261,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 342,
+    unfinished: false,
     checksum: '342',
     beatmapsetId: 816,
     artist: 'Cooley',
@@ -3186,6 +3292,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 480,
+    unfinished: false,
     checksum: '480',
     beatmapsetId: 1523,
     artist: 'Tate',
@@ -3216,6 +3323,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 535,
+    unfinished: false,
     checksum: '535',
     beatmapsetId: 2532,
     artist: 'Mcknight',
@@ -3246,6 +3354,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 685,
+    unfinished: false,
     checksum: '685',
     beatmapsetId: 1774,
     artist: 'Whitney',
@@ -3276,6 +3385,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 755,
+    unfinished: false,
     checksum: '755',
     beatmapsetId: 276,
     artist: 'Carver',
@@ -3306,6 +3416,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 831,
+    unfinished: false,
     checksum: '831',
     beatmapsetId: 1920,
     artist: 'Hendrix',
@@ -3336,6 +3447,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 910,
+    unfinished: false,
     checksum: '910',
     beatmapsetId: 1796,
     artist: 'Hodge',
@@ -3366,6 +3478,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 936,
+    unfinished: false,
     checksum: '936',
     beatmapsetId: 1185,
     artist: 'Higgins',
@@ -3396,6 +3509,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 1098,
+    unfinished: false,
     checksum: '1098',
     beatmapsetId: 2810,
     artist: 'Benjamin',
@@ -3426,6 +3540,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 1226,
+    unfinished: false,
     checksum: '1226',
     beatmapsetId: 2844,
     artist: 'Witt',
@@ -3456,6 +3571,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 1331,
+    unfinished: false,
     checksum: '1331',
     beatmapsetId: 2195,
     artist: 'Faulkner',
@@ -3486,6 +3602,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 1386,
+    unfinished: false,
     checksum: '1386',
     beatmapsetId: 1949,
     artist: 'Huffman',
@@ -3516,6 +3633,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 1470,
+    unfinished: false,
     checksum: '1470',
     beatmapsetId: 2748,
     artist: 'Jenkins',
@@ -3546,6 +3664,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 1544,
+    unfinished: false,
     checksum: '1544',
     beatmapsetId: 2525,
     artist: 'Harrington',
@@ -3576,6 +3695,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 1712,
+    unfinished: false,
     checksum: '1712',
     beatmapsetId: 2382,
     artist: 'Lloyd',
@@ -3606,6 +3726,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 2207,
+    unfinished: false,
     checksum: '2207',
     beatmapsetId: 677,
     artist: 'Mckinney',
@@ -3636,6 +3757,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 2288,
+    unfinished: false,
     checksum: '2288',
     beatmapsetId: 1840,
     artist: 'Pena',
@@ -3666,6 +3788,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 2527,
+    unfinished: false,
     checksum: '2527',
     beatmapsetId: 1488,
     artist: 'Mathis',
@@ -3696,6 +3819,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 2610,
+    unfinished: false,
     checksum: '2610',
     beatmapsetId: 2139,
     artist: 'Shepard',
@@ -3726,6 +3850,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 2852,
+    unfinished: false,
     checksum: '2852',
     beatmapsetId: 1160,
     artist: 'Giles',
@@ -3756,6 +3881,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 2875,
+    unfinished: false,
     checksum: '2875',
     beatmapsetId: 1913,
     artist: 'Fuller',
@@ -3786,6 +3912,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 2985,
+    unfinished: false,
     checksum: '2985',
     beatmapsetId: 2087,
     artist: 'Woods',
@@ -3816,6 +3943,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
   {
     id: 3000,
+    unfinished: false,
     checksum: '3000',
     beatmapsetId: 1981,
     artist: 'Waller',
@@ -3846,9 +3974,44 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
   },
 ];
 
+export const unfinishedBeamapsResult: AppBeatmap[] = [
+  {
+    id: 2328,
+    unfinished: true,
+    checksum: '2328',
+    beatmapsetId: 1142,
+    artist: 'Doyle',
+    title: 'Arkansas',
+    creator: 'Steele',
+    version: 'Normal',
+    difficulty: 7.67,
+    AR: 2.8,
+    CS: 4.5,
+    OD: 7.3,
+    HP: 6.2,
+    BPM: 161,
+    length: 585,
+    status: 'ranked',
+    mode: 'osu',
+    rankedDate: '2008',
+    accuracy: null,
+    max_combo: null,
+    mods: null,
+    perfect: null,
+    pp: null,
+    rank: null,
+    score: null,
+    count_ok: null,
+    count_great: null,
+    count_meh: null,
+    count_miss: null,
+  },
+];
+
 export const problematicBeatmapsResult: AppBeatmap[] = [
   {
     id: 1386,
+    unfinished: false,
     checksum: '1386',
     beatmapsetId: 1949,
     artist: 'Huffman',
@@ -3879,6 +4042,7 @@ export const problematicBeatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1752,
+    unfinished: false,
     checksum: '1752',
     beatmapsetId: 118,
     artist: 'Kaufman',
@@ -3909,6 +4073,7 @@ export const problematicBeatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2396,
+    unfinished: false,
     checksum: '2396',
     beatmapsetId: 291,
     artist: 'Simmons',
@@ -3939,6 +4104,7 @@ export const problematicBeatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1544,
+    unfinished: false,
     checksum: '1544',
     beatmapsetId: 2525,
     artist: 'Harrington',
@@ -3969,6 +4135,7 @@ export const problematicBeatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2348,
+    unfinished: false,
     checksum: '2348',
     beatmapsetId: 2039,
     artist: 'Miranda',
@@ -3999,6 +4166,7 @@ export const problematicBeatmapsResult: AppBeatmap[] = [
   },
   {
     id: 319,
+    unfinished: false,
     checksum: '319',
     beatmapsetId: 826,
     artist: 'Middleton',
@@ -4029,6 +4197,7 @@ export const problematicBeatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1906,
+    unfinished: false,
     checksum: '1906',
     beatmapsetId: 2660,
     artist: 'Knight',
@@ -4062,6 +4231,7 @@ export const problematicBeatmapsResult: AppBeatmap[] = [
 export const nonSDBeatmapsResult: AppBeatmap[] = [
   {
     id: 831,
+    unfinished: false,
     checksum: '831',
     beatmapsetId: 1920,
     artist: 'Hendrix',
@@ -4092,6 +4262,7 @@ export const nonSDBeatmapsResult: AppBeatmap[] = [
   },
   {
     id: 1752,
+    unfinished: false,
     checksum: '1752',
     beatmapsetId: 118,
     artist: 'Kaufman',
@@ -4122,6 +4293,7 @@ export const nonSDBeatmapsResult: AppBeatmap[] = [
   },
   {
     id: 2348,
+    unfinished: false,
     checksum: '2348',
     beatmapsetId: 2039,
     artist: 'Miranda',
@@ -4155,6 +4327,7 @@ export const nonSDBeatmapsResult: AppBeatmap[] = [
 export const dtBeatmapsResult = [
   {
     id: 388,
+    unfinished: false,
     checksum: '388',
     beatmapsetId: 929,
     artist: 'Blackwell',
@@ -4185,6 +4358,7 @@ export const dtBeatmapsResult = [
   },
   {
     id: 1906,
+    unfinished: false,
     checksum: '1906',
     beatmapsetId: 2660,
     artist: 'Knight',
@@ -4233,6 +4407,7 @@ export const aRanksResult = [
     'creator': 'Rachel',
     'difficulty': 0.41,
     'id': 1940,
+    'unfinished': false,
     'length': 172,
     'max_combo': 730,
     'mode': 'osu',
@@ -4263,6 +4438,7 @@ export const aRanksResult = [
     'creator': 'Lara',
     'difficulty': 1.74,
     'id': 1386,
+    'unfinished': false,
     'length': 130,
     'max_combo': 637,
     'mode': 'osu',
@@ -4293,6 +4469,7 @@ export const aRanksResult = [
     'creator': 'Guadalupe',
     'difficulty': 2.13,
     'id': 583,
+    'unfinished': false,
     'length': 94,
     'max_combo': 694,
     'mode': 'osu',
@@ -4323,6 +4500,7 @@ export const aRanksResult = [
     'creator': 'Alexandra',
     'difficulty': 2.97,
     'id': 1809,
+    'unfinished': false,
     'length': 285,
     'max_combo': 584,
     'mode': 'osu',
@@ -4353,6 +4531,7 @@ export const aRanksResult = [
     'creator': 'Alba',
     'difficulty': 3.26,
     'id': 2156,
+    'unfinished': false,
     'length': 321,
     'max_combo': 786,
     'mode': 'osu',
@@ -4383,6 +4562,7 @@ export const aRanksResult = [
     'creator': 'Foley',
     'difficulty': 3.51,
     'id': 2811,
+    'unfinished': false,
     'length': 444,
     'max_combo': 884,
     'mode': 'osu',
@@ -4413,6 +4593,7 @@ export const aRanksResult = [
     'creator': 'Shanna',
     'difficulty': 3.68,
     'id': 831,
+    'unfinished': false,
     'length': 144,
     'max_combo': 461,
     'mode': 'osu',
@@ -4443,6 +4624,7 @@ export const aRanksResult = [
     'creator': 'Joyce',
     'difficulty': 3.74,
     'id': 372,
+    'unfinished': false,
     'length': 418,
     'max_combo': 802,
     'mode': 'osu',
@@ -4473,6 +4655,7 @@ export const aRanksResult = [
     'creator': 'Whitney',
     'difficulty': 3.94,
     'id': 1752,
+    'unfinished': false,
     'length': 31,
     'max_combo': 868,
     'mode': 'osu',
@@ -4503,6 +4686,7 @@ export const aRanksResult = [
     'creator': 'Velez',
     'difficulty': 6.42,
     'id': 2207,
+    'unfinished': false,
     'length': 233,
     'max_combo': 658,
     'mode': 'osu',
@@ -4533,6 +4717,7 @@ export const aRanksResult = [
     'creator': 'Rosales',
     'difficulty': 6.57,
     'id': 1544,
+    'unfinished': false,
     'length': 522,
     'max_combo': 440,
     'mode': 'osu',
@@ -4563,6 +4748,7 @@ export const aRanksResult = [
     'creator': 'Dickerson',
     'difficulty': 6.81,
     'id': 388,
+    'unfinished': false,
     'length': 344,
     'max_combo': 934,
     'mode': 'osu',
@@ -4593,6 +4779,7 @@ export const aRanksResult = [
     'creator': 'Reva',
     'difficulty': 6.91,
     'id': 2047,
+    'unfinished': false,
     'length': 453,
     'max_combo': 432,
     'mode': 'osu',
@@ -4623,6 +4810,7 @@ export const aRanksResult = [
     'creator': 'Elena',
     'difficulty': 7.28,
     'id': 2348,
+    'unfinished': false,
     'length': 178,
     'max_combo': 532,
     'mode': 'osu',
@@ -4653,6 +4841,7 @@ export const aRanksResult = [
     'creator': 'Janell',
     'difficulty': 8.65,
     'id': 1470,
+    'unfinished': false,
     'length': 251,
     'max_combo': 856,
     'mode': 'osu',
@@ -4683,6 +4872,7 @@ export const aRanksResult = [
     'creator': 'Craft',
     'difficulty': 9.47,
     'id': 1906,
+    'unfinished': false,
     'length': 194,
     'max_combo': 427,
     'mode': 'osu',
@@ -4713,6 +4903,7 @@ export const aRanksResult = [
     'creator': 'Hayes',
     'difficulty': 9.64,
     'id': 1563,
+    'unfinished': false,
     'length': 298,
     'max_combo': 620,
     'mode': 'osu',
@@ -4746,6 +4937,7 @@ export const suboptimalResult = [
     'creator': 'Lara',
     'difficulty': 1.74,
     'id': 1386,
+    'unfinished': false,
     'length': 130,
     'max_combo': 637,
     'mode': 'osu',
@@ -4776,6 +4968,7 @@ export const suboptimalResult = [
     'creator': 'Dickerson',
     'difficulty': 6.81,
     'id': 388,
+    'unfinished': false,
     'length': 344,
     'max_combo': 934,
     'mode': 'osu',
