@@ -1,16 +1,15 @@
 import numeral from 'numeral';
-import type OsuClient from '../../client/OsuClient';
-import type SheetClient from '../../client/SheetClient';
 import type { OsuLeaderboardUser, SheetLeaderboard } from '../../types';
 import { createUserLinkFromId, getDaysFromToday } from '../../utils';
+import TrackerServer from '../server';
 
-export async function updateLeaderboard(osuClient: OsuClient, sheetClient: SheetClient): Promise<void> {
+export async function updateLeaderboard(): Promise<void> {
   console.log('starting getting leaderboard');
 
   const leaderboardUsers: OsuLeaderboardUser[] = [];
   let cursor = { page: 1 };
   do {
-    const response = await osuClient.getCountryLeaderboard({ country: 'GR', 'cursor[page]': cursor.page });
+    const response = await TrackerServer.getOsuClient().getCountryLeaderboard({ country: 'GR', 'cursor[page]': cursor.page });
     if (!response) {
       continue;
     }
@@ -21,7 +20,7 @@ export async function updateLeaderboard(osuClient: OsuClient, sheetClient: Sheet
   leaderboardUsers
     .sort((a, b) => (a.ranked_score < b.ranked_score ? 1 : -1));
 
-  await sheetClient.updateLeaderboard(createSheetLeaderboardFromOsuResponse(leaderboardUsers.slice(0, 100)));
+  await TrackerServer.getSheetClient().updateLeaderboard(createSheetLeaderboardFromOsuResponse(leaderboardUsers.slice(0, 100)));
   console.log('finished updating leaderboard');
 }
 
@@ -42,14 +41,14 @@ function createSheetLeaderboardFromOsuResponse(users: OsuLeaderboardUser[]): She
   }));
 }
 
-export async function updateTargets(osuClient: OsuClient, sheetClient: SheetClient): Promise<void> {
+export async function updateTargets(): Promise<void> {
   console.log('started updating targets');
-  const myUser = await osuClient.getUserById(12375044);
+  const myUser = await TrackerServer.getOsuClient().getUserById(12375044);
   if (!myUser) {
     throw Error('did not find me stats');
   }
 
-  const top50Response = await osuClient.getScoreLeaderboard();
+  const top50Response = await TrackerServer.getOsuClient().getScoreLeaderboard();
 
   if (!top50Response) {
     throw Error('did not find top 50 response');
@@ -60,7 +59,7 @@ export async function updateTargets(osuClient: OsuClient, sheetClient: SheetClie
 
   const scoreToTop50 = (top50Response.ranking[49]!.ranked_score - myUser.statistics.ranked_score) / getDaysFromToday(new Date(2025, 0, 1));
 
-  const top100Response = await osuClient.getScoreLeaderboard({ 'cursor[page]': 2 });
+  const top100Response = await TrackerServer.getOsuClient().getScoreLeaderboard({ 'cursor[page]': 2 });
   if (!top100Response) {
     throw Error('did not find top 100 response');
   }
@@ -70,7 +69,7 @@ export async function updateTargets(osuClient: OsuClient, sheetClient: SheetClie
 
   const scoreToTop100 = (top100Response.ranking[49]!.ranked_score - myUser.statistics.ranked_score) / getDaysFromToday(new Date(2024, 8, 1));
 
-  await sheetClient.updateTargets([{
+  await TrackerServer.getSheetClient().updateTargets([{
     'Target': 'Top 50 by the end of the year',
     'Score to Earn': numeral(scoreToTop50).format('0,0'),
     'Target Score': numeral(scoreToTop50 + myUser.statistics.ranked_score).format('0,0'),

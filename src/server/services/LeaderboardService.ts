@@ -17,7 +17,7 @@ export default class LeaderboardService extends AbstractService {
   }
 
   private async _updateCountryLeaderboardRequestHandler(_req: Request, res: Response): Promise<void> {
-    updateLeaderboard(this.osuClient, this.sheetClient);
+    updateLeaderboard();
     res.status(200).json({
       meta: {
         status: 200,

@@ -22,9 +22,9 @@ export default class TrackerServer {
   private router: Router | null = null;
   private server: Server | null = null;
 
-  private databaseClient: DatabaseClient | null = null;
-  private osuClient: OsuClient | null = null;
-  private sheetClient: SheetClient | null = null;
+  static databaseClient: DatabaseClient | null = null;
+  static osuClient: OsuClient | null = null;
+  static sheetClient: SheetClient | null = null;
 
   constructor() {
     this.services = [];
@@ -46,16 +46,15 @@ export default class TrackerServer {
     this._initServices();
 
     cron.schedule('0,30 * * * *', () => {
-      updateLeaderboard(this.getOsuClient(), this.getSheetClient());
+      updateLeaderboard();
     });
 
     cron.schedule('0 * * * *', () => {
-      importNewScoresJob(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
+      importNewScoresJob();
     });
-    importNewScoresJob(this.getOsuClient(), this.getDatabaseClient(), this.getSheetClient());
 
     cron.schedule('0 0 * * *', () => {
-      updateTargets(this.getOsuClient(), this.getSheetClient());
+      updateTargets();
     });
 
     if (process.env['ENVIRONMENT'] === 'development') {
@@ -96,15 +95,15 @@ export default class TrackerServer {
   }
 
   _initClients(): void {
-    this.osuClient = new OsuClient({
+    TrackerServer.osuClient = new OsuClient({
       client_id: process.env['CLIENT_ID'] ?? '',
       client_secret: process.env['CLIENT_SECRET'] ?? '',
     });
 
-    this.databaseClient = new DatabaseClient(process.env['DATABASE_URL'] ?? '', process.env['DATABASE_SECURE'] ?? '');
-    this.getDatabaseClient().initializeDatabase();
+    TrackerServer.databaseClient = new DatabaseClient(process.env['DATABASE_URL'] ?? '', process.env['DATABASE_SECURE'] ?? '');
+    TrackerServer.getDatabaseClient().initializeDatabase();
 
-    this.sheetClient = new SheetClient(process.env['LEADERBOARD_SHEET_ID'] ?? '', process.env['UNFINISHED_SHEET_ID'] ?? '', process.env['BEATMAPS_SHEET_ID'] ?? '');
+    TrackerServer.sheetClient = new SheetClient(process.env['LEADERBOARD_SHEET_ID'] ?? '', process.env['UNFINISHED_SHEET_ID'] ?? '', process.env['BEATMAPS_SHEET_ID'] ?? '');
   }
 
   _initServices(): void {
@@ -122,7 +121,7 @@ export default class TrackerServer {
       service.shutDown();
     });
 
-    this.getDatabaseClient()
+    TrackerServer.getDatabaseClient()
       .closeConnection()
       .then(
         () => {
@@ -155,24 +154,24 @@ export default class TrackerServer {
     return this.app;
   }
 
-  getOsuClient(): OsuClient {
-    if (!this.osuClient) {
+  static getOsuClient(): OsuClient {
+    if (!TrackerServer.osuClient) {
       throw new Error('osu client was not initialized correctly');
     }
-    return this.osuClient;
+    return TrackerServer.osuClient;
   }
 
-  getDatabaseClient(): DatabaseClient {
-    if (!this.databaseClient) {
+  static getDatabaseClient(): DatabaseClient {
+    if (!TrackerServer.databaseClient) {
       throw new Error('database client was not initialized correctly');
     }
-    return this.databaseClient;
+    return TrackerServer.databaseClient;
   }
 
-  getSheetClient(): SheetClient {
-    if (!this.sheetClient) {
+  static getSheetClient(): SheetClient {
+    if (!TrackerServer.sheetClient) {
       throw new Error('sheet client was not initialized correctly');
     }
-    return this.sheetClient;
+    return TrackerServer.sheetClient;
   }
 }

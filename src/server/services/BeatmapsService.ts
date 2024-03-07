@@ -24,7 +24,7 @@ export default class BeatmapsService extends AbstractService {
   }
 
   private async _importAllBeatmapsRequestHandler(_req: Request, res: Response): Promise<void> {
-    importAllBeatmaps(this.osuClient, this.databaseClient);
+    importAllBeatmaps();
     res.status(200).json({
       meta: {
         status: 200,
@@ -34,7 +34,7 @@ export default class BeatmapsService extends AbstractService {
   }
 
   private async _findAllMissingBeatmapsRequestHandler(req: Request<unknown, unknown, { userId: number }>, res: Response): Promise<void> {
-    addMissingBeatmaps(this.osuClient, this.databaseClient, req.body.userId);
+    addMissingBeatmaps(req.body.userId);
     res.status(200).json({
       meta: {
         status: 200,
@@ -44,7 +44,7 @@ export default class BeatmapsService extends AbstractService {
   }
 
   private async _updateRecentBeatmapsRequestHandler(_req: Request, res: Response): Promise<void> {
-    await importLatestBeatmaps(this.osuClient, this.databaseClient);
+    await importLatestBeatmaps();
     res.status(200).json({
       meta: {
         status: 200,

@@ -17,7 +17,7 @@ export default class ScoresService extends AbstractService {
   }
 
   private async _updateScoresRequestHandler(_req: Request, res: Response): Promise<void> {
-    updateAllScores(this.osuClient, this.databaseClient);
+    updateAllScores();
     res.status(200).json({
       meta: {
         status: 200,
