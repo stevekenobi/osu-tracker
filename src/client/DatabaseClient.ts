@@ -38,7 +38,7 @@ export default class DatabaseClient {
   async initializeDatabase(): Promise<void> {
     initBeatmaps(this.getSequelizeSingleton());
 
-    await this.getSequelizeSingleton().sync({ force: true });
+    await this.getSequelizeSingleton().sync({ alter: true });
   }
 
   async closeConnection(): Promise<void> {

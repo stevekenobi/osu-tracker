@@ -52,7 +52,6 @@ export async function syncBeatmapsSheet(databaseClient: DatabaseClient, sheetCli
           .flatMap((s) => s.beatmaps),
       ));
 
-    await sheetClient.updateStats(stats);
     console.log(`finished ${year}`);
     const playedBeatmaps = beatmaps.filter((b) => b.rank);
     const totalScore = playedBeatmaps.reduce((sum, b) => sum + (b.score ? b.score : 0), 0);
