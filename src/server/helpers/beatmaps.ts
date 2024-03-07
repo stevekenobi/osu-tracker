@@ -1,50 +1,48 @@
-import type DatabaseClient from '../../client/DatabaseClient';
-import type OsuClient from '../../client/OsuClient';
-import type SheetClient from '../../client/SheetClient';
 import type { SheetStats, OsuBeatmapset, AppBeatmap, OsuBeatmap, AppBeatmapset, SheetBeatmap } from '../../types';
 import { getYearsUntilToday, isBeatmapRankedApprovedOrLoved, delay, createBeatmapLinkFromId } from '../../utils';
 import numeral from 'numeral';
+import TrackerServer from '../server';
 
-export async function importLatestBeatmaps(osuClient: OsuClient, databaseClient: DatabaseClient): Promise<void> {
+export async function importLatestBeatmaps(): Promise<void> {
   console.log('importing new beatmaps');
-  const recentBeatmaps = await osuClient.getBeatmapsetSearch();
+  const recentBeatmaps = await TrackerServer.getOsuClient().getBeatmapsetSearch();
 
   if (!recentBeatmaps) {
     throw new Error('could not find recent beatmaps');
   }
 
-  await databaseClient.updateBeatmaps(createBeatmapModelsFromOsuBeatmapsets(recentBeatmaps.beatmapsets));
+  await TrackerServer.getDatabaseClient().updateBeatmaps(createBeatmapModelsFromOsuBeatmapsets(recentBeatmaps.beatmapsets));
   console.log('finished importing new beatmaps');
 }
 
-export async function importAllBeatmaps(osuClient: OsuClient, databaseClient: DatabaseClient): Promise<void> {
+export async function importAllBeatmaps(): Promise<void> {
   console.log('importing all beatmaps');
   let cursor_string = '';
   do {
-    const beatmapSearch = await osuClient.getBeatmapsetSearch({ cursor_string });
+    const beatmapSearch = await TrackerServer.getOsuClient().getBeatmapsetSearch({ cursor_string });
 
     if (!beatmapSearch) {
       continue;
     }
 
-    await databaseClient.updateBeatmaps(createBeatmapModelsFromOsuBeatmapsets(beatmapSearch.beatmapsets));
+    await TrackerServer.getDatabaseClient().updateBeatmaps(createBeatmapModelsFromOsuBeatmapsets(beatmapSearch.beatmapsets));
     cursor_string = beatmapSearch.cursor_string;
   } while (cursor_string);
 
   console.log('finished importing all beatmaps');
 
-  await addMissingBeatmaps(osuClient,databaseClient, 2927048);
-  await addMissingBeatmaps(osuClient,databaseClient, 6699330);
+  await addMissingBeatmaps(2927048);
+  await addMissingBeatmaps(6699330);
 
   console.log('finished importing missing beatmaps');
 }
 
-export async function syncBeatmapsSheet(databaseClient: DatabaseClient, sheetClient: SheetClient): Promise<void> {
+export async function syncBeatmapsSheet(): Promise<void> {
   const years = getYearsUntilToday();
   const stats: SheetStats[] = [];
   for (const year of years) {
-    const beatmaps = await databaseClient.getBeatmapsOfYear(year);
-    await sheetClient.updateBeatmapsOfYear(
+    const beatmaps = await TrackerServer.getDatabaseClient().getBeatmapsOfYear(year);
+    await TrackerServer.getSheetClient().updateBeatmapsOfYear(
       year,
       createSheetBeatmapsFromApp(
         createBeatmapsetsFromBeatmaps(beatmaps)
@@ -52,7 +50,6 @@ export async function syncBeatmapsSheet(databaseClient: DatabaseClient, sheetCli
           .flatMap((s) => s.beatmaps),
       ));
 
-    await sheetClient.updateStats(stats);
     console.log(`finished ${year}`);
     const playedBeatmaps = beatmaps.filter((b) => b.rank);
     const totalScore = playedBeatmaps.reduce((sum, b) => sum + (b.score ? b.score : 0), 0);
@@ -71,27 +68,27 @@ export async function syncBeatmapsSheet(databaseClient: DatabaseClient, sheetCli
     });
   }
 
-  await sheetClient.updateStats(stats);
+  await TrackerServer.getSheetClient().updateStats(stats);
 
-  await sheetClient.updateProblematicBeatmaps(createSheetBeatmapsFromApp(await databaseClient.getUnfinishedBeatmaps('problematic')));
-  await sheetClient.updateNonSDBeatmaps(createSheetBeatmapsFromApp(await databaseClient.getUnfinishedBeatmaps('non-sd')));
-  await sheetClient.updateDtBeatmaps(createSheetBeatmapsFromApp(await databaseClient.getUnfinishedBeatmaps('dt')));
-  await sheetClient.updateArankBeatmaps(createSheetBeatmapsFromApp(await databaseClient.getUnfinishedBeatmaps('a-ranks')));
-  await sheetClient.updateSuboptimalBeatmaps(createSheetBeatmapsFromApp(await databaseClient.getUnfinishedBeatmaps('sub-optimal')));
+  await TrackerServer.getSheetClient().updateProblematicBeatmaps(createSheetBeatmapsFromApp(await TrackerServer.getDatabaseClient().getUnfinishedBeatmaps('problematic')));
+  await TrackerServer.getSheetClient().updateNonSDBeatmaps(createSheetBeatmapsFromApp(await TrackerServer.getDatabaseClient().getUnfinishedBeatmaps('non-sd')));
+  await TrackerServer.getSheetClient().updateDtBeatmaps(createSheetBeatmapsFromApp(await TrackerServer.getDatabaseClient().getUnfinishedBeatmaps('dt')));
+  await TrackerServer.getSheetClient().updateArankBeatmaps(createSheetBeatmapsFromApp(await TrackerServer.getDatabaseClient().getUnfinishedBeatmaps('a-ranks')));
+  await TrackerServer.getSheetClient().updateSuboptimalBeatmaps(createSheetBeatmapsFromApp(await TrackerServer.getDatabaseClient().getUnfinishedBeatmaps('sub-optimal')));
 
   console.log('finished syncing beatmaps sheet');
 }
 
-export async function addMissingBeatmaps(osuClient: OsuClient, databaseClient: DatabaseClient, userId: number): Promise<void> {
+export async function addMissingBeatmaps(userId: number): Promise<void> {
   console.log(`starting finding missing beatmaps of user ${userId}`);
 
   let j = 0;
-  const allBeatmapIds = (await databaseClient.getBeatmaps()).map((b) => b.id);
+  const allBeatmapIds = (await TrackerServer.getDatabaseClient().getBeatmaps()).map((b) => b.id);
   const missingIds: number[] = [];
-  let result = await osuClient.getUserBeatmaps(userId, 'most_played', { limit: 100 });
+  let result = await TrackerServer.getOsuClient().getUserBeatmaps(userId, 'most_played', { limit: 100 });
   do {
     if (!result) {
-      result = await osuClient.getUserBeatmaps(userId, 'most_played', { limit: 100, offset: j });
+      result = await TrackerServer.getOsuClient().getUserBeatmaps(userId, 'most_played', { limit: 100, offset: j });
       continue;
     }
     j += 100;
@@ -99,7 +96,7 @@ export async function addMissingBeatmaps(osuClient: OsuClient, databaseClient: D
 
     missingIds.push(...result.filter((b) => b.beatmap.mode === 'osu' && isBeatmapRankedApprovedOrLoved(b.beatmap)).filter((b) => !allBeatmapIds.includes(b.beatmap_id)).map(b => b.beatmapset.id));
 
-    result = await osuClient.getUserBeatmaps(userId, 'most_played', { limit: 100, offset: j });
+    result = await TrackerServer.getOsuClient().getUserBeatmaps(userId, 'most_played', { limit: 100, offset: j });
 
     await delay(500);
   } while (result!.length > 0);
@@ -107,11 +104,11 @@ export async function addMissingBeatmaps(osuClient: OsuClient, databaseClient: D
   const missingSet = Array.from(new Set(missingIds));
 
   for (const id of missingSet) {
-    const beatmapset = await osuClient.getBeatmapsetById(id);
+    const beatmapset = await TrackerServer.getOsuClient().getBeatmapsetById(id);
     if (!beatmapset) {
       throw new Error(`Did not find ${id}`);
     }
-    await databaseClient.updateBeatmaps(createBeatmapModelsFromOsuBeatmapsets([beatmapset]));
+    await TrackerServer.getDatabaseClient().updateBeatmaps(createBeatmapModelsFromOsuBeatmapsets([beatmapset]));
   }
 
   console.log('finished finding missing beatmaps');

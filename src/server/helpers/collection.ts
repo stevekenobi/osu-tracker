@@ -1,47 +1,24 @@
-import type DatabaseClient from '../../client/DatabaseClient';
-import type SheetClient from '../../client/SheetClient';
 import type { OsuCollection } from '../../client/OsuCollection';
-import { extractIdFromLink } from '../../utils';
-import { Op } from 'sequelize';
+import TrackerServer from '../server';
 
-export async function getCollections(databaseClient: DatabaseClient, sheetClient: SheetClient): Promise<OsuCollection[]> {
+export async function getCollections(): Promise<OsuCollection[]> {
   const collections: OsuCollection[] = [];
 
-  const dtBeatmaps = await databaseClient.getUnfinishedBeatmaps('dt');
-  collections.push({
-    name: 'DT',
-    beatmapCount: dtBeatmaps.length,
-    beatmaps: dtBeatmaps.map(b => b.checksum),
-  });
-
-  const nonSdBeatmaps = await databaseClient.getUnfinishedBeatmaps('non-sd');
-  collections.push({
-    name: 'Non SD',
-    beatmapCount: nonSdBeatmaps.length,
-    beatmaps: nonSdBeatmaps.map(b => b.checksum),
-  });
-
-  const nonFcBeatmaps = await databaseClient.getUnfinishedBeatmaps('problematic');
-  collections.push({
-    name: 'Non FC',
-    beatmapCount: nonFcBeatmaps.length,
-    beatmaps: nonFcBeatmaps.map(b => b.checksum),
-  });
-
-  const aRankBeatmaps = await databaseClient.getUnfinishedBeatmaps('a-ranks');
-  collections.push({
-    name: 'A ranks',
-    beatmapCount: aRankBeatmaps.length,
-    beatmaps: aRankBeatmaps.map(b => b.checksum),
-  });
-
-  const unfinishedBeatmaps = await sheetClient.getNoScoreBeatmaps();
-  const beatmaps = await databaseClient.getBeatmaps({where: {id: {[Op.in]: unfinishedBeatmaps.map(u => extractIdFromLink(u.Link))}}});
-  collections.push({
-    name: 'Unfinished',
-    beatmapCount: beatmaps.length,
-    beatmaps: beatmaps.map(b => b.checksum),
-  });
+  collections.push(await getCollection('a-ranks'));
+  collections.push(await getCollection('no-score'));
+  collections.push(await getCollection('problematic'));
+  collections.push(await getCollection('non-sd'));
+  collections.push(await getCollection('dt'));
+  collections.push(await getCollection('sub-optimal'));
 
   return collections;
+}
+
+export async function getCollection(option: 'no-score' | 'a-ranks' | 'problematic' | 'non-sd' | 'dt' | 'sub-optimal'): Promise<OsuCollection> {
+  const beatmaps = await TrackerServer.getDatabaseClient().getUnfinishedBeatmaps(option);
+  return {
+    name: option,
+    beatmapCount: beatmaps.length,
+    beatmaps: beatmaps.map(b => b.checksum),
+  };
 }

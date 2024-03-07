@@ -1,18 +1,24 @@
 import DatabaseClient from '../../../src/client/DatabaseClient';
-import { beatmapsResult, beatmapsOfYearResult, problematicBeatmapsResult, nonSDBeatmapsResult, dtBeatmapsResult, aRanksResult, suboptimalResult } from '../../data/allBeatmaps';
+import { beatmapsResult, beatmapsOfYearResult, problematicBeatmapsResult, nonSDBeatmapsResult, dtBeatmapsResult, aRanksResult, suboptimalResult, unfinishedBeamapsResult } from '../../data/allBeatmaps';
 import { beatmapData } from '../../data/beatmaps';
 import { scoreData } from '../../data/scores';
 
 const client = new DatabaseClient('sqlite::memory', 'false');
 
 describe.sequential('database client', () => {
-  beforeAll(async () => await client.initializeDatabase());
+  beforeAll(() => client.initializeDatabase());
   afterAll(async () => client.closeConnection());
   describe('updateBeatmaps', () => {
     test('executes query', async () => {
       await client.updateBeatmaps(beatmapData);
       const result = await client.getBeatmaps();
       expect(result.length).toEqual(100);
+    });
+  });
+
+  describe('addUnfinishedBeatmap', () => {
+    test('executes query', async () => {
+      await client.addUnfinishedBeatmap(2328);
     });
   });
 
@@ -28,6 +34,7 @@ describe.sequential('database client', () => {
     test('does not update', async () => {
       await client.updateScore({
         'id': 1752,
+        'unfinished': false,
         'accuracy': 99.18,
         'max_combo': 868,
         'perfect': true,
@@ -48,6 +55,7 @@ describe.sequential('database client', () => {
     test('updates score', async () => {
       await client.updateScore({
         'id': 319,
+        'unfinished': false,
         'accuracy': 98.86,
         'max_combo': 689,
         'perfect': false,
@@ -80,6 +88,7 @@ describe.sequential('database client', () => {
 
   describe('getUnfinishedBeatmaps', () => {
     describe.each([
+      { input: 'no-score', expected: unfinishedBeamapsResult },
       { input: 'problematic', expected: problematicBeatmapsResult },
       { input: 'non-sd', expected: nonSDBeatmapsResult },
       { input: 'dt', expected: dtBeatmapsResult },
@@ -88,7 +97,7 @@ describe.sequential('database client', () => {
       { input: 'unknown', expected: [] },
     ])('$input', ({ input, expected }) => {
       test('returns correct result', async () => {
-        const result = await client.getUnfinishedBeatmaps(input as 'problematic' | 'non-sd' | 'dt' | 'a-ranks' | 'sub-optimal');
+        const result = await client.getUnfinishedBeatmaps(input as 'no-score' | 'problematic' | 'non-sd' | 'dt' | 'a-ranks' | 'sub-optimal');
         expect(result).toEqual(expected);
       });
     });
@@ -96,8 +105,9 @@ describe.sequential('database client', () => {
 
   describe('updating score on non-existant map', () => {
     test('throws error', () => {
-      expect(async () => await client.updateScore({
-        id: 10,
+      expect(() => client.updateScore({
+        'id': 10,
+        'unfinished': false,
         'accuracy': 98.86,
         'max_combo': 689,
         'perfect': false,
@@ -111,6 +121,12 @@ describe.sequential('database client', () => {
         'mods': 'HD,SD',
         'rank': 'A',
       })).rejects.toThrowError('beatmap 10 not found in database');
+    });
+  });
+
+  describe('updating unfinished on non-existant map', () => {
+    test('throws error', () => {
+      expect(() => client.addUnfinishedBeatmap(10)).rejects.toThrowError('beatmap 10 not found in database');
     });
   });
 });

@@ -3,6 +3,7 @@ import type { AppScore } from '../../src/types';
 export const scoreData: AppScore[] =[
   {
     'id': 1752,
+    'unfinished': false,
     'accuracy': 99.18,
     'max_combo': 868,
     'perfect': false,
@@ -18,6 +19,7 @@ export const scoreData: AppScore[] =[
   },
   {
     'id': 319,
+    'unfinished': false,
     'accuracy': 98.86,
     'max_combo': 689,
     'perfect': false,
@@ -33,6 +35,7 @@ export const scoreData: AppScore[] =[
   },
   {
     'id': 2348,
+    'unfinished': false,
     'accuracy': 97.87,
     'max_combo': 532,
     'perfect': false,
@@ -48,6 +51,7 @@ export const scoreData: AppScore[] =[
   },
   {
     'id': 1386,
+    'unfinished': false,
     'accuracy': 99.58,
     'max_combo': 637,
     'perfect': false,
@@ -63,6 +67,7 @@ export const scoreData: AppScore[] =[
   },
   {
     'id': 583,
+    'unfinished': false,
     'accuracy': 98.51,
     'max_combo': 694,
     'perfect': true,
@@ -78,6 +83,7 @@ export const scoreData: AppScore[] =[
   },
   {
     'id': 388,
+    'unfinished': false,
     'accuracy': 98.36,
     'max_combo': 934,
     'perfect': true,
@@ -93,6 +99,7 @@ export const scoreData: AppScore[] =[
   },
   {
     'id': 372,
+    'unfinished': false,
     'accuracy': 98.66,
     'max_combo': 802,
     'perfect': true,
@@ -108,6 +115,7 @@ export const scoreData: AppScore[] =[
   },
   {
     'id': 1809,
+    'unfinished': false,
     'accuracy': 97.13,
     'max_combo': 584,
     'perfect': true,
@@ -123,6 +131,7 @@ export const scoreData: AppScore[] =[
   },
   {
     'id': 831,
+    'unfinished': false,
     'accuracy': 99.57,
     'max_combo': 461,
     'perfect': true,
@@ -138,6 +147,7 @@ export const scoreData: AppScore[] =[
   },
   {
     'id': 2207,
+    'unfinished': false,
     'accuracy': 98.88,
     'max_combo': 658,
     'perfect': true,
@@ -153,6 +163,7 @@ export const scoreData: AppScore[] =[
   },
   {
     'id': 1940,
+    'unfinished': false,
     'accuracy': 98.92,
     'max_combo': 730,
     'perfect': true,
@@ -168,6 +179,7 @@ export const scoreData: AppScore[] =[
   },
   {
     'id': 1906,
+    'unfinished': false,
     'accuracy': 99.13,
     'max_combo': 427,
     'perfect': false,
@@ -183,6 +195,7 @@ export const scoreData: AppScore[] =[
   },
   {
     'id': 1470,
+    'unfinished': false,
     'accuracy': 98.85,
     'max_combo': 856,
     'perfect': true,
@@ -198,6 +211,7 @@ export const scoreData: AppScore[] =[
   },
   {
     'id': 1544,
+    'unfinished': false,
     'accuracy': 97.55,
     'max_combo': 440,
     'perfect': false,
@@ -213,6 +227,7 @@ export const scoreData: AppScore[] =[
   },
   {
     'id': 2156,
+    'unfinished': false,
     'accuracy': 98.63,
     'max_combo': 786,
     'perfect': true,
@@ -228,6 +243,7 @@ export const scoreData: AppScore[] =[
   },
   {
     'id': 2811,
+    'unfinished': false,
     'accuracy': 99.56,
     'max_combo': 884,
     'perfect': true,
@@ -243,6 +259,7 @@ export const scoreData: AppScore[] =[
   },
   {
     'id': 2047,
+    'unfinished': false,
     'accuracy': 99.58,
     'max_combo': 432,
     'perfect': true,
@@ -258,6 +275,7 @@ export const scoreData: AppScore[] =[
   },
   {
     'id': 1895,
+    'unfinished': false,
     'accuracy': 99.08,
     'max_combo': 864,
     'perfect': true,
@@ -273,6 +291,7 @@ export const scoreData: AppScore[] =[
   },
   {
     'id': 1563,
+    'unfinished': false,
     'accuracy': 97.89,
     'max_combo': 620,
     'perfect': true,
@@ -288,6 +307,7 @@ export const scoreData: AppScore[] =[
   },
   {
     'id': 2396,
+    'unfinished': false,
     'accuracy': 99.44,
     'max_combo': 925,
     'perfect': false,

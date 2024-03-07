@@ -17,15 +17,3 @@ export type SheetBeatmap = {
   Accuracy?: string;
   Score?: string;
 };
-
-export type SheetNoScoreBeatmap = {
-  Link: string
-  Artist: string
-  Title: string
-  Creator: string
-  Version: string
-  Difficulty: string
-  Status: string
-  Length: string
-  Playcount: string
-};

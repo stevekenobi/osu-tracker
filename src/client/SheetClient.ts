@@ -1,7 +1,7 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import creds from '../../google_service_account.json';
 import { JWT } from 'google-auth-library';
-import type { SheetBeatmap, SheetLeaderboard, SheetNoScoreBeatmap, SheetStats, SheetTarget } from '../types';
+import type { SheetBeatmap, SheetLeaderboard, SheetStats, SheetTarget } from '../types';
 import type { AxiosError } from 'axios';
 import { delay } from '../utils';
 
@@ -120,12 +120,11 @@ export default class SheetClient {
     return this.getRows(this.beatmaps_sheet_id, 'Stats');
   }
 
-  async updateNoScoreBeatmaps(beatmaps: SheetNoScoreBeatmap[]): Promise<void> {
-    await this.clearRows(this.unfinished_sheet_id, 'No Score', { start: 2 });
-    await this.addRows(beatmaps, this.unfinished_sheet_id, 'No Score');
+  async updateNoScoreBeatmaps(beatmaps: SheetBeatmap[]): Promise<void> {
+    await this.updateUnfinishedBeatmaps(beatmaps, 'No Score');
   }
 
-  async getNoScoreBeatmaps(): Promise<SheetNoScoreBeatmap[]> {
+  async getNoScoreBeatmaps(): Promise<SheetBeatmap[]> {
     return this.getRows(this.unfinished_sheet_id, 'No Score');
   }
 
@@ -153,7 +152,7 @@ export default class SheetClient {
     await this.updateUnfinishedBeatmaps(beatmaps, 'Sub Optimal');
   }
 
-  private async updateUnfinishedBeatmaps(beatmaps: SheetBeatmap[], title: 'Problematic' | 'Non SD' | 'DT' | 'A Ranks' | 'Sub Optimal'): Promise<void> {
+  private async updateUnfinishedBeatmaps(beatmaps: SheetBeatmap[], title: 'No Score' | 'Problematic' | 'Non SD' | 'DT' | 'A Ranks' | 'Sub Optimal'): Promise<void> {
     await this.clearRows(this.unfinished_sheet_id, title, { start: 2 });
     await this.addRows(beatmaps, this.unfinished_sheet_id, title);
   }
