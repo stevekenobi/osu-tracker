@@ -50,9 +50,9 @@ export function getModsString(mods: OsuMod[]): string {
     return '';
   }
 
-  const s = mods.map(m => {
+  const s = mods.map((m) => {
     if (m.settings) {
-      return `${m.acronym}(${Object.keys(m.settings).map(x => m.settings![x])})`;
+      return `${m.acronym}(${Object.keys(m.settings).map((x) => m.settings![x])})`;
     } else {
       return m.acronym;
     }

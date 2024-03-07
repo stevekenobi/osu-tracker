@@ -9,8 +9,7 @@ const authUrl = ' https://osu.ppy.sh/oauth/token';
 export default class OsuClient {
   private authToken = '';
 
-  constructor(private readonly authDetails: AuthDetails) {
-  }
+  constructor(private readonly authDetails: AuthDetails) {}
 
   private async getRequest<T>(requestUrl: string): Promise<T | null> {
     try {
@@ -61,7 +60,7 @@ export default class OsuClient {
       },
       data: data,
     };
-    const response = await axios.request<{access_token: string}>(config);
+    const response = await axios.request<{ access_token: string }>(config);
     this.authToken = response.data.access_token;
   }
 
@@ -80,7 +79,7 @@ export default class OsuClient {
     return response;
   }
 
-  async getBeatmapsetSearch(query?: {cursor_string: string}): Promise<OsuBeatmapsetSearchResponse | null> {
+  async getBeatmapsetSearch(query?: { cursor_string: string }): Promise<OsuBeatmapsetSearchResponse | null> {
     const response = await this.getRequest<OsuBeatmapsetSearchResponse>(`beatmapsets/search${createQuery(query)}`);
     return response;
   }
@@ -95,7 +94,7 @@ export default class OsuClient {
     return response;
   }
 
-  async getUserBeatmaps(id: number, type: 'most_played', query?: Partial<{ limit: number, offset: number }>): Promise<OsuUserBeatmap[] | null> {
+  async getUserBeatmaps(id: number, type: 'most_played', query?: Partial<{ limit: number; offset: number }>): Promise<OsuUserBeatmap[] | null> {
     const response = await this.getRequest<OsuUserBeatmap[]>(`users/${id}/beatmapsets/${type}${createQuery(query)}`);
     return response;
   }

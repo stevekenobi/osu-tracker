@@ -17,8 +17,7 @@ export async function updateLeaderboard(): Promise<void> {
     cursor = response.cursor;
     leaderboardUsers.push(...response.ranking);
   } while (cursor);
-  leaderboardUsers
-    .sort((a, b) => (a.ranked_score < b.ranked_score ? 1 : -1));
+  leaderboardUsers.sort((a, b) => (a.ranked_score < b.ranked_score ? 1 : -1));
 
   await TrackerServer.getSheetClient().updateLeaderboard(createSheetLeaderboardFromOsuResponse(leaderboardUsers.slice(0, 100)));
   console.log('finished updating leaderboard');
@@ -69,16 +68,18 @@ export async function updateTargets(): Promise<void> {
 
   const scoreToTop100 = (top100Response.ranking[49]!.ranked_score - myUser.statistics.ranked_score) / getDaysFromToday(new Date(2024, 8, 1));
 
-  await TrackerServer.getSheetClient().updateTargets([{
-    'Target': 'Top 50 by the end of the year',
-    'Score to Earn': numeral(scoreToTop50).format('0,0'),
-    'Target Score': numeral(scoreToTop50 + myUser.statistics.ranked_score).format('0,0'),
-  },
-  {
-    'Target': 'Top 100 by September',
-    'Score to Earn': numeral(scoreToTop100).format('0,0'),
-    'Target Score': numeral(scoreToTop100 + myUser.statistics.ranked_score).format('0,0'),
-  }]);
+  await TrackerServer.getSheetClient().updateTargets([
+    {
+      Target: 'Top 50 by the end of the year',
+      'Score to Earn': numeral(scoreToTop50).format('0,0'),
+      'Target Score': numeral(scoreToTop50 + myUser.statistics.ranked_score).format('0,0'),
+    },
+    {
+      Target: 'Top 100 by September',
+      'Score to Earn': numeral(scoreToTop100).format('0,0'),
+      'Target Score': numeral(scoreToTop100 + myUser.statistics.ranked_score).format('0,0'),
+    },
+  ]);
 
   console.log('finished updating targets');
 }

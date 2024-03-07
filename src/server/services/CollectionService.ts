@@ -22,7 +22,7 @@ export default class CollectionService extends AbstractService {
   private async _getCollectionRequestHandler(_req: Request, res: Response): Promise<void> {
     const collections = await getCollections();
     const osuCollection = new OsuCollectionFile(20240123);
-    collections.forEach(c => {
+    collections.forEach((c) => {
       osuCollection.addCollection(c);
     });
     const pathName = path.join(__dirname, 'collection.db');

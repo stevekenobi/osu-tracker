@@ -3,7 +3,6 @@ import AbstractService from '../AbstractService';
 import { importAllBeatmaps, importLatestBeatmaps, addMissingBeatmaps } from '../helpers/beatmaps';
 
 export default class BeatmapsService extends AbstractService {
-
   override init(): void {
     /* empty */
   }

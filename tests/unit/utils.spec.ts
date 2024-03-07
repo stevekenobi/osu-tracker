@@ -1,4 +1,16 @@
-import { createBeatmapLinkFromId, createQuery, createUserLinkFromId, delay, extractIdFromLink, getDaysFromToday, getModsString, getRulesetFromInt, getYearsUntilToday, isBeatmapRankedApprovedOrLoved, range } from '../../src/utils';
+import {
+  createBeatmapLinkFromId,
+  createQuery,
+  createUserLinkFromId,
+  delay,
+  extractIdFromLink,
+  getDaysFromToday,
+  getModsString,
+  getRulesetFromInt,
+  getYearsUntilToday,
+  isBeatmapRankedApprovedOrLoved,
+  range,
+} from '../../src/utils';
 
 describe('utils', () => {
   describe('delay', () => {
@@ -44,26 +56,7 @@ describe('utils', () => {
   describe('getYearsUntilToday', () => {
     test('returns years until today', () => {
       const result = getYearsUntilToday();
-      expect(result).toStrictEqual([
-        '2007',
-        '2008',
-        '2009',
-        '2010',
-        '2011',
-        '2012',
-        '2013',
-        '2014',
-        '2015',
-        '2016',
-        '2017',
-        '2018',
-        '2019',
-        '2020',
-        '2021',
-        '2022',
-        '2023',
-        '2024',
-      ]);
+      expect(result).toStrictEqual(['2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024']);
     });
   });
 
@@ -118,7 +111,7 @@ describe('utils', () => {
     });
 
     test('returns random string', () => {
-      const result = getModsString([{ acronym: 'HD' }, { acronym: 'SD', settings: {some_setting: 123, other_setting: 'other'} }, { acronym: 'NC', settings: { speed_change: 1.23 } }]);
+      const result = getModsString([{ acronym: 'HD' }, { acronym: 'SD', settings: { some_setting: 123, other_setting: 'other' } }, { acronym: 'NC', settings: { speed_change: 1.23 } }]);
       expect(result).toBe('HD,SD(123,other),NC(1.23)');
     });
   });

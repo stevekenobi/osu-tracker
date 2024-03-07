@@ -94,19 +94,21 @@ describe.sequential('sheet client', () => {
 
   describe('stats', () => {
     test('updateStats', async () => {
-      await sheetClient.updateStats([{
-        Year: '2009',
-        'Total Beatmaps': '12375044',
-        'Played Beatmaps': '4171323',
-        'Completion (%)': '98.6',
-        'Total Score': '213216521',
-        'Average Score': '151621',
-        SSH: '1235',
-        SS: '1542',
-        SH: '4212',
-        S: '1232',
-        A: '1',
-      }]);
+      await sheetClient.updateStats([
+        {
+          Year: '2009',
+          'Total Beatmaps': '12375044',
+          'Played Beatmaps': '4171323',
+          'Completion (%)': '98.6',
+          'Total Score': '213216521',
+          'Average Score': '151621',
+          SSH: '1235',
+          SS: '1542',
+          SH: '4212',
+          S: '1232',
+          A: '1',
+        },
+      ]);
 
       expect(clearRows).toHaveBeenCalled();
       expect(addRows).toHaveBeenCalled();
@@ -129,19 +131,21 @@ describe.sequential('sheet client', () => {
         },
       ]);
       const result = await sheetClient.getStats();
-      expect(result).toStrictEqual([{
-        Year: '2009',
-        'Total Beatmaps': '12375044',
-        'Played Beatmaps': '4171323',
-        'Completion (%)': '98.6',
-        'Total Score': '213216521',
-        'Average Score': '151621',
-        SSH: '1235',
-        SS: '1542',
-        SH: '4212',
-        S: '1232',
-        A: '1',
-      }]);
+      expect(result).toStrictEqual([
+        {
+          Year: '2009',
+          'Total Beatmaps': '12375044',
+          'Played Beatmaps': '4171323',
+          'Completion (%)': '98.6',
+          'Total Score': '213216521',
+          'Average Score': '151621',
+          SSH: '1235',
+          SS: '1542',
+          SH: '4212',
+          S: '1232',
+          A: '1',
+        },
+      ]);
     });
   });
 
@@ -274,66 +278,72 @@ describe.sequential('sheet client', () => {
       ${'updateDtBeatmaps'}          | ${'DT'}
       ${'updateArankBeatmaps'}       | ${'A Ranks'}
       ${'updateSuboptimalBeatmaps'}  | ${'Sub Optimal'}
-    `('updates $title', async (obj: { method: 'updateNoScoreBeatmaps' | 'updateProblematicBeatmaps' | 'updateNonSDBeatmaps' | 'updateDtBeatmaps' | 'updateArankBeatmaps' | 'updateSuboptimalBeatmaps', title: 'Problematic' | 'Non SD' | 'DT' | 'A Ranks' | 'Sub Optimal' }) => {
-      await sheetClient[obj.method]([
-        {
-          Link: 'https://osu.ppy.sh/b/123',
-          Artist: 'artist',
-          Title: 'title',
-          Creator: 'creator',
-          Version: 'version',
-          Difficulty: '1.23',
-          Status: 'loved',
-          BPM: '150',
-          AR: '9.2',
-          CS: '4',
-          HP: '7',
-          OD: '8',
-          Length: '124',
-        },
-      ]);
+    `(
+      'updates $title',
+      async (obj: {
+        method: 'updateNoScoreBeatmaps' | 'updateProblematicBeatmaps' | 'updateNonSDBeatmaps' | 'updateDtBeatmaps' | 'updateArankBeatmaps' | 'updateSuboptimalBeatmaps';
+        title: 'Problematic' | 'Non SD' | 'DT' | 'A Ranks' | 'Sub Optimal';
+      }) => {
+        await sheetClient[obj.method]([
+          {
+            Link: 'https://osu.ppy.sh/b/123',
+            Artist: 'artist',
+            Title: 'title',
+            Creator: 'creator',
+            Version: 'version',
+            Difficulty: '1.23',
+            Status: 'loved',
+            BPM: '150',
+            AR: '9.2',
+            CS: '4',
+            HP: '7',
+            OD: '8',
+            Length: '124',
+          },
+        ]);
 
-      expect(clearRows).toHaveBeenCalled();
-      expect(addRows).toHaveBeenCalled();
-      getRows.mockResolvedValue([
-        {
-          Link: 'https://osu.ppy.sh/b/123',
-          Artist: 'artist',
-          Title: 'title',
-          Creator: 'creator',
-          Version: 'version',
-          Difficulty: '1.23',
-          Status: 'loved',
-          BPM: '150',
-          AR: '9.2',
-          CS: '4',
-          HP: '7',
-          OD: '8',
-          Length: '124',
-        },
-      ]);
+        expect(clearRows).toHaveBeenCalled();
+        expect(addRows).toHaveBeenCalled();
+        getRows.mockResolvedValue([
+          {
+            Link: 'https://osu.ppy.sh/b/123',
+            Artist: 'artist',
+            Title: 'title',
+            Creator: 'creator',
+            Version: 'version',
+            Difficulty: '1.23',
+            Status: 'loved',
+            BPM: '150',
+            AR: '9.2',
+            CS: '4',
+            HP: '7',
+            OD: '8',
+            Length: '124',
+          },
+        ]);
 
-      await delay(3000);
+        await delay(3000);
 
-      const result = await sheetClient.getUnfinishedBeatmaps(obj.title);
-      expect(result).toStrictEqual([
-        {
-          Link: 'https://osu.ppy.sh/b/123',
-          Artist: 'artist',
-          Title: 'title',
-          Creator: 'creator',
-          Version: 'version',
-          Difficulty: '1.23',
-          Status: 'loved',
-          BPM: '150',
-          AR: '9.2',
-          CS: '4',
-          HP: '7',
-          OD: '8',
-          Length: '124',
-        },
-      ]);
-    });
+        const result = await sheetClient.getUnfinishedBeatmaps(obj.title);
+        expect(result).toStrictEqual([
+          {
+            Link: 'https://osu.ppy.sh/b/123',
+            Artist: 'artist',
+            Title: 'title',
+            Creator: 'creator',
+            Version: 'version',
+            Difficulty: '1.23',
+            Status: 'loved',
+            BPM: '150',
+            AR: '9.2',
+            CS: '4',
+            HP: '7',
+            OD: '8',
+            Length: '124',
+          },
+        ]);
+      },
+    );
   });
 
   describe('updateTargets', () => {

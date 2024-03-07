@@ -54,7 +54,7 @@ export default class DatabaseClient {
     return this.sequelizeSingleton;
   }
 
-  async addUnfinishedBeatmap(id: number): Promise<void> {    
+  async addUnfinishedBeatmap(id: number): Promise<void> {
     const beatmap = await Beatmaps.findByPk(id);
     if (!beatmap) {
       throw new Error(`beatmap ${id} not found in database`);
@@ -67,11 +67,11 @@ export default class DatabaseClient {
   }
 
   async getBeatmaps(options?: FindOptions<Beatmaps>): Promise<AppBeatmap[]> {
-    return (await Beatmaps.findAll(options)).map(b => b.toJSON());
+    return (await Beatmaps.findAll(options)).map((b) => b.toJSON());
   }
 
   async getBeatmapsOfYear(year: string): Promise<AppBeatmap[]> {
-    return (await Beatmaps.findAll({ where: { rankedDate: { [Op.like]: `${year}%` } } })).map(b => b.toJSON());
+    return (await Beatmaps.findAll({ where: { rankedDate: { [Op.like]: `${year}%` } } })).map((b) => b.toJSON());
   }
 
   async getUnfinishedBeatmaps(option: 'no-score' | 'problematic' | 'non-sd' | 'dt' | 'a-ranks' | 'sub-optimal'): Promise<AppBeatmap[]> {
@@ -89,31 +89,31 @@ export default class DatabaseClient {
     } else if (option === 'sub-optimal') {
       result = await this.getSubOptimalBeatmaps();
     }
-    return result.sort((a, b) => a.difficulty > b.difficulty ? 1 : -1);
+    return result.sort((a, b) => (a.difficulty > b.difficulty ? 1 : -1));
   }
 
   private async getNoScoreBeatmaps(): Promise<AppBeatmap[]> {
-    return (await Beatmaps.findAll({ where: { unfinished: true } })).map(b => b.toJSON());
+    return (await Beatmaps.findAll({ where: { unfinished: true } })).map((b) => b.toJSON());
   }
 
   private async getProblematicBeatmaps(): Promise<AppBeatmap[]> {
-    return (await Beatmaps.findAll({ where: { perfect: false } })).map(b => b.toJSON());
+    return (await Beatmaps.findAll({ where: { perfect: false } })).map((b) => b.toJSON());
   }
 
   private async getNonSDBeatmaps(): Promise<AppBeatmap[]> {
-    return (await Beatmaps.findAll({ where: { mods: { [Op.notLike]: '%SD%' } } })).map(b => b.toJSON());
+    return (await Beatmaps.findAll({ where: { mods: { [Op.notLike]: '%SD%' } } })).map((b) => b.toJSON());
   }
 
   private async getDTBeatmaps(): Promise<AppBeatmap[]> {
-    return (await Beatmaps.findAll({ where: { mods: { [Op.like]: '%DT%' } } })).map(b => b.toJSON());
+    return (await Beatmaps.findAll({ where: { mods: { [Op.like]: '%DT%' } } })).map((b) => b.toJSON());
   }
 
   private async getArankBeatmaps(): Promise<AppBeatmap[]> {
-    return (await Beatmaps.findAll({ where: { rank: 'A' } })).map(b => b.toJSON());
+    return (await Beatmaps.findAll({ where: { rank: 'A' } })).map((b) => b.toJSON());
   }
 
   private async getSubOptimalBeatmaps(): Promise<AppBeatmap[]> {
-    return (await Beatmaps.findAll({ where: { score: { [Op.lt]: 1000000 } } })).map(b => b.toJSON());
+    return (await Beatmaps.findAll({ where: { score: { [Op.lt]: 1000000 } } })).map((b) => b.toJSON());
   }
 
   async updateScore(score: AppScore): Promise<void> {

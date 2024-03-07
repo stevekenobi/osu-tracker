@@ -20,14 +20,14 @@ export type OsuBeatmap = {
   difficulty_rating: number;
   beatmapset_id: number;
   ar: number;
-  cs: number,
-  accuracy: number,
-  drain: number,
-  bpm: number,
-  total_length: number,
+  cs: number;
+  accuracy: number;
+  drain: number;
+  bpm: number;
+  total_length: number;
   user_id: number;
-  mode: string,
-  status: string,
+  mode: string;
+  status: string;
   beatmapset: OsuBeatmapset;
   checksum: string;
 };
@@ -41,11 +41,11 @@ export type OsuUserBeatmap = {
     version: string;
     difficulty_rating: number;
     total_length: number;
-  }
+  };
   beatmapset: {
     id: number;
     artist: string;
     title: string;
     creator: string;
-  }
+  };
 };

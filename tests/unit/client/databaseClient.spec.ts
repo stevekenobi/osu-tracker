@@ -1,5 +1,14 @@
 import DatabaseClient from '../../../src/client/DatabaseClient';
-import { beatmapsResult, beatmapsOfYearResult, problematicBeatmapsResult, nonSDBeatmapsResult, dtBeatmapsResult, aRanksResult, suboptimalResult, unfinishedBeamapsResult } from '../../data/allBeatmaps';
+import {
+  beatmapsResult,
+  beatmapsOfYearResult,
+  problematicBeatmapsResult,
+  nonSDBeatmapsResult,
+  dtBeatmapsResult,
+  aRanksResult,
+  suboptimalResult,
+  unfinishedBeamapsResult,
+} from '../../data/allBeatmaps';
 import { beatmapData } from '../../data/beatmaps';
 import { scoreData } from '../../data/scores';
 
@@ -24,7 +33,7 @@ describe.sequential('database client', () => {
 
   describe('updateScore', () => {
     test('executes query', async () => {
-      for(const s of scoreData) {
+      for (const s of scoreData) {
         await client.updateScore(s);
       }
     });
@@ -33,20 +42,20 @@ describe.sequential('database client', () => {
   describe('updating score with less score', () => {
     test('does not update', async () => {
       await client.updateScore({
-        'id': 1752,
-        'unfinished': false,
-        'accuracy': 99.18,
-        'max_combo': 868,
-        'perfect': true,
-        'pp': 155.91,
-        'score': 123,
-        'count_ok': 34,
-        'count_great': 3,
-        'count_meh': 9,
-        'count_miss': 5432,
-        'mode': 'osu',
-        'mods': 'HD',
-        'rank': 'A',
+        id: 1752,
+        unfinished: false,
+        accuracy: 99.18,
+        max_combo: 868,
+        perfect: true,
+        pp: 155.91,
+        score: 123,
+        count_ok: 34,
+        count_great: 3,
+        count_meh: 9,
+        count_miss: 5432,
+        mode: 'osu',
+        mods: 'HD',
+        rank: 'A',
       });
     });
   });
@@ -54,20 +63,20 @@ describe.sequential('database client', () => {
   describe('updating score with greater score', () => {
     test('updates score', async () => {
       await client.updateScore({
-        'id': 319,
-        'unfinished': false,
-        'accuracy': 98.86,
-        'max_combo': 689,
-        'perfect': false,
-        'pp': 137.19,
-        'score': 23632046,
-        'count_ok': 8,
-        'count_great': 1528,
-        'count_meh': 0,
-        'count_miss': 0,
-        'mode': 'osu',
-        'mods': 'HD,SD',
-        'rank': 'XH',
+        id: 319,
+        unfinished: false,
+        accuracy: 98.86,
+        max_combo: 689,
+        perfect: false,
+        pp: 137.19,
+        score: 23632046,
+        count_ok: 8,
+        count_great: 1528,
+        count_meh: 0,
+        count_miss: 0,
+        mode: 'osu',
+        mods: 'HD,SD',
+        rank: 'XH',
       });
     });
   });
@@ -105,22 +114,24 @@ describe.sequential('database client', () => {
 
   describe('updating score on non-existant map', () => {
     test('throws error', () => {
-      expect(() => client.updateScore({
-        'id': 10,
-        'unfinished': false,
-        'accuracy': 98.86,
-        'max_combo': 689,
-        'perfect': false,
-        'pp': 137.19,
-        'score': 3632046,
-        'count_ok': 7,
-        'count_great': 528,
-        'count_meh': 4,
-        'count_miss': 2,
-        'mode': 'osu',
-        'mods': 'HD,SD',
-        'rank': 'A',
-      })).rejects.toThrowError('beatmap 10 not found in database');
+      expect(() =>
+        client.updateScore({
+          id: 10,
+          unfinished: false,
+          accuracy: 98.86,
+          max_combo: 689,
+          perfect: false,
+          pp: 137.19,
+          score: 3632046,
+          count_ok: 7,
+          count_great: 528,
+          count_meh: 4,
+          count_miss: 2,
+          mode: 'osu',
+          mods: 'HD,SD',
+          rank: 'A',
+        }),
+      ).rejects.toThrowError('beatmap 10 not found in database');
     });
   });
 
