@@ -36,18 +36,18 @@ export type AppBeatmapset = {
 };
 
 export type AppScore = {
-  id: number
+  id: number;
   unfinished: boolean;
-  accuracy: number
-  max_combo: number
-  mode: string
-  mods: string
-  perfect: boolean
-  pp: number
-  rank: string
-  score: number
-  count_ok: number
-  count_great: number
-  count_meh: number
-  count_miss: number
+  accuracy: number;
+  max_combo: number;
+  mode: string;
+  mods: string;
+  perfect: boolean;
+  pp: number;
+  rank: string;
+  score: number;
+  count_ok: number;
+  count_great: number;
+  count_meh: number;
+  count_miss: number;
 };

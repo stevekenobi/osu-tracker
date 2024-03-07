@@ -15,17 +15,19 @@ export async function updateAllScores(): Promise<void> {
       continue;
     }
 
-    result.filter((r) => isBeatmapRankedApprovedOrLoved(r.beatmap) && r.beatmap.mode === 'osu').forEach(beatmap => {
-      (async (): Promise<void> => {
-        const score = await TrackerServer.getOsuClient().getUserScoreOnBeatmap(beatmap.beatmap_id, 12375044);
-        console.log(`${j + 1} - ${j + 100} score on ${beatmap.beatmap_id} ${score ? 'found' : 'not found'}`);
-        if (score) {
-          scores.push(score);
-        } else {
-          unfinished.push(beatmap);
-        }
-      })();
-    });
+    result
+      .filter((r) => isBeatmapRankedApprovedOrLoved(r.beatmap) && r.beatmap.mode === 'osu')
+      .forEach((beatmap) => {
+        (async (): Promise<void> => {
+          const score = await TrackerServer.getOsuClient().getUserScoreOnBeatmap(beatmap.beatmap_id, 12375044);
+          console.log(`${j + 1} - ${j + 100} score on ${beatmap.beatmap_id} ${score ? 'found' : 'not found'}`);
+          if (score) {
+            scores.push(score);
+          } else {
+            unfinished.push(beatmap);
+          }
+        })();
+      });
 
     await delay(5000);
     j += 100;
@@ -50,7 +52,7 @@ export async function updateRecentScores(): Promise<void> {
     return;
   }
 
-  await updateScores(result.filter((r) => isBeatmapRankedApprovedOrLoved(r.beatmap) && r.beatmap.mode === 'osu').map(s => ({ score: s })));
+  await updateScores(result.filter((r) => isBeatmapRankedApprovedOrLoved(r.beatmap) && r.beatmap.mode === 'osu').map((s) => ({ score: s })));
 
   console.log('finished updating recent scores');
 }
@@ -95,8 +97,7 @@ export async function addUnfinishedBeatmaps(beatmaps: OsuUserBeatmap[]): Promise
 export async function updateUnfinishedBeatmap(beatmap: OsuUserBeatmap): Promise<void> {
   try {
     await TrackerServer.getDatabaseClient().addUnfinishedBeatmap(beatmap.beatmap_id);
-  }
-  catch (error) {
+  } catch (error) {
     console.log(error);
     const beatmapset = await TrackerServer.getOsuClient().getBeatmapsetById(beatmap.beatmapset.id);
     await TrackerServer.getDatabaseClient().updateBeatmaps(createBeatmapModelsFromOsuBeatmapsets([beatmapset!]));

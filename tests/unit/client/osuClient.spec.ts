@@ -14,7 +14,7 @@ const axiosGetMock = axios.get as Mock;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getRequest = vi.spyOn(OsuClient.prototype as any, 'getRequest');
-getRequest.mockImplementation(() => { });
+getRequest.mockImplementation(() => {});
 
 describe('osu client', () => {
   describe('authenticate', () => {
@@ -102,7 +102,6 @@ describe('osu client', () => {
       getRequest.mockRestore();
       axiosGetMock.mockResolvedValue({ data: { access_token: 'token' } });
       await getClient.authenticate();
-
     });
 
     test('returns correct data', async () => {

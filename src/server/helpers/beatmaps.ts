@@ -48,7 +48,8 @@ export async function syncBeatmapsSheet(): Promise<void> {
         createBeatmapsetsFromBeatmaps(beatmaps)
           .sort((a, b) => (a.beatmaps[0]!.rankedDate > b.beatmaps[0]!.rankedDate ? 1 : -1))
           .flatMap((s) => s.beatmaps),
-      ));
+      ),
+    );
 
     console.log(`finished ${year}`);
     const playedBeatmaps = beatmaps.filter((b) => b.rank);
@@ -60,11 +61,11 @@ export async function syncBeatmapsSheet(): Promise<void> {
       'Completion (%)': numeral((100 * playedBeatmaps.length) / beatmaps.length).format('0.00'),
       'Total Score': numeral(totalScore).format('0,0'),
       'Average Score': numeral(totalScore / playedBeatmaps.length).format('0,0'),
-      SSH: numeral(playedBeatmaps.filter(b => b.rank === 'XH').length).format('0,0'),
-      SS: numeral(playedBeatmaps.filter(b => b.rank === 'X').length).format('0,0'),
-      SH: numeral(playedBeatmaps.filter(b => b.rank === 'SH').length).format('0,0'),
-      S: numeral(playedBeatmaps.filter(b => b.rank === 'S').length).format('0,0'),
-      A: numeral(playedBeatmaps.filter(b => b.rank === 'A').length).format('0,0'),
+      SSH: numeral(playedBeatmaps.filter((b) => b.rank === 'XH').length).format('0,0'),
+      SS: numeral(playedBeatmaps.filter((b) => b.rank === 'X').length).format('0,0'),
+      SH: numeral(playedBeatmaps.filter((b) => b.rank === 'SH').length).format('0,0'),
+      S: numeral(playedBeatmaps.filter((b) => b.rank === 'S').length).format('0,0'),
+      A: numeral(playedBeatmaps.filter((b) => b.rank === 'A').length).format('0,0'),
     });
   }
 
@@ -94,7 +95,12 @@ export async function addMissingBeatmaps(userId: number): Promise<void> {
     j += 100;
     console.log(`getting ${j} out of about 115,000`);
 
-    missingIds.push(...result.filter((b) => b.beatmap.mode === 'osu' && isBeatmapRankedApprovedOrLoved(b.beatmap)).filter((b) => !allBeatmapIds.includes(b.beatmap_id)).map(b => b.beatmapset.id));
+    missingIds.push(
+      ...result
+        .filter((b) => b.beatmap.mode === 'osu' && isBeatmapRankedApprovedOrLoved(b.beatmap))
+        .filter((b) => !allBeatmapIds.includes(b.beatmap_id))
+        .map((b) => b.beatmapset.id),
+    );
 
     result = await TrackerServer.getOsuClient().getUserBeatmaps(userId, 'most_played', { limit: 100, offset: j });
 
@@ -184,7 +190,7 @@ export function createBeatmapsetsFromBeatmaps(beatmaps: AppBeatmap[]): AppBeatma
 }
 
 export function createSheetBeatmapsFromApp(beatmaps: AppBeatmap[]): SheetBeatmap[] {
-  return beatmaps.map(b => ({
+  return beatmaps.map((b) => ({
     Link: createBeatmapLinkFromId(b.id),
     Artist: b.artist,
     Title: b.title,
@@ -198,9 +204,9 @@ export function createSheetBeatmapsFromApp(beatmaps: AppBeatmap[]): SheetBeatmap
     HP: b.HP.toString(),
     OD: b.OD.toString(),
     Length: b.length.toString(),
-    ...(b.rank) && { Rank: b.rank },
-    ...(b.mods) && { Mods: b.mods },
-    ...(b.accuracy) && { Accuracy: numeral(b.accuracy).format('0.00') },
-    ...(b.score) && { Score: numeral(b.score).format('0,0') },
+    ...(b.rank && { Rank: b.rank }),
+    ...(b.mods && { Mods: b.mods }),
+    ...(b.accuracy && { Accuracy: numeral(b.accuracy).format('0.00') }),
+    ...(b.score && { Score: numeral(b.score).format('0,0') }),
   }));
 }

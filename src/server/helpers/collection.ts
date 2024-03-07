@@ -19,6 +19,6 @@ export async function getCollection(option: 'no-score' | 'a-ranks' | 'problemati
   return {
     name: option,
     beatmapCount: beatmaps.length,
-    beatmaps: beatmaps.map(b => b.checksum),
+    beatmaps: beatmaps.map((b) => b.checksum),
   };
 }

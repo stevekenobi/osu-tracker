@@ -4,8 +4,7 @@ export class OsuCollectionFile {
   public collectionCount: number = 0;
   public collections: OsuCollection[] = [];
 
-  constructor(public version: number = 0) {
-  }
+  constructor(public version: number = 0) {}
 
   addCollection(collection: OsuCollection): void {
     this.collections.push(collection);
@@ -45,7 +44,6 @@ export class OsuCollectionFile {
     position += 4;
 
     for (const collection of this.collections) {
-
       buffer[position++] = 11;
 
       buffer[position++] = collection.name.length;
@@ -72,6 +70,6 @@ export class OsuCollectionFile {
 
 export type OsuCollection = {
   name: string;
-  beatmapCount: number,
-  beatmaps: string[]
+  beatmapCount: number;
+  beatmaps: string[];
 };

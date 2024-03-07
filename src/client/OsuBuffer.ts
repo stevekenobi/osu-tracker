@@ -29,7 +29,7 @@ export default class OsuBuffer {
     this.position++;
 
     if ((byte & 0x80) === 0) {
-      total |= ((byte & 0x7F) << shift);
+      total |= (byte & 0x7f) << shift;
     } else {
       let end = false;
       do {
@@ -37,7 +37,7 @@ export default class OsuBuffer {
           byte = this.buffer.readUIntLE(this.position, 1);
           this.position++;
         }
-        total |= ((byte & 0x7F) << shift);
+        total |= (byte & 0x7f) << shift;
         if ((byte & 0x80) === 0) end = true;
         shift += 7;
       } while (!end);

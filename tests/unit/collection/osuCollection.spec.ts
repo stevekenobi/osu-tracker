@@ -18,7 +18,7 @@ describe('osuCollection', () => {
   describe('write', () => {
     test('produces correct file', async () => {
       const osuCollection = new OsuCollectionFile(20240123);
-      collection.collections.forEach(c => osuCollection.addCollection(c));
+      collection.collections.forEach((c) => osuCollection.addCollection(c));
       const result = await osuCollection.write();
 
       const buffer = await fs.readFile(path.join(__dirname, '../../data/collection.db'));

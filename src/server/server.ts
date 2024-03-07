@@ -13,7 +13,7 @@ import cron from 'node-cron';
 import type AbstractService from './AbstractService';
 import { importNewScoresJob } from './helpers/cronJobs';
 
-type IAbstractService = new(server: TrackerServer) => AbstractService;
+type IAbstractService = new (server: TrackerServer) => AbstractService;
 
 export default class TrackerServer {
   private services: AbstractService[] = [];

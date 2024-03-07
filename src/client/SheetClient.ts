@@ -8,7 +8,11 @@ import { delay } from '../utils';
 export default class SheetClient {
   private readonly serviceAccountAuth;
 
-  constructor(private readonly leaderboard_sheet_id: string, private readonly unfinished_sheet_id: string, private readonly beatmaps_sheet_id: string) {
+  constructor(
+    private readonly leaderboard_sheet_id: string,
+    private readonly unfinished_sheet_id: string,
+    private readonly beatmaps_sheet_id: string,
+  ) {
     const SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive.file'];
     this.serviceAccountAuth = new JWT({
       email: creds.client_email,
@@ -30,7 +34,7 @@ export default class SheetClient {
       }
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      return (await sheet.getRows<T>()).map(r => Object.fromEntries(Object.entries(r.toObject()).filter(([_, v]) => v !== undefined)) as T);
+      return (await sheet.getRows<T>()).map((r) => Object.fromEntries(Object.entries(r.toObject()).filter(([_, v]) => v !== undefined)) as T);
     } catch (err: unknown) {
       const error = err as AxiosError;
       if (error.code === 'ERR_BAD_RESPONSE' || error.code === 'ERR_BAD_REQUEST') {
@@ -69,7 +73,7 @@ export default class SheetClient {
   }
 
   /* istanbul ignore next @preserve */
-  private async clearRows(docId: string, sheetTitle: string, options?: { start?: number, end?: number }): Promise<void> {
+  private async clearRows(docId: string, sheetTitle: string, options?: { start?: number; end?: number }): Promise<void> {
     try {
       const doc = new GoogleSpreadsheet(docId, this.serviceAccountAuth);
       await doc.loadInfo();
