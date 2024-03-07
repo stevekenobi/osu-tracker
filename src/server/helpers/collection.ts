@@ -4,47 +4,21 @@ import type { OsuCollection } from '../../client/OsuCollection';
 export async function getCollections(databaseClient: DatabaseClient): Promise<OsuCollection[]> {
   const collections: OsuCollection[] = [];
 
-  const dtBeatmaps = await databaseClient.getUnfinishedBeatmaps('dt');
-  collections.push({
-    name: 'DT',
-    beatmapCount: dtBeatmaps.length,
-    beatmaps: dtBeatmaps.map(b => b.checksum),
-  });
-
-  const nonSdBeatmaps = await databaseClient.getUnfinishedBeatmaps('non-sd');
-  collections.push({
-    name: 'Non SD',
-    beatmapCount: nonSdBeatmaps.length,
-    beatmaps: nonSdBeatmaps.map(b => b.checksum),
-  });
-
-  const nonFcBeatmaps = await databaseClient.getUnfinishedBeatmaps('problematic');
-  collections.push({
-    name: 'Non FC',
-    beatmapCount: nonFcBeatmaps.length,
-    beatmaps: nonFcBeatmaps.map(b => b.checksum),
-  });
-
-  const aRankBeatmaps = await databaseClient.getUnfinishedBeatmaps('a-ranks');
-  collections.push({
-    name: 'A ranks',
-    beatmapCount: aRankBeatmaps.length,
-    beatmaps: aRankBeatmaps.map(b => b.checksum),
-  });
-
-  const suboptimalBeatmaps = await databaseClient.getUnfinishedBeatmaps('sub-optimal');
-  collections.push({
-    name: 'Sub-Optimal',
-    beatmapCount: suboptimalBeatmaps.length,
-    beatmaps: suboptimalBeatmaps.map(b => b.checksum),
-  });
-
-  const unfinishedBeatmaps = await databaseClient.getUnfinishedBeatmaps('no-score');
-  collections.push({
-    name: 'Unfinished',
-    beatmapCount: unfinishedBeatmaps.length,
-    beatmaps: unfinishedBeatmaps.map(b => b.checksum),
-  });
+  collections.push(await getCollection(databaseClient, 'a-ranks'));
+  collections.push(await getCollection(databaseClient, 'no-score'));
+  collections.push(await getCollection(databaseClient, 'problematic'));
+  collections.push(await getCollection(databaseClient, 'non-sd'));
+  collections.push(await getCollection(databaseClient, 'dt'));
+  collections.push(await getCollection(databaseClient, 'sub-optimal'));
 
   return collections;
+}
+
+export async function getCollection(databaseClient: DatabaseClient, option: 'no-score' | 'a-ranks' | 'problematic' | 'non-sd' | 'dt' | 'sub-optimal'): Promise<OsuCollection> {
+  const beatmaps = await databaseClient.getUnfinishedBeatmaps(option);
+  return {
+    name: option,
+    beatmapCount: beatmaps.length,
+    beatmaps: beatmaps.map(b => b.checksum),
+  };
 }
