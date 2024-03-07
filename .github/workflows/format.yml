@@ -1,0 +1,34 @@
+name: Node.js Formatter
+
+on:
+  pull_request:
+    branches: ['main']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+          cache: 'npm'
+
+      - name: Create file
+        run: cat /home/runner/work/osu-tracker/osu-tracker/google_service_account.json | base64
+      
+      - name: Putting data
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
+        run: echo $DATA > /home/runner/work/osu-tracker/osu-tracker/google_service_account.json
+
+      - name: Build
+        run: yarn && yarn build
+
+      - name: format
+        run: yarn format:check
