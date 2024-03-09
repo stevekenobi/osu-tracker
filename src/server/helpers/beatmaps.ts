@@ -145,6 +145,7 @@ export function createBeatmapModelsFromOsuBeatmapsets(beatmapsets: OsuBeatmapset
           checksum: b.checksum,
           status: b.status,
           rankedDate: s.ranked_date,
+          submittedDate: s.submitted_date,
         })),
     );
   }
@@ -173,6 +174,7 @@ export function createBeatmapModelsFromOsuBeatmaps(beatmaps: OsuBeatmap[]): AppB
       mode: b.mode,
       status: b.status,
       rankedDate: b.beatmapset.ranked_date,
+      submittedDate: b.beatmapset.submitted_date,
     }));
 }
 
