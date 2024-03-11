@@ -12,6 +12,7 @@ import {
   getYearsUntilToday,
   isBeatmapRankedApprovedOrLoved,
   range,
+  createBeatmapsetLinkFromId,
 } from '../../src/utils';
 
 describe('utils', () => {
@@ -186,6 +187,13 @@ describe('utils', () => {
     test('returns correct link', () => {
       const result = createBeatmapLinkFromId(123);
       expect(result).toBe('https://osu.ppy.sh/b/123');
+    });
+  });
+
+  describe('createBeatmapsetLinkFromId', () => {
+    test('returns correct link', () => {
+      const result = createBeatmapsetLinkFromId(123);
+      expect(result).toBe('https://osu.ppy.sh/s/123');
     });
   });
 

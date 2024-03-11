@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import SheetClient from '../../../src/client/SheetClient';
-const sheetClient = new SheetClient('1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc');
+const sheetClient = new SheetClient('1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc');
 
 const getRows = vi.spyOn(sheetClient as any, 'getRows');
 const addRows = vi.spyOn(sheetClient as any, 'addRows');
@@ -12,7 +12,7 @@ clearRows.mockImplementation(() => {});
 
 describe.sequential('sheet client', () => {
   describe('errors', () => {
-    const client = new SheetClient('1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro', '1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro', '1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro');
+    const client = new SheetClient('1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro', '1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro', '1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro', '1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro');
     test('getRows', () => {
       expect(() => client.getNoScoreBeatmaps()).rejects.toThrowError('Sheet No Score not found');
     });
@@ -353,6 +353,20 @@ describe.sequential('sheet client', () => {
 
       const result = await sheetClient.getTargets();
       expect(result).toStrictEqual([{ Target: 'some target', 'Score to Earn': '123456', 'Target Score': '123456789' }]);
+    });
+  });
+
+  describe('updateAges', () => {
+    test('updates ages', async () => {
+      await sheetClient.updateAges([{ Year: '2007', 'Average Age': '123', 'Oldest Age': '456', 'Youngest Age': '789', 'Oldest Map': 'olderst map', 'Youngest Map': 'youngest map' }]);
+
+      expect(clearRows).toHaveBeenCalled();
+      expect(addRows).toHaveBeenCalled();
+
+      getRows.mockResolvedValue([{ Year: '2007', 'Average Age': '123', 'Oldest Age': '456', 'Youngest Age': '789', 'Oldest Map': 'olderst map', 'Youngest Map': 'youngest map' }]);
+
+      const result = await sheetClient.getAges();
+      expect(result).toStrictEqual([{ Year: '2007', 'Average Age': '123', 'Oldest Age': '456', 'Youngest Age': '789', 'Oldest Map': 'olderst map', 'Youngest Map': 'youngest map' }]);
     });
   });
 });
