@@ -86,6 +86,10 @@ export function createBeatmapLinkFromId(id: number): string {
   return `https://osu.ppy.sh/b/${id}`;
 }
 
+export function createBeatmapsetLinkFromId(id: number): string {
+  return `https://osu.ppy.sh/s/${id}`;
+}
+
 export function createUserLinkFromId(id: number): string {
   return `https://osu.ppy.sh/u/${id}`;
 }

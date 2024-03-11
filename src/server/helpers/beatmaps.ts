@@ -182,9 +182,12 @@ export function createBeatmapsetsFromBeatmaps(beatmaps: AppBeatmap[]): AppBeatma
   const beatmapsetIds = Array.from(new Set(beatmaps.map((b) => b.beatmapsetId)));
   const beatmapsets: AppBeatmapset[] = [];
   beatmapsetIds.forEach((i) => {
+    const beatmapsFound = beatmaps.filter((b) => b.beatmapsetId === i).sort((a, b) => (a.difficulty > b.difficulty ? 1 : -1));
     beatmapsets.push({
       id: i,
-      beatmaps: beatmaps.filter((b) => b.beatmapsetId === i).sort((a, b) => (a.difficulty > b.difficulty ? 1 : -1)),
+      beatmaps: beatmapsFound,
+      rankedDate: beatmapsFound[0]!.rankedDate,
+      submittedDate: beatmapsFound[0]!.submittedDate,
     });
   });
 
