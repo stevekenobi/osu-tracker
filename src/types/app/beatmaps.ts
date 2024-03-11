@@ -34,6 +34,8 @@ export type AppBeatmap = {
 export type AppBeatmapset = {
   id: number;
   beatmaps: AppBeatmap[];
+  rankedDate: string;
+  submittedDate: string;
 };
 
 export type AppScore = {
