@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import SheetClient from '../../../src/client/SheetClient';
-const sheetClient = new SheetClient('1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc');
+const sheetClient = new SheetClient(
+  '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc',
+  '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc',
+  '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc',
+  '1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc',
+);
 
 const getRows = vi.spyOn(sheetClient as any, 'getRows');
 const addRows = vi.spyOn(sheetClient as any, 'addRows');
@@ -12,7 +17,12 @@ clearRows.mockImplementation(() => {});
 
 describe.sequential('sheet client', () => {
   describe('errors', () => {
-    const client = new SheetClient('1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro', '1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro', '1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro', '1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro');
+    const client = new SheetClient(
+      '1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro',
+      '1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro',
+      '1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro',
+      '1X5I8SnrMQnVOQ6jRyug2Mhub81rJBb0fIVqPUNhirro',
+    );
     test('getRows', () => {
       expect(() => client.getNoScoreBeatmaps()).rejects.toThrowError('Sheet No Score not found');
     });

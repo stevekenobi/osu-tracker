@@ -9,11 +9,13 @@ export async function syncAgesSheet(): Promise<void> {
   const ages: SheetAges[] = [];
   for (const year of years) {
     const beatmaps = await TrackerServer.getDatabaseClient().getBeatmapsOfYear(year);
-    const beatmapsets = createBeatmapsetsFromBeatmaps(beatmaps.filter(b => b.status === 'ranked'));
-    const beatmapAges = beatmapsets.map(b =>({
-      age: getDaysFromDate(b.submittedDate, b.rankedDate),
-      id: b.id,
-    })).sort((a,b) => a.age > b.age ? 1 : -1);
+    const beatmapsets = createBeatmapsetsFromBeatmaps(beatmaps.filter((b) => b.status === 'ranked'));
+    const beatmapAges = beatmapsets
+      .map((b) => ({
+        age: getDaysFromDate(b.submittedDate, b.rankedDate),
+        id: b.id,
+      }))
+      .sort((a, b) => (a.age > b.age ? 1 : -1));
     ages.push({
       Year: year,
       'Average Age': numeral(beatmapAges.reduce((sum, x) => sum + x.age, 0) / beatmapAges.length).format('0,0'),
