@@ -368,14 +368,28 @@ describe.sequential('sheet client', () => {
 
   describe('updateAges', () => {
     test('updates ages', async () => {
-      await sheetClient.updateAges([{ Year: '2007', 'Average Age': '123', 'Oldest Age': '456', 'Youngest Age': '789', 'Oldest Map': 'olderst map', 'Youngest Map': 'youngest map' }]);
+      await sheetClient.updateAges([{ Link: 'https://osu.ppy.sh/s/123', Artist: 'artist', Title: 'title', Creator: 'creator', Age: '1234' }], '2010');
+
+      expect(clearRows).toHaveBeenCalled();
+      expect(addRows).toHaveBeenCalled();
+
+      getRows.mockResolvedValue([{ Link: 'https://osu.ppy.sh/s/123', Artist: 'artist', Title: 'title', Creator: 'creator', Age: '1234' }]);
+
+      const result = await sheetClient.getAges('2010');
+      expect(result).toStrictEqual([{ Link: 'https://osu.ppy.sh/s/123', Artist: 'artist', Title: 'title', Creator: 'creator', Age: '1234' }]);
+    });
+  });
+
+  describe('updateAgeStats', () => {
+    test('updates age stats', async () => {
+      await sheetClient.updateAgeStats([{ Year: '2007', 'Average Age': '123', 'Oldest Age': '456', 'Youngest Age': '789', 'Oldest Map': 'olderst map', 'Youngest Map': 'youngest map' }]);
 
       expect(clearRows).toHaveBeenCalled();
       expect(addRows).toHaveBeenCalled();
 
       getRows.mockResolvedValue([{ Year: '2007', 'Average Age': '123', 'Oldest Age': '456', 'Youngest Age': '789', 'Oldest Map': 'olderst map', 'Youngest Map': 'youngest map' }]);
 
-      const result = await sheetClient.getAges();
+      const result = await sheetClient.getAgeStats();
       expect(result).toStrictEqual([{ Year: '2007', 'Average Age': '123', 'Oldest Age': '456', 'Youngest Age': '789', 'Oldest Map': 'olderst map', 'Youngest Map': 'youngest map' }]);
     });
   });
