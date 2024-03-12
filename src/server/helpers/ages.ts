@@ -41,6 +41,6 @@ export async function syncAgesSheet(): Promise<void> {
   await TrackerServer.getSheetClient().updateAgeStats(ages);
 }
 
-export function beatmapsOfSameAge(beatmaps: { age: number, id: number }[], type: 'youngest' | 'oldest'): number {
+export function beatmapsOfSameAge(beatmaps: { age: number}[], type: 'youngest' | 'oldest'): number {
   return beatmaps.filter(b => b.age === beatmaps.at(type === 'youngest' ? -1 : 0)!.age).length;
 }
