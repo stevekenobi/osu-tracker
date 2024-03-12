@@ -9,6 +9,7 @@ export type OsuBeatmapset = {
   title: string;
   creator: string;
   ranked_date: string;
+  submitted_date: string;
   beatmaps: OsuBeatmap[];
   bpm: number;
   status: string;

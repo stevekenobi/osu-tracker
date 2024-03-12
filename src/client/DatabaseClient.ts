@@ -63,7 +63,9 @@ export default class DatabaseClient {
   }
 
   async updateBeatmaps(beatmaps: AppBeatmap[]): Promise<void> {
-    await Beatmaps.bulkCreate(beatmaps as Beatmaps[], { updateOnDuplicate: ['artist', 'title', 'creator', 'version', 'difficulty', 'AR', 'CS', 'OD', 'HP', 'BPM', 'length', 'status', 'rankedDate'] });
+    await Beatmaps.bulkCreate(beatmaps as Beatmaps[], {
+      updateOnDuplicate: ['artist', 'title', 'creator', 'version', 'difficulty', 'AR', 'CS', 'OD', 'HP', 'BPM', 'length', 'status', 'rankedDate', 'submittedDate'],
+    });
   }
 
   async getBeatmaps(options?: FindOptions<Beatmaps>): Promise<AppBeatmap[]> {

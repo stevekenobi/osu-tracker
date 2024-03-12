@@ -1,7 +1,7 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import creds from '../../google_service_account.json';
 import { JWT } from 'google-auth-library';
-import type { SheetBeatmap, SheetLeaderboard, SheetStats, SheetTarget } from '../types';
+import type { SheetAges, SheetBeatmap, SheetLeaderboard, SheetStats, SheetTarget } from '../types';
 import type { AxiosError } from 'axios';
 import { delay } from '../utils';
 
@@ -12,6 +12,7 @@ export default class SheetClient {
     private readonly leaderboard_sheet_id: string,
     private readonly unfinished_sheet_id: string,
     private readonly beatmaps_sheet_id: string,
+    private readonly ages_beatmaps_sheet_id: string,
   ) {
     const SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive.file'];
     this.serviceAccountAuth = new JWT({
@@ -103,7 +104,8 @@ export default class SheetClient {
   }
 
   async getLeaderboard(): Promise<SheetLeaderboard[]> {
-    return this.getRows(this.leaderboard_sheet_id, 'GR');
+    const result = await this.getRows<SheetLeaderboard>(this.leaderboard_sheet_id, 'GR');
+    return result;
   }
 
   async updateBeatmapsOfYear(year: string, beatmaps: SheetBeatmap[]): Promise<void> {
@@ -133,7 +135,8 @@ export default class SheetClient {
   }
 
   async getUnfinishedBeatmaps(title: string): Promise<SheetBeatmap[]> {
-    return this.getRows(this.unfinished_sheet_id, title);
+    const result = await this.getRows<SheetBeatmap>(this.unfinished_sheet_id, title);
+    return result;
   }
 
   async updateProblematicBeatmaps(beatmaps: SheetBeatmap[]): Promise<void> {
@@ -169,5 +172,15 @@ export default class SheetClient {
   async getTargets(): Promise<SheetTarget[]> {
     const response = await this.getRows<SheetTarget>(this.leaderboard_sheet_id, 'Targets');
     return response;
+  }
+
+  async updateAges(ages: SheetAges[]): Promise<void> {
+    await this.clearRows(this.ages_beatmaps_sheet_id, 'Ages');
+    await this.addRows(ages, this.ages_beatmaps_sheet_id, 'Ages');
+  }
+
+  async getAges(): Promise<SheetAges[]> {
+    const result = await this.getRows<SheetAges>(this.ages_beatmaps_sheet_id, 'Ages');
+    return result;
   }
 }

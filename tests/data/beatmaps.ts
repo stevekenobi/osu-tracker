@@ -20,6 +20,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 1404,
@@ -40,6 +41,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2008',
+    submittedDate: '2008',
   },
   {
     id: 319,
@@ -60,6 +62,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 1099,
@@ -80,6 +83,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 2348,
@@ -100,6 +104,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 483,
@@ -120,6 +125,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2008',
+    submittedDate: '2008',
   },
   {
     id: 685,
@@ -140,6 +146,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 2176,
@@ -160,6 +167,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 1386,
@@ -180,6 +188,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 2852,
@@ -200,6 +209,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 1431,
@@ -220,6 +230,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 2875,
@@ -240,6 +251,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 583,
@@ -260,6 +272,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2008',
+    submittedDate: '2008',
   },
   {
     id: 871,
@@ -280,6 +293,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 1883,
@@ -300,6 +314,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 2686,
@@ -320,6 +335,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 388,
@@ -340,6 +356,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2008',
+    submittedDate: '2008',
   },
   {
     id: 2291,
@@ -360,6 +377,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2008',
+    submittedDate: '2008',
   },
   {
     id: 2938,
@@ -380,6 +398,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 1098,
@@ -400,6 +419,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 221,
@@ -420,6 +440,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 372,
@@ -440,6 +461,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2008',
+    submittedDate: '2008',
   },
   {
     id: 755,
@@ -460,6 +482,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 785,
@@ -480,6 +503,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 2710,
@@ -500,6 +524,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 1809,
@@ -520,6 +545,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2008',
+    submittedDate: '2008',
   },
   {
     id: 2123,
@@ -540,6 +566,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 809,
@@ -560,6 +587,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 444,
@@ -580,6 +608,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 831,
@@ -600,6 +629,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 307,
@@ -620,6 +650,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 936,
@@ -640,6 +671,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 351,
@@ -660,6 +692,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 2207,
@@ -680,6 +713,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 1940,
@@ -700,6 +734,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 1906,
@@ -720,6 +755,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2008',
+    submittedDate: '2008',
   },
   {
     id: 107,
@@ -740,6 +776,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 1470,
@@ -760,6 +797,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 2286,
@@ -780,6 +818,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 2822,
@@ -800,6 +839,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 520,
@@ -820,6 +860,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 1544,
@@ -840,6 +881,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 119,
@@ -860,6 +902,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 2175,
@@ -880,6 +923,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2008',
+    submittedDate: '2008',
   },
   {
     id: 2156,
@@ -900,6 +944,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 1712,
@@ -920,6 +965,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 900,
@@ -940,6 +986,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 1778,
@@ -960,6 +1007,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 2811,
@@ -980,6 +1028,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2008',
+    submittedDate: '2008',
   },
   {
     id: 2328,
@@ -1000,6 +1049,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2008',
+    submittedDate: '2008',
   },
   {
     id: 1895,
@@ -1020,6 +1070,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2008',
+    submittedDate: '2008',
   },
   {
     id: 1961,
@@ -1040,6 +1091,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 2047,
@@ -1060,6 +1112,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 90,
@@ -1080,6 +1133,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2008',
+    submittedDate: '2008',
   },
   {
     id: 1563,
@@ -1100,6 +1154,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 2559,
@@ -1120,6 +1175,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2008',
+    submittedDate: '2008',
   },
   {
     id: 2396,
@@ -1140,6 +1196,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 3000,
@@ -1160,6 +1217,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 1144,
@@ -1180,6 +1238,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2008',
+    submittedDate: '2008',
   },
   {
     id: 2503,
@@ -1200,6 +1259,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 2500,
@@ -1220,6 +1280,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2008',
+    submittedDate: '2008',
   },
   {
     id: 1333,
@@ -1240,6 +1301,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 480,
@@ -1260,6 +1322,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 323,
@@ -1280,6 +1343,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 313,
@@ -1300,6 +1364,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 384,
@@ -1320,6 +1385,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2008',
+    submittedDate: '2008',
   },
   {
     id: 2350,
@@ -1340,6 +1406,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 2527,
@@ -1360,6 +1427,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 2949,
@@ -1380,6 +1448,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 404,
@@ -1400,6 +1469,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 2293,
@@ -1420,6 +1490,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 2964,
@@ -1440,6 +1511,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 1394,
@@ -1460,6 +1532,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2008',
+    submittedDate: '2008',
   },
   {
     id: 2610,
@@ -1480,6 +1553,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 1610,
@@ -1500,6 +1574,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 395,
@@ -1520,6 +1595,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 347,
@@ -1540,6 +1616,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 1254,
@@ -1560,6 +1637,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 1892,
@@ -1580,6 +1658,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 48,
@@ -1600,6 +1679,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 1498,
@@ -1620,6 +1700,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 1118,
@@ -1640,6 +1721,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2008',
+    submittedDate: '2008',
   },
   {
     id: 794,
@@ -1660,6 +1742,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 184,
@@ -1680,6 +1763,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 2288,
@@ -1700,6 +1784,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 622,
@@ -1720,6 +1805,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 2189,
@@ -1740,6 +1826,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 910,
@@ -1760,6 +1847,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 535,
@@ -1780,6 +1868,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 1331,
@@ -1800,6 +1889,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 1226,
@@ -1820,6 +1910,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 1393,
@@ -1840,6 +1931,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 2864,
@@ -1860,6 +1952,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2008',
+    submittedDate: '2008',
   },
   {
     id: 719,
@@ -1880,6 +1973,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 20,
@@ -1900,6 +1994,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 2985,
@@ -1920,6 +2015,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
   {
     id: 1575,
@@ -1940,6 +2036,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2010',
+    submittedDate: '2010',
   },
   {
     id: 2007,
@@ -1960,6 +2057,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 569,
@@ -1980,6 +2078,7 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2009',
+    submittedDate: '2009',
   },
   {
     id: 342,
@@ -2000,5 +2099,6 @@ export const beatmapData: AppBeatmap[] = [
     mode: 'osu',
     status: 'ranked',
     rankedDate: '2007',
+    submittedDate: '2007',
   },
 ];

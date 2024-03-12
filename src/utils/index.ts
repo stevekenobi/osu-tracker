@@ -1,3 +1,4 @@
+import moment from 'moment';
 import type { OsuMod } from '../types';
 
 export function delay(ms: number): Promise<void> {
@@ -37,6 +38,26 @@ export function getDaysFromToday(firstDate: Date): number {
   return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / oneDay));
 }
 
+export function getDaysFromDate(firstDate: string, secondDate: string): number {
+  const oneDay = 24 * 60 * 60 * 1000;
+  return Math.round(Math.abs((new Date(firstDate).getTime() - new Date(secondDate).getTime()) / oneDay));
+}
+export function getDiffDataFromDays(firstDate: string, secondDate: string): string {
+  const diff = moment.duration(moment(firstDate).diff(moment(secondDate)));
+  const result: string[] = [];
+  if (diff.years()) {
+    result.push(`${diff.years()} year${diff.years() > 1 ? 's' : ''}`);
+  }
+  if (diff.months()) {
+    result.push(`${diff.months()} month${diff.months() > 1 ? 's' : ''}`);
+  }
+  if (diff.days()) {
+    result.push(`${diff.days()} day${diff.days() > 1 ? 's' : ''}`);
+  }
+
+  return result.join(' ');
+}
+
 export function isBeatmapRankedApprovedOrLoved(beatmap: { status: string }): boolean {
   return beatmap.status === 'ranked' || beatmap.status === 'approved' || beatmap.status === 'loved';
 }
@@ -63,6 +84,10 @@ export function getModsString(mods: OsuMod[]): string {
 
 export function createBeatmapLinkFromId(id: number): string {
   return `https://osu.ppy.sh/b/${id}`;
+}
+
+export function createBeatmapsetLinkFromId(id: number): string {
+  return `https://osu.ppy.sh/s/${id}`;
 }
 
 export function createUserLinkFromId(id: number): string {

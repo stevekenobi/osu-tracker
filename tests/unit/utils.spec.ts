@@ -5,11 +5,14 @@ import {
   delay,
   extractIdFromLink,
   getDaysFromToday,
+  getDaysFromDate,
+  getDiffDataFromDays,
   getModsString,
   getRulesetFromInt,
   getYearsUntilToday,
   isBeatmapRankedApprovedOrLoved,
   range,
+  createBeatmapsetLinkFromId,
 } from '../../src/utils';
 
 describe('utils', () => {
@@ -63,6 +66,70 @@ describe('utils', () => {
   describe('getDaysFromToday', () => {
     test('returns correct days', () => {
       getDaysFromToday(new Date(2025, 0, 1));
+    });
+  });
+
+  describe('getDaysFromDate', () => {
+    test('returns correct days', () => {
+      const result = getDaysFromDate('2024-03-09T06:02:55Z', '2023-04-13T20:57:35Z');
+      expect(result).toBe(330);
+    });
+  });
+
+  describe('getDiffDataFromDays', () => {
+    test('1 day', () => {
+      const result = getDiffDataFromDays('2024-03-09T06:02:55Z', '2024-03-08T06:02:55Z');
+      expect(result).toBe('1 day');
+    });
+
+    test('many days', () => {
+      const result = getDiffDataFromDays('2024-03-09T06:02:55Z', '2024-03-01T06:02:55Z');
+      expect(result).toBe('8 days');
+    });
+
+    test('many days in different months', () => {
+      const result = getDiffDataFromDays('2024-03-09T06:02:55Z', '2024-02-25T06:02:55Z');
+      expect(result).toBe('13 days');
+    });
+
+    test('1 month', () => {
+      const result = getDiffDataFromDays('2023-10-09T06:02:55Z', '2023-09-08T06:02:55Z');
+      expect(result).toBe('1 month');
+    });
+
+    test('1 month in february', () => {
+      const result = getDiffDataFromDays('2023-03-09T06:02:55Z', '2023-02-06T06:02:55Z');
+      expect(result).toBe('1 month');
+    });
+
+    test('1 month in february of 2024', () => {
+      const result = getDiffDataFromDays('2024-03-09T06:02:55Z', '2024-02-07T06:02:55Z');
+      expect(result).toBe('1 month');
+    });
+
+    test('many months', () => {
+      const result = getDiffDataFromDays('2023-10-09T06:02:55Z', '2023-07-09T06:02:55Z');
+      expect(result).toBe('3 months');
+    });
+
+    test('1 year exactly', () => {
+      const result = getDiffDataFromDays('2023-10-09T06:02:55Z', '2022-10-08T06:02:55Z');
+      expect(result).toBe('1 year');
+    });
+
+    test('1 year exactly with 29th february', () => {
+      const result = getDiffDataFromDays('2024-10-09T06:02:55Z', '2023-10-09T06:02:55Z');
+      expect(result).toBe('1 year');
+    });
+
+    test('1 year and days', () => {
+      const result = getDiffDataFromDays('2024-03-09T06:02:55Z', '2023-03-01T20:57:35Z');
+      expect(result).toBe('1 year 7 days');
+    });
+
+    test('many years and something', () => {
+      const result = getDiffDataFromDays('2022-03-09T06:02:55Z', '2015-06-20T20:57:35Z');
+      expect(result).toBe('6 years 8 months 18 days');
     });
   });
 
@@ -120,6 +187,13 @@ describe('utils', () => {
     test('returns correct link', () => {
       const result = createBeatmapLinkFromId(123);
       expect(result).toBe('https://osu.ppy.sh/b/123');
+    });
+  });
+
+  describe('createBeatmapsetLinkFromId', () => {
+    test('returns correct link', () => {
+      const result = createBeatmapsetLinkFromId(123);
+      expect(result).toBe('https://osu.ppy.sh/s/123');
     });
   });
 

@@ -103,7 +103,12 @@ export default class TrackerServer {
     TrackerServer.databaseClient = new DatabaseClient(process.env['DATABASE_URL'] ?? '', process.env['DATABASE_SECURE'] ?? '');
     TrackerServer.getDatabaseClient().initializeDatabase();
 
-    TrackerServer.sheetClient = new SheetClient(process.env['LEADERBOARD_SHEET_ID'] ?? '', process.env['UNFINISHED_SHEET_ID'] ?? '', process.env['BEATMAPS_SHEET_ID'] ?? '');
+    TrackerServer.sheetClient = new SheetClient(
+      process.env['LEADERBOARD_SHEET_ID'] ?? '',
+      process.env['UNFINISHED_SHEET_ID'] ?? '',
+      process.env['BEATMAPS_SHEET_ID'] ?? '',
+      process.env['AGES_SHEET_ID'] ?? '',
+    );
   }
 
   _initServices(): void {

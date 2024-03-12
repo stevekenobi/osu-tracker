@@ -16,6 +16,7 @@ export type AppBeatmap = {
   checksum: string;
   status: string;
   rankedDate: string;
+  submittedDate: string;
   unfinished?: boolean;
   accuracy?: number | null;
   max_combo?: number | null;
@@ -33,6 +34,8 @@ export type AppBeatmap = {
 export type AppBeatmapset = {
   id: number;
   beatmaps: AppBeatmap[];
+  rankedDate: string;
+  submittedDate: string;
 };
 
 export type AppScore = {
