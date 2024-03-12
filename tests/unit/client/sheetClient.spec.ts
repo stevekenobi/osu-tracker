@@ -368,15 +368,15 @@ describe.sequential('sheet client', () => {
 
   describe('updateAges', () => {
     test('updates ages', async () => {
-      await sheetClient.updateAges([{Link: 'https://osu.ppy.sh/s/123', Artist: 'artist', Title: 'title', Creator: 'creator', Age: '1234'}], '2010');
+      await sheetClient.updateAges([{ Link: 'https://osu.ppy.sh/s/123', Artist: 'artist', Title: 'title', Creator: 'creator', Age: '1234' }], '2010');
 
       expect(clearRows).toHaveBeenCalled();
       expect(addRows).toHaveBeenCalled();
 
-      getRows.mockResolvedValue([{Link: 'https://osu.ppy.sh/s/123', Artist: 'artist', Title: 'title', Creator: 'creator', Age: '1234'}]);
+      getRows.mockResolvedValue([{ Link: 'https://osu.ppy.sh/s/123', Artist: 'artist', Title: 'title', Creator: 'creator', Age: '1234' }]);
 
       const result = await sheetClient.getAges('2010');
-      expect(result).toStrictEqual([{Link: 'https://osu.ppy.sh/s/123', Artist: 'artist', Title: 'title', Creator: 'creator', Age: '1234'}]);
+      expect(result).toStrictEqual([{ Link: 'https://osu.ppy.sh/s/123', Artist: 'artist', Title: 'title', Creator: 'creator', Age: '1234' }]);
     });
   });
 

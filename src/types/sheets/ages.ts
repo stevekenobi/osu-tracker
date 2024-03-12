@@ -9,8 +9,8 @@ export type SheetAgeStats = {
 
 export type SheetAge = {
   Link: string;
-  Artist: string
-  Title: string
-  Creator: string
-  Age: string
+  Artist: string;
+  Title: string;
+  Creator: string;
+  Age: string;
 };

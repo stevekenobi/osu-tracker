@@ -30,17 +30,20 @@ export async function syncAgesSheet(): Promise<void> {
       'Youngest Map': beatmapsOfOldestAge > 1 ? 'multiple beatmapsets' : createBeatmapsetLinkFromId(beatmapAges[0]!.id),
     });
 
-    await TrackerServer.getSheetClient().updateAges(beatmapAges.map(b => ({
-      Link: createBeatmapsetLinkFromId(b.id),
-      Artist: b.artist,
-      Title: b.title,
-      Creator: b.creator,
-      Age: numeral(b.age).format('0,0'),
-    })), year);
+    await TrackerServer.getSheetClient().updateAges(
+      beatmapAges.map((b) => ({
+        Link: createBeatmapsetLinkFromId(b.id),
+        Artist: b.artist,
+        Title: b.title,
+        Creator: b.creator,
+        Age: numeral(b.age).format('0,0'),
+      })),
+      year,
+    );
   }
   await TrackerServer.getSheetClient().updateAgeStats(ages);
 }
 
-export function beatmapsOfSameAge(beatmaps: { age: number}[], type: 'youngest' | 'oldest'): number {
-  return beatmaps.filter(b => b.age === beatmaps.at(type === 'youngest' ? -1 : 0)!.age).length;
+export function beatmapsOfSameAge(beatmaps: { age: number }[], type: 'youngest' | 'oldest'): number {
+  return beatmaps.filter((b) => b.age === beatmaps.at(type === 'youngest' ? -1 : 0)!.age).length;
 }
