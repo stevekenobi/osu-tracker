@@ -1,7 +1,7 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import creds from '../../google_service_account.json';
 import { JWT } from 'google-auth-library';
-import type { SheetAges, SheetBeatmap, SheetLeaderboard, SheetStats, SheetTarget } from '../types';
+import type { SheetAge, SheetAgeStats, SheetBeatmap, SheetLeaderboard, SheetStats, SheetTarget } from '../types';
 import type { AxiosError } from 'axios';
 import { delay } from '../utils';
 
@@ -174,13 +174,23 @@ export default class SheetClient {
     return response;
   }
 
-  async updateAges(ages: SheetAges[]): Promise<void> {
+  async updateAges(ages: SheetAge[], year: string): Promise<void> {
+    await this.clearRows(this.ages_beatmaps_sheet_id, 'Ages');
+    await this.addRows(ages, this.ages_beatmaps_sheet_id, year);
+  }
+
+  async getAges(year: string): Promise<SheetAge[]> {
+    const result = await this.getRows<SheetAge>(this.ages_beatmaps_sheet_id, year);
+    return result;
+  }
+
+  async updateAgeStats(ages: SheetAgeStats[]): Promise<void> {
     await this.clearRows(this.ages_beatmaps_sheet_id, 'Ages');
     await this.addRows(ages, this.ages_beatmaps_sheet_id, 'Ages');
   }
 
-  async getAges(): Promise<SheetAges[]> {
-    const result = await this.getRows<SheetAges>(this.ages_beatmaps_sheet_id, 'Ages');
+  async getAgeStats(): Promise<SheetAgeStats[]> {
+    const result = await this.getRows<SheetAgeStats>(this.ages_beatmaps_sheet_id, 'Ages');
     return result;
   }
 }

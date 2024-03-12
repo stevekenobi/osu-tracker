@@ -1,12 +1,12 @@
 import numeral from 'numeral';
-import type { SheetAges } from '../../types';
+import type { SheetAgeStats } from '../../types';
 import { createBeatmapsetLinkFromId, getDaysFromDate, getYearsUntilToday } from '../../utils';
 import TrackerServer from '../server';
 import { createBeatmapsetsFromBeatmaps } from './beatmaps';
 
 export async function syncAgesSheet(): Promise<void> {
   const years = getYearsUntilToday();
-  const ages: SheetAges[] = [];
+  const ages: SheetAgeStats[] = [];
   for (const year of years) {
     const beatmaps = await TrackerServer.getDatabaseClient().getBeatmapsOfYear(year);
     const beatmapsets = createBeatmapsetsFromBeatmaps(beatmaps.filter((b) => b.status === 'ranked'));
@@ -27,7 +27,7 @@ export async function syncAgesSheet(): Promise<void> {
       'Youngest Map': beatmapsOfOldestAge > 1 ? 'multiple beatmapsets' : createBeatmapsetLinkFromId(beatmapAges[0]!.id),
     });
   }
-  await TrackerServer.getSheetClient().updateAges(ages);
+  await TrackerServer.getSheetClient().updateAgeStats(ages);
 }
 
 export function beatmapsOfSameAge(beatmaps: { age: number, id: number }[], type: 'youngest' | 'oldest'): number {
