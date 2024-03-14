@@ -29,7 +29,7 @@ export async function getUnfinishedCollection(option: 'no-score' | 'a-ranks' | '
 }
 
 export async function getYearlyCollection(year: string): Promise<OsuCollection> {
-  const beatmaps = (await TrackerServer.getDatabaseClient().getBeatmapsOfYear(year)).filter(b => !b.score);
+  const beatmaps = (await TrackerServer.getDatabaseClient().getBeatmapsOfYear(year)).filter((b) => !b.score);
   return {
     name: year,
     beatmapCount: beatmaps.length,
