@@ -38,7 +38,9 @@ export default class OsuBuffer {
           this.position++;
         }
         total |= (byte & 0x7f) << shift;
-        if ((byte & 0x80) === 0) end = true;
+        if ((byte & 0x80) === 0) {
+          end = true;
+        }
         shift += 7;
       } while (!end);
     }
@@ -54,7 +56,9 @@ export default class OsuBuffer {
     const nextByte = this.readByte();
 
     /* istanbul ignore next @preserve */
-    if (nextByte !== 11) return '';
+    if (nextByte !== 11) {
+      return '';
+    }
 
     const len = this.readVarint();
     return this.readString(len);
