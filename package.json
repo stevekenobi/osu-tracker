@@ -19,7 +19,7 @@
   "license": "ISC",
   "repository": "https://github.com/thanosbousios/osu-tracker.git",
   "devDependencies": {
-    "@rushstack/eslint-patch": "^1.7.2",
+    "@rushstack/eslint-patch": "^1.10.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/node": "^20.11.30",
