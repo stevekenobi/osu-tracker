@@ -4,6 +4,7 @@ import LeaderboardService from './server/services/LeaderboardService';
 import BeatmapsService from './server/services/BeatmapsService';
 import ScoresService from './server/services/ScoresService';
 import CollectionService from './server/services/CollectionService';
+import PackService from './server/services/PackService';
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -14,6 +15,7 @@ server.registerService(LeaderboardService);
 server.registerService(BeatmapsService);
 server.registerService(ScoresService);
 server.registerService(CollectionService);
+server.registerService(PackService);
 
 function shutDownServer(): void {
   server
