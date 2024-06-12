@@ -14,7 +14,7 @@ const axiosGetMock = axios.get as Mock;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getRequest = vi.spyOn(OsuClient.prototype as any, 'getRequest');
-getRequest.mockImplementation(() => {});
+getRequest.mockImplementation(() => { });
 
 describe('osu client', () => {
   describe('authenticate', () => {
@@ -87,6 +87,18 @@ describe('osu client', () => {
     test('calls getRequest with correct url', async () => {
       await client.getUserScoreOnBeatmap(123, 456);
       expect(getRequest).toHaveBeenCalledWith('beatmaps/123/scores/users/456');
+    });
+  });
+
+  describe('getOsuBeatmapPacks', () => {
+    test('calls getRequest with correct url', async () => {
+      await client.getOsuBeatmapPacks();
+      expect(getRequest).toHaveBeenCalledWith('beatmaps/packs');
+    });
+
+    test('calls getRequest with correct query', async () => {
+      await client.getOsuBeatmapPacks({cursor_string: 'some_string'});
+      expect(getRequest).toHaveBeenCalledWith('beatmaps/packs?cursor_string=some_string');
     });
   });
 
