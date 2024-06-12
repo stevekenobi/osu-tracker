@@ -109,8 +109,8 @@ export default class OsuClient {
     return response;
   }
 
-  async getOsuBeatmapPacks(): Promise<OsuBeatmapPacksResponse | null> {
-    const response = await this.getRequest<OsuBeatmapPacksResponse>('beatmaps/packs');
+  async getOsuBeatmapPacks(query?: { cursor_string: string }): Promise<OsuBeatmapPacksResponse | null> {
+    const response = await this.getRequest<OsuBeatmapPacksResponse>(`beatmaps/packs${createQuery(query)}`);
     return response;
   }
 }
