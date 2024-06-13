@@ -14,7 +14,7 @@ const axiosGetMock = axios.get as Mock;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getRequest = vi.spyOn(OsuClient.prototype as any, 'getRequest');
-getRequest.mockImplementation(() => { });
+getRequest.mockImplementation(() => {});
 
 describe('osu client', () => {
   describe('authenticate', () => {
@@ -97,7 +97,7 @@ describe('osu client', () => {
     });
 
     test('calls getRequest with correct query', async () => {
-      await client.getOsuBeatmapPacks({cursor_string: 'some_string'});
+      await client.getOsuBeatmapPacks({ cursor_string: 'some_string' });
       expect(getRequest).toHaveBeenCalledWith('beatmaps/packs?cursor_string=some_string');
     });
   });

@@ -18,9 +18,5 @@ export async function getOsuBeatmapPacks(): Promise<OsuBeatmapPack[] | undefined
   // 'Loved Beatmap Pack (osu!)' for loved
   // 'Approved' for approved
 
-  return result.filter(p =>
-    p.name.startsWith('osu! B') ||
-    p.name.startsWith('Loved Beatmap Pack (osu!)') ||
-    p.name.startsWith('Approved')
-  );
+  return result.filter((p) => p.name.startsWith('osu! B') || p.name.startsWith('Loved Beatmap Pack (osu!)') || p.name.startsWith('Approved'));
 }
