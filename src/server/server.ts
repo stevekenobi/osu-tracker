@@ -8,6 +8,7 @@ import SheetClient from '../client/SheetClient';
 import DatabaseClient from '../client/DatabaseClient';
 
 import { updateLeaderboard, updateTargets } from './helpers/leaderboard';
+import { updateBeatmapPacks } from './helpers/packs';
 
 import cron from 'node-cron';
 import type AbstractService from './AbstractService';
@@ -55,6 +56,7 @@ export default class TrackerServer {
 
     cron.schedule('0 0 * * *', () => {
       updateTargets();
+      updateBeatmapPacks();
     });
 
     if (process.env['ENVIRONMENT'] === 'development') {

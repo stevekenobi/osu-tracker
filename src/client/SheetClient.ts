@@ -4,6 +4,7 @@ import { JWT } from 'google-auth-library';
 import type { SheetAge, SheetAgeStats, SheetBeatmap, SheetLeaderboard, SheetStats, SheetTarget } from '../types';
 import type { AxiosError } from 'axios';
 import { delay } from '../utils';
+import type { SheetBeatmapPack } from '../types/sheets/packs';
 
 export default class SheetClient {
   private readonly serviceAccountAuth;
@@ -192,5 +193,10 @@ export default class SheetClient {
   async getAgeStats(): Promise<SheetAgeStats[]> {
     const result = await this.getRows<SheetAgeStats>(this.ages_beatmaps_sheet_id, 'Ages');
     return result;
+  }
+
+  async updateBeatmapPackStats(stats: SheetBeatmapPack[]): Promise<void> {
+    await this.clearRows(this.beatmaps_sheet_id, 'Packs');
+    await this.addRows(stats, this.beatmaps_sheet_id, 'Packs');
   }
 }

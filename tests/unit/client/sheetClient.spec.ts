@@ -11,9 +11,9 @@ const getRows = vi.spyOn(sheetClient as any, 'getRows');
 const addRows = vi.spyOn(sheetClient as any, 'addRows');
 const clearRows = vi.spyOn(sheetClient as any, 'clearRows');
 
-getRows.mockImplementation(() => {});
-addRows.mockImplementation(() => {});
-clearRows.mockImplementation(() => {});
+getRows.mockImplementation(() => { });
+addRows.mockImplementation(() => { });
+clearRows.mockImplementation(() => { });
 
 describe.sequential('sheet client', () => {
   describe('errors', () => {
@@ -391,6 +391,20 @@ describe.sequential('sheet client', () => {
 
       const result = await sheetClient.getAgeStats();
       expect(result).toStrictEqual([{ Year: '2007', 'Average Age': '123', 'Oldest Age': '456', 'Youngest Age': '789', 'Oldest Map': 'olderst map', 'Youngest Map': 'youngest map' }]);
+    });
+  });
+
+  describe('updateBeatmapPackStats', () => {
+    test('updates packs', async () => {
+      await sheetClient.updateBeatmapPackStats([{ 'Beatmap Completion': 'name', 'Completion (%)': '12.6', 'Download Link': 'https://somelink.com', Name: 'Beatmap Pack Name`' }]);
+
+      expect(clearRows).toHaveBeenCalled();
+      expect(addRows).toHaveBeenCalled();
+
+      getRows.mockResolvedValue([{ 'Beatmap Completion': 'name', 'Completion (%)': '12.6', 'Download Link': 'https://somelink.com', Name: 'Beatmap Pack Name`' }]);
+
+      const result = await sheetClient.getAgeStats();
+      expect(result).toStrictEqual([{ 'Beatmap Completion': 'name', 'Completion (%)': '12.6', 'Download Link': 'https://somelink.com', Name: 'Beatmap Pack Name`' }]);
     });
   });
 });
