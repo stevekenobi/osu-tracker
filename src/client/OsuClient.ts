@@ -13,6 +13,7 @@ import type {
   OsuUser,
   AuthDetails,
   OsuBeatmapPacksResponse,
+  OsuBeatmapPackDetails,
 } from '../types';
 
 const baseUrl = 'https://osu.ppy.sh/api/v2';
@@ -123,6 +124,11 @@ export default class OsuClient {
 
   async getOsuBeatmapPacks(query?: { cursor_string: string }): Promise<OsuBeatmapPacksResponse | null> {
     const response = await this.getRequest<OsuBeatmapPacksResponse>(`beatmaps/packs${createQuery(query)}`);
+    return response;
+  }
+
+  async getOsuBeatmapPackById(id: string): Promise<OsuBeatmapPackDetails | null> {
+    const response = await this.getRequest<OsuBeatmapPackDetails>(`beatmaps/packs/${id}`);
     return response;
   }
 }

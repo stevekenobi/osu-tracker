@@ -102,6 +102,13 @@ describe('osu client', () => {
     });
   });
 
+  describe('getOsuBeatmapPackById', () => {
+    test('calls getRequest with correct url', async () => {
+      await client.getOsuBeatmapPackById('123');
+      expect(getRequest).toHaveBeenCalledWith('beatmaps/packs/123');
+    });
+  });
+
   describe('getRequest', () => {
     const getClient = new OsuClient({
       client_id: '12375044',
