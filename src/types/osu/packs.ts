@@ -17,21 +17,21 @@ export type OsuBeatmapPack = {
 };
 
 export type OsuBeatmapPackDetails = {
-  "author": string
-  "date": string
-  "name": string
-  "no_diff_reduction": boolean,
-  "ruleset_id"?: number,
-  "tag": string
-  "url": string
-  "beatmapsets": {
-    "artist": string,
-    "creator": string,
-    "id": number,
-    "status": string
-    "title": string
-    "bpm": number,
-    "ranked_date": string
-    "submitted_date": string
-  }[]
-}
+  author: string;
+  date: string;
+  name: string;
+  no_diff_reduction: boolean;
+  ruleset_id?: number;
+  tag: string;
+  url: string;
+  beatmapsets: {
+    artist: string;
+    creator: string;
+    id: number;
+    status: string;
+    title: string;
+    bpm: number;
+    ranked_date: string;
+    submitted_date: string;
+  }[];
+};

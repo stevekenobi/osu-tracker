@@ -11,9 +11,9 @@ const getRows = vi.spyOn(sheetClient as any, 'getRows');
 const addRows = vi.spyOn(sheetClient as any, 'addRows');
 const clearRows = vi.spyOn(sheetClient as any, 'clearRows');
 
-getRows.mockImplementation(() => { });
-addRows.mockImplementation(() => { });
-clearRows.mockImplementation(() => { });
+getRows.mockImplementation(() => {});
+addRows.mockImplementation(() => {});
+clearRows.mockImplementation(() => {});
 
 describe.sequential('sheet client', () => {
   describe('errors', () => {
