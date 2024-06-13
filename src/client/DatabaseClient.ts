@@ -72,6 +72,10 @@ export default class DatabaseClient {
     return (await Beatmaps.findAll(options)).map((b) => b.toJSON());
   }
 
+  async getBeatmapsOfBeatmapsets(ids: number[]): Promise<AppBeatmap[]> {
+    return (await Beatmaps.findAll({ where: { beatmapsetId: { [Op.in]: ids } } })).map((b) => b.toJSON());
+  }
+
   async getBeatmapsOfYear(year: string): Promise<AppBeatmap[]> {
     return (await Beatmaps.findAll({ where: { rankedDate: { [Op.like]: `${year}%` } } })).map((b) => b.toJSON());
   }

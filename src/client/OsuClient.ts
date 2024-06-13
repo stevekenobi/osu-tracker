@@ -1,7 +1,20 @@
 import { createQuery, delay } from '../utils';
 import type { AxiosError } from 'axios';
 import axios from 'axios';
-import type { OsuLeaderboardResponse, OsuLeaderboardQuery, OsuBeatmapsetSearchResponse, OsuBeatmap, OsuBeatmapset, OsuUserBeatmap, OsuScore, OsuRecentScore, OsuUser, AuthDetails } from '../types';
+import type {
+  OsuLeaderboardResponse,
+  OsuLeaderboardQuery,
+  OsuBeatmapsetSearchResponse,
+  OsuBeatmap,
+  OsuBeatmapset,
+  OsuUserBeatmap,
+  OsuScore,
+  OsuRecentScore,
+  OsuUser,
+  AuthDetails,
+  OsuBeatmapPacksResponse,
+  OsuBeatmapPackDetails,
+} from '../types';
 
 const baseUrl = 'https://osu.ppy.sh/api/v2';
 const authUrl = ' https://osu.ppy.sh/oauth/token';
@@ -106,6 +119,16 @@ export default class OsuClient {
 
   async getUserScoreOnBeatmap(beatmapId: number, userId: number): Promise<OsuScore | null> {
     const response = await this.getRequest<OsuScore>(`beatmaps/${beatmapId}/scores/users/${userId}`);
+    return response;
+  }
+
+  async getOsuBeatmapPacks(query?: { cursor_string: string }): Promise<OsuBeatmapPacksResponse | null> {
+    const response = await this.getRequest<OsuBeatmapPacksResponse>(`beatmaps/packs${createQuery(query)}`);
+    return response;
+  }
+
+  async getOsuBeatmapPackById(id: string): Promise<OsuBeatmapPackDetails | null> {
+    const response = await this.getRequest<OsuBeatmapPackDetails>(`beatmaps/packs/${id}`);
     return response;
   }
 }

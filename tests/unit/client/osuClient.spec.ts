@@ -90,6 +90,25 @@ describe('osu client', () => {
     });
   });
 
+  describe('getOsuBeatmapPacks', () => {
+    test('calls getRequest with correct url', async () => {
+      await client.getOsuBeatmapPacks();
+      expect(getRequest).toHaveBeenCalledWith('beatmaps/packs');
+    });
+
+    test('calls getRequest with correct query', async () => {
+      await client.getOsuBeatmapPacks({ cursor_string: 'some_string' });
+      expect(getRequest).toHaveBeenCalledWith('beatmaps/packs?cursor_string=some_string');
+    });
+  });
+
+  describe('getOsuBeatmapPackById', () => {
+    test('calls getRequest with correct url', async () => {
+      await client.getOsuBeatmapPackById('123');
+      expect(getRequest).toHaveBeenCalledWith('beatmaps/packs/123');
+    });
+  });
+
   describe('getRequest', () => {
     const getClient = new OsuClient({
       client_id: '12375044',

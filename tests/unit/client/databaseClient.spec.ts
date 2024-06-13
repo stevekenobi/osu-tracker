@@ -95,6 +95,46 @@ describe.sequential('database client', () => {
     });
   });
 
+  describe('getBeatmapsOfBeatmapsets', () => {
+    test('executes query', async () => {
+      const result = await client.getBeatmapsOfBeatmapsets([826]);
+      expect(result).toEqual([
+        {
+          id: 319,
+          unfinished: false,
+          checksum: '319',
+          beatmapsetId: 826,
+          artist: 'Middleton',
+          title: 'Idaho',
+          creator: 'Sharlene',
+          version: 'Insane',
+          difficulty: 7.86,
+          AR: 7.9,
+          CS: 0.4,
+          OD: 9.4,
+          HP: 5.9,
+          BPM: 176,
+          length: 593,
+          status: 'ranked',
+          mode: 'osu',
+          rankedDate: '2007',
+          submittedDate: '2007',
+          accuracy: 98.86,
+          max_combo: 689,
+          mods: 'HD,SD',
+          perfect: false,
+          pp: 137.19,
+          rank: 'XH',
+          score: 23632046,
+          count_ok: 8,
+          count_great: 1528,
+          count_meh: 0,
+          count_miss: 0,
+        },
+      ]);
+    });
+  });
+
   describe('getUnfinishedBeatmaps', () => {
     describe.each([
       { input: 'no-score', expected: unfinishedBeamapsResult },

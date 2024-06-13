@@ -3,6 +3,7 @@ export * from './app/beatmaps';
 export * from './osu/auth';
 export * from './osu/beatmaps';
 export * from './osu/leaderboard';
+export * from './osu/packs';
 export * from './osu/scores';
 export * from './osu/user';
 
