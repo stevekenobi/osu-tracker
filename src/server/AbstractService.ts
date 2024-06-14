@@ -4,7 +4,6 @@ export default class AbstractService {
   readonly app;
 
   constructor(private readonly serverInstance: TrackerServer) {
-    this.serverInstance = serverInstance;
     this.app = this.serverInstance.getApp();
   }
 

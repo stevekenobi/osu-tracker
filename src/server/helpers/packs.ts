@@ -6,12 +6,16 @@ import TrackerServer from '../server';
 export async function getOsuBeatmapPacks(): Promise<OsuBeatmapPack[] | undefined> {
   let response = await TrackerServer.getOsuClient().getOsuBeatmapPacks();
 
-  if (!response) return [];
+  if (!response) {
+    return [];
+  }
   const result = response.beatmap_packs;
 
   do {
     response = await TrackerServer.getOsuClient().getOsuBeatmapPacks({ cursor_string: response.cursor_string });
-    if (!response) break;
+    if (!response) {
+      break;
+    }
     result.push(...response.beatmap_packs);
   } while (response.cursor_string);
 
@@ -51,5 +55,9 @@ export async function updateBeatmapPacks(): Promise<void> {
     });
   }
 
-  await TrackerServer.getSheetClient().updateBeatmapPackStats(stats.reverse());
+  stats.reverse();
+
+  await TrackerServer.getSheetClient().updateBeatmapPackStats(stats);
+
+  console.log('finished updating packs');
 }
