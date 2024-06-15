@@ -19,11 +19,11 @@ export async function getOsuBeatmapPacks(): Promise<OsuBeatmapPack[] | undefined
     result.push(...response.beatmap_packs);
   } while (response.cursor_string);
 
-  // 'osu! B' for osu!
+  // 'osu! B' for osu! and 'Beatmap pack #38' for missing
   // 'Loved Beatmap Pack (osu!)' for loved
   // 'Approved' for approved
 
-  return result.filter((p) => p.name.startsWith('osu! B') || p.name.startsWith('Loved Beatmap Pack (osu!)') || p.name.startsWith('Approved'));
+  return result.filter((p) => p.name === 'Beatmap pack #38' || p.name.startsWith('osu! B') || p.name.startsWith('Loved Beatmap Pack (osu!)') || p.name.startsWith('Approved'));
 }
 
 export async function updateBeatmapPacks(): Promise<void> {
