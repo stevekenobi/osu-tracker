@@ -176,7 +176,7 @@ export default class SheetClient {
   }
 
   async updateAges(ages: SheetAge[], year: string): Promise<void> {
-    await this.clearRows(this.ages_beatmaps_sheet_id, 'Ages');
+    await this.clearRows(this.ages_beatmaps_sheet_id, year, { start: 2 });
     await this.addRows(ages, this.ages_beatmaps_sheet_id, year);
   }
 
