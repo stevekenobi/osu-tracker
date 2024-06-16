@@ -18,7 +18,7 @@ export async function syncAgesSheet(): Promise<void> {
         creator: b.beatmaps[0]!.creator,
         id: b.id,
       }))
-      .sort((a, b) => (a.age > b.age ? 1 : -1));
+      .sort((a, b) => (a.age < b.age ? 1 : -1));
     const beatmapsOfYoungestAge = beatmapsOfSameAge(beatmapAges, 'youngest');
     const beatmapsOfOldestAge = beatmapsOfSameAge(beatmapAges, 'oldest');
     ages.push({
@@ -45,5 +45,5 @@ export async function syncAgesSheet(): Promise<void> {
 }
 
 export function beatmapsOfSameAge(beatmaps: { age: number }[], type: 'youngest' | 'oldest'): number {
-  return beatmaps.filter((b) => b.age === beatmaps.at(type === 'youngest' ? -1 : 0)!.age).length;
+  return beatmaps.filter((b) => b.age === beatmaps.at(type === 'youngest' ? 0 : -1)!.age).length;
 }
