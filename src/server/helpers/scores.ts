@@ -73,13 +73,13 @@ export async function updateScore(s: OsuScore): Promise<void> {
       mode: getRulesetFromInt(s.score.ruleset_id),
       mods: getModsString(s.score.mods),
       perfect: s.score.is_perfect_combo,
-      pp: s.score.pp,
+      pp: s.score.pp ?? 0,
       rank: s.score.rank,
       score: s.score.total_score,
-      count_ok: s.score.statistics.ok,
-      count_great: s.score.statistics.great,
-      count_meh: s.score.statistics.meh,
-      count_miss: s.score.statistics.miss,
+      count_ok: s.score.statistics.ok ?? 0,
+      count_great: s.score.statistics.great ?? 0,
+      count_meh: s.score.statistics.meh ?? 0,
+      count_miss: s.score.statistics.miss ?? 0,
     });
   } catch (error) {
     const beatmapset = await TrackerServer.getOsuClient().getBeatmapsetById(s.score.beatmap.beatmapset_id);
