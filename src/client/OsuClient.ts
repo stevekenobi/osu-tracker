@@ -42,7 +42,6 @@ export default class OsuClient {
       } else if (error.response?.status === 404) {
         return null;
       } else if (error.response?.status === 429) {
-        console.log(`osu returned a 429 on ${requestUrl}`);
         await delay(60000);
         const response = await this.getRequest<T>(requestUrl);
         return response;

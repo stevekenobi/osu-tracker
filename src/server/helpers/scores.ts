@@ -98,7 +98,6 @@ export async function updateUnfinishedBeatmap(beatmap: OsuUserBeatmap): Promise<
   try {
     await TrackerServer.getDatabaseClient().addUnfinishedBeatmap(beatmap.beatmap_id);
   } catch (error) {
-    console.log(error);
     const beatmapset = await TrackerServer.getOsuClient().getBeatmapsetById(beatmap.beatmapset.id);
     await TrackerServer.getDatabaseClient().updateBeatmaps(createBeatmapModelsFromOsuBeatmapsets([beatmapset!]));
     await updateUnfinishedBeatmap(beatmap);
