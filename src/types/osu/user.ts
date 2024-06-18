@@ -7,9 +7,9 @@ export type OsuUser = {
     name: string;
   };
   statistics: {
-    count_ok: number;
-    count_great: number;
-    count_meh: number;
+    count_100: number;
+    count_300: number;
+    count_50: number;
     count_miss: number;
     level: {
       current: number;
