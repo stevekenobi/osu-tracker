@@ -173,4 +173,12 @@ describe('osu client test', () => {
       expect(beatmap).toBeNull();
     });
   });
+
+  describe('getBeatmapsetSearch', () => {
+    test('returns result', async () => {
+      const search = await client.getBeatmapsetSearch();
+      expect(search?.beatmapsets.length).toBe(50);
+      expect(search?.cursor_string).not.toBeNull();
+    });
+  });
 });
