@@ -13,8 +13,8 @@ describe('osu client test', () => {
       expect(user?.id).toBe(12375044);
       expect(user?.username).toBe('Steve Kenobi');
       expect(user?.country).toStrictEqual({
-        'code': 'GR',
-        'name': 'Greece',
+        code: 'GR',
+        name: 'Greece',
       });
 
       expect(user?.statistics.count_100).toBeGreaterThan(0);
@@ -106,7 +106,6 @@ describe('osu client test', () => {
       expect(beatmapset?.beatmaps[2]?.drain).toBe(7);
       expect(beatmapset?.beatmaps[2]?.checksum).toBe('de8e252f51f8edf5c41484b2f12bf77c');
 
-
       expect(beatmapset?.beatmaps[3]?.beatmapset_id).toBe(147177);
       expect(beatmapset?.beatmaps[3]?.difficulty_rating).toBe(2.45);
       expect(beatmapset?.beatmaps[3]?.id).toBe(376612);
@@ -141,6 +140,37 @@ describe('osu client test', () => {
     test('returns not found', async () => {
       const beatmapset = await client.getBeatmapsetById(12375044);
       expect(beatmapset).toBeNull();
+    });
+  });
+
+  describe('getBeatmapById', () => {
+    test('returns correct beatmap', async () => {
+      const beatmap = await client.getBeatmapById(4183347);
+
+      expect(beatmap?.beatmapset_id).toBe(2010488);
+      expect(beatmap?.difficulty_rating).toBe(5.22);
+      expect(beatmap?.id).toBe(4183347);
+      expect(beatmap?.mode).toBe('osu');
+      expect(beatmap?.status).toBe('graveyard');
+      expect(beatmap?.total_length).toBe(263);
+      expect(beatmap?.user_id).toBe(12375044);
+      expect(beatmap?.version).toBe('Larry');
+      expect(beatmap?.accuracy).toBe(8);
+      expect(beatmap?.ar).toBe(9);
+      expect(beatmap?.bpm).toBe(168);
+      expect(beatmap?.cs).toBe(4);
+      expect(beatmap?.drain).toBe(7);
+      expect(beatmap?.checksum).toBe('1ca66af58609586c9aee9bab4323bc15');
+      expect(beatmap?.beatmapset.artist).toBe('frederic');
+      expect(beatmap?.beatmapset.creator).toBe('Steve Kenobi');
+      expect(beatmap?.beatmapset.id).toBe(2010488);
+      expect(beatmap?.beatmapset.title).toBe('ONLYWONDER');
+      expect(beatmap?.beatmapset.bpm).toBe(168);
+    });
+
+    test('returns not found', async () => {
+      const beatmap = await client.getBeatmapById(12375044);
+      expect(beatmap).toBeNull();
     });
   });
 });
