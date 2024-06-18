@@ -5,7 +5,7 @@ const client = new OsuClient({
   client_secret: process.env['CLIENT_SECRET'] ?? '',
 });
 
-describe('getBeatmapById', () => {
+describe('osu client test', () => {
   describe('getBeatmapsetSearch', () => {
     test('returns result', async () => {
       const search = await client.getBeatmapsetSearch();
