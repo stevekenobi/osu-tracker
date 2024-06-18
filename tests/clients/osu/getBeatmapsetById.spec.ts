@@ -1,4 +1,4 @@
-import OsuClient from '../../src/client/OsuClient';
+import OsuClient from '../../../src/client/OsuClient';
 
 const client = new OsuClient({
   client_id: process.env['CLIENT_ID'] ?? '',
@@ -6,47 +6,6 @@ const client = new OsuClient({
 });
 
 describe('osu client test', () => {
-  describe('getUserById', () => {
-    test('returns correct user', async () => {
-      const user = await client.getUserById(12375044);
-      expect(user?.country_code).toBe('GR');
-      expect(user?.id).toBe(12375044);
-      expect(user?.username).toBe('Steve Kenobi');
-      expect(user?.country).toStrictEqual({
-        code: 'GR',
-        name: 'Greece',
-      });
-
-      expect(user?.statistics.count_100).toBeGreaterThan(0);
-      expect(user?.statistics.count_300).toBeGreaterThan(0);
-      expect(user?.statistics.count_50).toBeGreaterThan(0);
-      expect(user?.statistics.count_miss).toBeGreaterThan(0);
-      expect(user?.statistics.level.current).toBeGreaterThan(0);
-      expect(user?.statistics.level.progress).toBeGreaterThan(0);
-
-      expect(user?.statistics.global_rank).toBeGreaterThan(1);
-      expect(user?.statistics.pp).toBeGreaterThan(5000);
-      expect(user?.statistics.ranked_score).toBeGreaterThan(100000000000);
-      expect(user?.statistics.hit_accuracy).toBeGreaterThan(90);
-      expect(user?.statistics.play_count).toBeGreaterThan(10000);
-      expect(user?.statistics.play_time).toBeGreaterThan(3000000);
-      expect(user?.statistics.total_score).toBeGreaterThan(150000000000);
-      expect(user?.statistics.total_hits).toBeGreaterThan(10000000);
-      expect(user?.statistics.maximum_combo).toBeGreaterThan(5900);
-      expect(user?.statistics.grade_counts.ss).toBeGreaterThan(10);
-      expect(user?.statistics.grade_counts.ssh).toBeGreaterThan(5000);
-      expect(user?.statistics.grade_counts.s).toBeGreaterThan(100);
-      expect(user?.statistics.grade_counts.sh).toBeGreaterThan(10000);
-      expect(user?.statistics.grade_counts.a).toBeGreaterThan(-30);
-      expect(user?.statistics.country_rank).toBeGreaterThan(1);
-    });
-
-    test('returns not found', async () => {
-      const user = await client.getUserById(4171323);
-      expect(user).toBeNull();
-    });
-  });
-
   describe('getBeatmapsetById', () => {
     test('returns beatmapset', async () => {
       const beatmapset = await client.getBeatmapsetById(147177);
@@ -140,45 +99,6 @@ describe('osu client test', () => {
     test('returns not found', async () => {
       const beatmapset = await client.getBeatmapsetById(12375044);
       expect(beatmapset).toBeNull();
-    });
-  });
-
-  describe('getBeatmapById', () => {
-    test('returns correct beatmap', async () => {
-      const beatmap = await client.getBeatmapById(4183347);
-
-      expect(beatmap?.beatmapset_id).toBe(2010488);
-      expect(beatmap?.difficulty_rating).toBe(5.22);
-      expect(beatmap?.id).toBe(4183347);
-      expect(beatmap?.mode).toBe('osu');
-      expect(beatmap?.status).toBe('graveyard');
-      expect(beatmap?.total_length).toBe(263);
-      expect(beatmap?.user_id).toBe(12375044);
-      expect(beatmap?.version).toBe('Larry');
-      expect(beatmap?.accuracy).toBe(8);
-      expect(beatmap?.ar).toBe(9);
-      expect(beatmap?.bpm).toBe(168);
-      expect(beatmap?.cs).toBe(4);
-      expect(beatmap?.drain).toBe(7);
-      expect(beatmap?.checksum).toBe('1ca66af58609586c9aee9bab4323bc15');
-      expect(beatmap?.beatmapset.artist).toBe('frederic');
-      expect(beatmap?.beatmapset.creator).toBe('Steve Kenobi');
-      expect(beatmap?.beatmapset.id).toBe(2010488);
-      expect(beatmap?.beatmapset.title).toBe('ONLYWONDER');
-      expect(beatmap?.beatmapset.bpm).toBe(168);
-    });
-
-    test('returns not found', async () => {
-      const beatmap = await client.getBeatmapById(12375044);
-      expect(beatmap).toBeNull();
-    });
-  });
-
-  describe('getBeatmapsetSearch', () => {
-    test('returns result', async () => {
-      const search = await client.getBeatmapsetSearch();
-      expect(search?.beatmapsets.length).toBe(50);
-      expect(search?.cursor_string).not.toBeNull();
     });
   });
 });
