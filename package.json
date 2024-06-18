@@ -12,6 +12,7 @@
     "format": "prettier --write src/ tests/",
     "test:unit": "vitest tests/unit --test-timeout=60000 --hook-timeout=60000",
     "test:coverage": "vitest run tests/unit --coverage --test-timeout=60000 --hook-timeout=60000",
+    "test:client": "vitest run tests/client --test-timeout=60000 --hook-timeout=60000",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "lint:check": "eslint . --ext .ts,.tsx,.js,.jsx,.cjs,.mjs --ignore-path .gitignore"
   },
