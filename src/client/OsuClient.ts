@@ -9,11 +9,11 @@ import type {
   OsuBeatmapset,
   OsuUserBeatmap,
   OsuScore,
-  OsuRecentScore,
   OsuUser,
   AuthDetails,
   OsuBeatmapPacksResponse,
   OsuBeatmapPackDetails,
+  OsuUserScore,
 } from '../types';
 
 const baseUrl = 'https://osu.ppy.sh/api/v2';
@@ -111,13 +111,13 @@ export default class OsuClient {
     return response;
   }
 
-  async getUserRecentScores(id: number): Promise<OsuRecentScore[] | null> {
-    const response = await this.getRequest<OsuRecentScore[]>(`users/${id}/scores/recent`);
+  async getUserRecentScores(id: number): Promise<OsuScore[] | null> {
+    const response = await this.getRequest<OsuScore[]>(`users/${id}/scores/recent`);
     return response;
   }
 
-  async getUserScoreOnBeatmap(beatmapId: number, userId: number): Promise<OsuScore | null> {
-    const response = await this.getRequest<OsuScore>(`beatmaps/${beatmapId}/scores/users/${userId}`);
+  async getUserScoreOnBeatmap(beatmapId: number, userId: number): Promise<OsuUserScore | null> {
+    const response = await this.getRequest<OsuUserScore>(`beatmaps/${beatmapId}/scores/users/${userId}`);
     return response;
   }
 

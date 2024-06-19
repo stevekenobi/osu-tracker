@@ -1,4 +1,4 @@
-import type { OsuUserBeatmap, OsuScore } from '../../types';
+import type { OsuUserBeatmap, OsuScore, OsuUserScore } from '../../types';
 import { calculateClassicScore, delay, getModsString, getRulesetFromInt, isBeatmapRankedApprovedOrLoved } from '../../utils';
 import TrackerServer from '../server';
 import { createBeatmapModelsFromOsuBeatmapsets } from './beatmaps';
@@ -9,7 +9,7 @@ export async function updateAllScores(): Promise<void> {
   let result = await TrackerServer.getOsuClient().getUserBeatmaps(12375044, 'most_played', { limit: 100 });
   do {
     const unfinished: OsuUserBeatmap[] = [];
-    const scores: OsuScore[] = [];
+    const scores: OsuUserScore[] = [];
     if (!result) {
       result = await TrackerServer.getOsuClient().getUserBeatmaps(12375044, 'most_played', { limit: 100, offset: j });
       continue;
@@ -32,7 +32,7 @@ export async function updateAllScores(): Promise<void> {
     await delay(5000);
     j += 100;
 
-    await updateScores(scores);
+    await updateScores(scores.map((s) => s.score));
     await addUnfinishedBeatmaps(unfinished);
     result = await TrackerServer.getOsuClient().getUserBeatmaps(12375044, 'most_played', { limit: 100, offset: j });
   } while (result!.length > 0);
@@ -66,23 +66,24 @@ export async function updateScores(scores: OsuScore[]): Promise<void> {
 export async function updateScore(s: OsuScore): Promise<void> {
   try {
     await TrackerServer.getDatabaseClient().updateScore({
-      id: s.score.beatmap.id,
+      id: s.beatmap.id,
       unfinished: false,
-      accuracy: s.score.accuracy * 100,
-      max_combo: s.score.max_combo,
-      mode: getRulesetFromInt(s.score.ruleset_id),
-      mods: getModsString(s.score.mods),
-      perfect: s.score.is_perfect_combo,
-      pp: s.score.pp ?? 0,
-      rank: s.score.rank,
-      score: s.score.total_score,
-      count_ok: s.score.statistics.ok ?? 0,
-      count_great: s.score.statistics.great ?? 0,
-      count_meh: s.score.statistics.meh ?? 0,
-      count_miss: s.score.statistics.miss ?? 0,
+      accuracy: s.accuracy * 100,
+      max_combo: s.max_combo,
+      mode: getRulesetFromInt(s.ruleset_id),
+      mods: getModsString(s.mods),
+      perfect: s.is_perfect_combo,
+      pp: s.pp ?? 0,
+      rank: s.rank,
+      score: s.total_score,
+      classicScore: calculateClassicScore(s),
+      count_ok: s.statistics.ok ?? 0,
+      count_great: s.statistics.great ?? 0,
+      count_meh: s.statistics.meh ?? 0,
+      count_miss: s.statistics.miss ?? 0,
     });
   } catch (error) {
-    const beatmapset = await TrackerServer.getOsuClient().getBeatmapsetById(s.score.beatmap.beatmapset_id);
+    const beatmapset = await TrackerServer.getOsuClient().getBeatmapsetById(s.beatmap.beatmapset_id);
     await TrackerServer.getDatabaseClient().updateBeatmaps(createBeatmapModelsFromOsuBeatmapsets([beatmapset!]));
     await updateScore(s);
   }
