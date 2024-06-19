@@ -73,7 +73,7 @@ describe('osu client', () => {
       expect(beatmapset?.beatmaps[1]?.status).toBe('ranked');
       expect(beatmapset?.beatmaps[1]?.total_length).toBe(209);
       expect(beatmapset?.beatmaps[1]?.user_id).toBe(685229);
-      expect(beatmapset?.beatmaps[1]?.version).toBe('W h i t e\'s Hard');
+      expect(beatmapset?.beatmaps[1]?.version).toBe("W h i t e's Hard");
       expect(beatmapset?.beatmaps[1]?.accuracy).toBe(6);
       expect(beatmapset?.beatmaps[1]?.ar).toBe(8);
       expect(beatmapset?.beatmaps[1]?.bpm).toBe(181);
@@ -88,7 +88,7 @@ describe('osu client', () => {
       expect(beatmapset?.beatmaps[2]?.status).toBe('ranked');
       expect(beatmapset?.beatmaps[2]?.total_length).toBe(209);
       expect(beatmapset?.beatmaps[2]?.user_id).toBe(1683740);
-      expect(beatmapset?.beatmaps[2]?.version).toBe('Gurvy\'s Insane');
+      expect(beatmapset?.beatmaps[2]?.version).toBe("Gurvy's Insane");
       expect(beatmapset?.beatmaps[2]?.accuracy).toBe(7);
       expect(beatmapset?.beatmaps[2]?.ar).toBe(8.5);
       expect(beatmapset?.beatmaps[2]?.bpm).toBe(181);
@@ -103,7 +103,7 @@ describe('osu client', () => {
       expect(beatmapset?.beatmaps[3]?.status).toBe('ranked');
       expect(beatmapset?.beatmaps[3]?.total_length).toBe(208);
       expect(beatmapset?.beatmaps[3]?.user_id).toBe(87546);
-      expect(beatmapset?.beatmaps[3]?.version).toBe('0920\'s Normal');
+      expect(beatmapset?.beatmaps[3]?.version).toBe("0920's Normal");
       expect(beatmapset?.beatmaps[3]?.accuracy).toBe(4);
       expect(beatmapset?.beatmaps[3]?.ar).toBe(5.3);
       expect(beatmapset?.beatmaps[3]?.bpm).toBe(181);
@@ -138,7 +138,7 @@ describe('osu client', () => {
       const search = await client.getBeatmapsetSearch();
       expect(search?.beatmapsets.length).toBe(50);
       expect(search?.cursor_string).not.null;
-      expect(search?.beatmapsets.find(b => b.status === 'qualified' || b.status === 'wip' || b.status === 'graveyard' || b.status === 'pending')).undefined;
+      expect(search?.beatmapsets.find((b) => b.status === 'qualified' || b.status === 'wip' || b.status === 'graveyard' || b.status === 'pending')).undefined;
     });
   });
 
@@ -147,7 +147,7 @@ describe('osu client', () => {
       const search = await client.getCountryLeaderboard({ country: 'GR' });
       expect(search?.cursor).not.null;
       expect(search?.ranking.length).toBe(50);
-      expect(search?.ranking.find(user => user.user.country.code !== 'GR')).undefined;
+      expect(search?.ranking.find((user) => user.user.country.code !== 'GR')).undefined;
     });
   });
 
@@ -155,7 +155,7 @@ describe('osu client', () => {
     test('returns leaderboard', async () => {
       const leaderboard = await client.getScoreLeaderboard();
       expect(leaderboard?.ranking.length).toBe(50);
-      expect(leaderboard?.ranking.find(user => user.ranked_score < 100000000000)).undefined;
+      expect(leaderboard?.ranking.find((user) => user.ranked_score < 100000000000)).undefined;
     });
   });
 
