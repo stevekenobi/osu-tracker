@@ -16,4 +16,5 @@ export type SheetBeatmap = {
   Mods?: string;
   Accuracy?: string;
   Score?: string;
+  'Classic Score'?: string;
 };

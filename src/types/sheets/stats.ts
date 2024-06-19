@@ -4,6 +4,7 @@ export type SheetStats = {
   'Played Beatmaps': string;
   'Completion (%)': string;
   'Total Score': string;
+  'Total Classic Score': string;
   'Average Score': string;
   SSH: string;
   SS: string;
