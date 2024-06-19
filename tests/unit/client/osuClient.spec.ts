@@ -161,7 +161,7 @@ describe('osu client', () => {
 
     test('throws error', async () => {
       axiosGetMock.mockRejectedValue({ response: { status: 500 } });
-      expect(async () => await getClient.getCountryLeaderboard()).rejects.toThrow();
+      expect(async () => getClient.getCountryLeaderboard()).rejects.toThrow();
     });
   });
 });
