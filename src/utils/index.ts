@@ -1,5 +1,5 @@
 import moment from 'moment';
-import type { OsuMod } from '../types';
+import type { OsuMod, OsuRecentScore } from '../types';
 
 export function delay(ms: number): Promise<void> {
   return new Promise((res) => setTimeout(res, ms));
@@ -100,4 +100,10 @@ export function extractIdFromLink(link: string): number {
     return 0;
   }
   return Number.parseInt(num);
+}
+
+export function calculateClassicScore(score: OsuRecentScore): number {
+  const classicScore =
+    (score.total_score / 1000000) * (100000 + 32.57 * Math.pow((score.statistics.great ?? 0) + (score.statistics.meh ?? 0) + (score.statistics.ok ?? 0) + (score.statistics.miss ?? 0), 2));
+  return Math.round(classicScore);
 }
