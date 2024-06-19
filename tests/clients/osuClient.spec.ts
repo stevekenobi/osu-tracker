@@ -33,7 +33,7 @@ describe('osu client', () => {
 
     test('returns not found', async () => {
       const beatmap = await client.getBeatmapById(12375044);
-      expect(beatmap).toBeNull();
+      expect(beatmap).null;
     });
   });
 
@@ -129,7 +129,7 @@ describe('osu client', () => {
 
     test('returns not found', async () => {
       const beatmapset = await client.getBeatmapsetById(12375044);
-      expect(beatmapset).toBeNull();
+      expect(beatmapset).null;
     });
   });
 
@@ -137,17 +137,17 @@ describe('osu client', () => {
     test('returns result', async () => {
       const search = await client.getBeatmapsetSearch();
       expect(search?.beatmapsets.length).toBe(50);
-      expect(search?.cursor_string).not.toBeNull();
-      expect(search?.beatmapsets.find(b => b.status === 'qualified' || b.status === 'wip' || b.status === 'graveyard' || b.status === 'pending')).toBeUndefined();
+      expect(search?.cursor_string).not.null;
+      expect(search?.beatmapsets.find(b => b.status === 'qualified' || b.status === 'wip' || b.status === 'graveyard' || b.status === 'pending')).undefined;
     });
   });
 
   describe('getCountryLeaderboard', () => {
     test('returns result', async () => {
       const search = await client.getCountryLeaderboard({ country: 'GR' });
-      expect(search?.cursor).not.toBeNull();
+      expect(search?.cursor).not.null;
       expect(search?.ranking.length).toBe(50);
-      expect(search?.ranking.find(user => user.user.country.code !== 'GR')).toBeUndefined();
+      expect(search?.ranking.find(user => user.user.country.code !== 'GR')).undefined;
     });
   });
 
@@ -155,7 +155,7 @@ describe('osu client', () => {
     test('returns leaderboard', async () => {
       const leaderboard = await client.getScoreLeaderboard();
       expect(leaderboard?.ranking.length).toBe(50);
-      expect(leaderboard?.ranking.find(user => user.ranked_score < 100000000000)).toBeUndefined();
+      expect(leaderboard?.ranking.find(user => user.ranked_score < 100000000000)).undefined;
     });
   });
 
@@ -196,7 +196,7 @@ describe('osu client', () => {
 
     test('returns not found', async () => {
       const user = await client.getUserById(4171323);
-      expect(user).toBeNull();
+      expect(user).null;
     });
   });
 
@@ -204,16 +204,97 @@ describe('osu client', () => {
     test('returns correct result', async () => {
       const beatmaps = await client.getUserBeatmaps(12375044, 'most_played');
       expect(beatmaps?.length).toBe(5);
-    });   
-    
+    });
+
     test('returns correct result size', async () => {
-      const beatmaps = await client.getUserBeatmaps(12375044, 'most_played', {limit: 100});
+      const beatmaps = await client.getUserBeatmaps(12375044, 'most_played', { limit: 100 });
       expect(beatmaps?.length).toBe(100);
     });
 
     test('returns null result', async () => {
       const result = await client.getUserBeatmaps(4171323, 'most_played');
-      expect(result).toBeNull();
+      expect(result).null;
+    });
+  });
+
+  describe('getUserRecentScores', () => {
+    test('returns correct result', async () => {
+      const result = await client.getUserRecentScores(12375044);
+      expect(result).not.null;
+    });
+
+    test('returns null result', async () => {
+      const result = await client.getUserRecentScores(4171323);
+      expect(result).null;
+    });
+  });
+
+  describe('getUserScoreOnBeatmap', () => {
+    test('returns correct result', async () => {
+      const result = await client.getUserScoreOnBeatmap(70052, 12375044);
+      expect(result).not.null;
+    });
+
+    test('returns null result', async () => {
+      const result = await client.getUserScoreOnBeatmap(70052, 4171323);
+      expect(result).null;
+    });
+
+    test('returns null result', async () => {
+      const result = await client.getUserScoreOnBeatmap(5432, 12375044);
+      expect(result).null;
+    });
+  });
+
+  describe('getOsuBeatmapPacks', () => {
+    test('returns result', async () => {
+      const result = await client.getOsuBeatmapPacks();
+      expect(result?.beatmap_packs.length).toBe(100);
+      expect(result?.cursor).not.null;
+      expect(result?.cursor_string).not.null;
+    });
+  });
+
+  describe('getOsuBeatmapPackById', () => {
+    test('returns correct ranked result', async () => {
+      const result = await client.getOsuBeatmapPackById('S1000');
+      expect(result?.author).toBe('Stefan');
+      expect(result?.date).toBe('2021-03-27T21:15:52.000000Z');
+      expect(result?.name).toBe('osu! Beatmap Pack #1000');
+      expect(result?.no_diff_reduction).toBeFalsy();
+      expect(result?.ruleset_id).null;
+      expect(result?.tag).toBe('S1000');
+      expect(result?.url).toBe('https://packs.ppy.sh/S1000%20-%20Beatmap%20Pack%20%231000.7z');
+      expect(result?.beatmapsets.length).toBe(20);
+    });
+
+    test('returns correct approved result', async () => {
+      const result = await client.getOsuBeatmapPackById('SA19');
+      expect(result?.author).toBe('Marcin');
+      expect(result?.date).toBe('2015-05-01T18:50:50.000000Z');
+      expect(result?.name).toBe('Approved Beatmap Pack #19');
+      expect(result?.no_diff_reduction).toBeFalsy();
+      expect(result?.ruleset_id).null;
+      expect(result?.tag).toBe('SA19');
+      expect(result?.url).toBe('https://packs.ppy.sh/SA19%20-%20Approved%20Beatmap%20Pack%20%2319.7z');
+      expect(result?.beatmapsets.length).toBe(19);
+    });
+
+    test('returns correct loved result', async () => {
+      const result = await client.getOsuBeatmapPackById('SL79');
+      expect(result?.author).toBe('Stefan');
+      expect(result?.date).toBe('2020-09-13T19:33:47.000000Z');
+      expect(result?.name).toBe('Loved Beatmap Pack (osu!) #32');
+      expect(result?.no_diff_reduction).toBeFalsy();
+      expect(result?.ruleset_id).null;
+      expect(result?.tag).toBe('SL79');
+      expect(result?.url).toBe('https://packs.ppy.sh/SL79%20-%20Loved%20Beatmap%20Pack%20(osu!)%20%2332.7z');
+      expect(result?.beatmapsets.length).toBe(18);
+    });
+
+    test('returns null result', async () => {
+      const result = await client.getOsuBeatmapPackById('non-existant');
+      expect(result).null;
     });
   });
 });
