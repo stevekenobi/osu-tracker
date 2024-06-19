@@ -54,12 +54,14 @@ export async function syncBeatmapsSheet(): Promise<void> {
     console.log(`finished ${year}`);
     const playedBeatmaps = beatmaps.filter((b) => b.rank);
     const totalScore = playedBeatmaps.reduce((sum, b) => sum + (b.score ? b.score : 0), 0);
+    const totalClassicScore = playedBeatmaps.reduce((sum, b) => sum + (b.classicScore ? b.classicScore : 0), 0);
     stats.push({
       Year: year,
       'Total Beatmaps': numeral(beatmaps.length).format('0,0'),
       'Played Beatmaps': numeral(playedBeatmaps.length).format('0,0'),
       'Completion (%)': numeral((100 * playedBeatmaps.length) / beatmaps.length).format('0.00'),
       'Total Score': numeral(totalScore).format('0,0'),
+      'Total Classic Score': numeral(totalClassicScore).format('0,0'),
       'Average Score': numeral(totalScore / playedBeatmaps.length).format('0,0'),
       SSH: numeral(playedBeatmaps.filter((b) => b.rank === 'XH').length).format('0,0'),
       SS: numeral(playedBeatmaps.filter((b) => b.rank === 'X').length).format('0,0'),
@@ -213,5 +215,6 @@ export function createSheetBeatmapsFromApp(beatmaps: AppBeatmap[]): SheetBeatmap
     ...(b.mods && { Mods: b.mods }),
     ...(b.accuracy && { Accuracy: numeral(b.accuracy).format('0.00') }),
     ...(b.score && { Score: numeral(b.score).format('0,0') }),
+    ...(b.classicScore && { 'Classic Score': numeral(b.classicScore).format('0,0') }),
   }));
 }

@@ -13,6 +13,7 @@ import {
   isBeatmapRankedApprovedOrLoved,
   range,
   createBeatmapsetLinkFromId,
+  calculateClassicScore,
 } from '../../src/utils';
 
 describe('utils', () => {
@@ -218,6 +219,61 @@ describe('utils', () => {
     test('returns wrong result', () => {
       const result = extractIdFromLink('');
       expect(result).toBe(0);
+    });
+  });
+
+  describe('calculateClassicScore', () => {
+    test('returns correct full result', () => {
+      const result = calculateClassicScore({
+        total_score: 1014523,
+        statistics: {
+          great: 1205,
+          miss: 2,
+          ok: 23,
+          meh: 2,
+        },
+      });
+      expect(result).toBe(50254932);
+    });
+
+    test('returns correct result great', () => {
+      const result = calculateClassicScore({
+        total_score: 1014523,
+        statistics: {
+          great: 1205,
+        },
+      });
+      expect(result).toBe(48080735);
+    });
+
+    test('returns correct result ok', () => {
+      const result = calculateClassicScore({
+        total_score: 1014523,
+        statistics: {
+          ok: 1205,
+        },
+      });
+      expect(result).toBe(48080735);
+    });
+
+    test('returns correct result meh', () => {
+      const result = calculateClassicScore({
+        total_score: 1014523,
+        statistics: {
+          meh: 1205,
+        },
+      });
+      expect(result).toBe(48080735);
+    });
+
+    test('returns correct result miss', () => {
+      const result = calculateClassicScore({
+        total_score: 1014523,
+        statistics: {
+          miss: 1205,
+        },
+      });
+      expect(result).toBe(48080735);
     });
   });
 });

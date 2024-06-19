@@ -25,6 +25,7 @@ export type AppBeatmap = {
   pp?: number | null;
   rank?: string | null;
   score?: number | null;
+  classicScore?: number | null;
   count_ok?: number | null;
   count_great?: number | null;
   count_meh?: number | null;
@@ -49,6 +50,7 @@ export type AppScore = {
   pp: number;
   rank: string;
   score: number;
+  classicScore: number;
   count_ok: number;
   count_great: number;
   count_meh: number;

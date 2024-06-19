@@ -42,6 +42,7 @@ export function getDaysFromDate(firstDate: string, secondDate: string): number {
   const oneDay = 24 * 60 * 60 * 1000;
   return Math.round(Math.abs((new Date(firstDate).getTime() - new Date(secondDate).getTime()) / oneDay));
 }
+
 export function getDiffDataFromDays(firstDate: string, secondDate: string): string {
   const diff = moment.duration(moment(firstDate).diff(moment(secondDate)));
   const result: string[] = [];
@@ -100,4 +101,10 @@ export function extractIdFromLink(link: string): number {
     return 0;
   }
   return Number.parseInt(num);
+}
+
+export function calculateClassicScore(score: { total_score: number; statistics: { great?: number; meh?: number; ok?: number; miss?: number } }): number {
+  const classicScore =
+    (score.total_score / 1000000) * (100000 + 32.57 * Math.pow((score.statistics.great ?? 0) + (score.statistics.meh ?? 0) + (score.statistics.ok ?? 0) + (score.statistics.miss ?? 0), 2));
+  return Math.round(classicScore);
 }
