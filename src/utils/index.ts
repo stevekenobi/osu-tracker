@@ -42,6 +42,7 @@ export function getDaysFromDate(firstDate: string, secondDate: string): number {
   const oneDay = 24 * 60 * 60 * 1000;
   return Math.round(Math.abs((new Date(firstDate).getTime() - new Date(secondDate).getTime()) / oneDay));
 }
+
 export function getDiffDataFromDays(firstDate: string, secondDate: string): string {
   const diff = moment.duration(moment(firstDate).diff(moment(secondDate)));
   const result: string[] = [];

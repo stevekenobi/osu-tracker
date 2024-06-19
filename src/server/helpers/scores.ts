@@ -52,11 +52,7 @@ export async function updateRecentScores(): Promise<void> {
     return;
   }
 
-  await updateScores(
-    result
-      .filter((r) => isBeatmapRankedApprovedOrLoved(r.beatmap) && r.beatmap.mode === 'osu')
-      .map((s) => ({ score: s })),
-  );
+  await updateScores(result.filter((r) => isBeatmapRankedApprovedOrLoved(r.beatmap) && r.beatmap.mode === 'osu').map((s) => ({ score: s })));
 
   console.log('finished updating recent scores');
 }
