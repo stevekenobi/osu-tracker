@@ -28,6 +28,7 @@ export class Beatmaps extends Model<InferAttributes<Beatmaps>, InferCreationAttr
   public declare pp?: number;
   public declare rank?: string;
   public declare score?: number;
+  public declare classicScore?: number;
   public declare count_ok?: number;
   public declare count_great?: number;
   public declare count_meh?: number;
@@ -141,6 +142,10 @@ export function initBeatmaps(sequelize: Sequelize): void {
         allowNull: true,
       },
       score: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      classicScore: {
         type: DataTypes.INTEGER,
         allowNull: true,
       },

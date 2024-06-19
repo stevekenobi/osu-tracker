@@ -1,5 +1,5 @@
 import type { OsuUserBeatmap, OsuScore } from '../../types';
-import { delay, getModsString, getRulesetFromInt, isBeatmapRankedApprovedOrLoved } from '../../utils';
+import { calculateClassicScore, delay, getModsString, getRulesetFromInt, isBeatmapRankedApprovedOrLoved } from '../../utils';
 import TrackerServer from '../server';
 import { createBeatmapModelsFromOsuBeatmapsets } from './beatmaps';
 
@@ -52,7 +52,7 @@ export async function updateRecentScores(): Promise<void> {
     return;
   }
 
-  await updateScores(result.filter((r) => isBeatmapRankedApprovedOrLoved(r.beatmap) && r.beatmap.mode === 'osu').map((s) => ({ score: s })));
+  await updateScores(result.filter((s) => isBeatmapRankedApprovedOrLoved(s.beatmap) && s.beatmap.mode === 'osu'));
 
   console.log('finished updating recent scores');
 }
