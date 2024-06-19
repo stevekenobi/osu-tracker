@@ -5,10 +5,10 @@ export type OsuScore = {
     id: number;
     mods: OsuMod[];
     statistics: {
-      ok: number;
-      great: number;
-      meh: number;
-      miss: number;
+      ok?: number;
+      great?: number;
+      meh?: number;
+      miss?: number;
       ignore_hit: number;
       ignore_miss: number;
       large_bonus: number;
@@ -36,10 +36,10 @@ export type OsuRecentScore = {
   id: number;
   mods: OsuMod[];
   statistics: {
-    ok: number;
-    great: number;
-    meh: number;
-    miss: number;
+    ok?: number;
+    great?: number;
+    meh?: number;
+    miss?: number;
     ignore_hit: number;
     ignore_miss: number;
     large_bonus: number;
