@@ -108,3 +108,13 @@ export function calculateClassicScore(score: { total_score: number; statistics: 
     (score.total_score / 1000000) * (100000 + 32.57 * Math.pow((score.statistics.great ?? 0) + (score.statistics.meh ?? 0) + (score.statistics.ok ?? 0) + (score.statistics.miss ?? 0), 2));
   return Math.round(classicScore);
 }
+
+export function getNormalRank(rank: string): string {
+  if (rank === 'X') {
+    return 'SS';
+  }
+  if (rank === 'XH') {
+    return 'SSH';
+  }
+  return rank;
+}

@@ -74,7 +74,7 @@ export async function updateScore(s: OsuScore): Promise<void> {
       mods: getModsString(s.mods),
       perfect: s.is_perfect_combo,
       pp: s.pp ?? 0,
-      rank: s.rank,
+      rank: getNormalRank(s.rank),
       score: s.total_score,
       classicScore: calculateClassicScore(s),
       count_ok: s.statistics.ok ?? 0,
