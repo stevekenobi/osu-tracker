@@ -30,6 +30,7 @@ export type AppBeatmap = {
   count_great?: number | null;
   count_meh?: number | null;
   count_miss?: number | null;
+  playedDate?: string | null;
 };
 
 export type AppBeatmapset = {
@@ -55,4 +56,5 @@ export type AppScore = {
   count_great: number;
   count_meh: number;
   count_miss: number;
+  playedDate: string;
 };

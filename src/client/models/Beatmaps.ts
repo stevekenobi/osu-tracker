@@ -33,6 +33,7 @@ export class Beatmaps extends Model<InferAttributes<Beatmaps>, InferCreationAttr
   public declare count_great?: number;
   public declare count_meh?: number;
   public declare count_miss?: number;
+  public declare playedDate?: string;
 }
 
 export function initBeatmaps(sequelize: Sequelize): void {
@@ -163,6 +164,10 @@ export function initBeatmaps(sequelize: Sequelize): void {
       },
       count_miss: {
         type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      playedDate: {
+        type: DataTypes.STRING,
         allowNull: true,
       },
     },
