@@ -17,6 +17,7 @@ export const scoreData: AppScore[] = [
     mode: 'osu',
     mods: 'HD',
     rank: 'A',
+    playedDate: '2010',
   },
   {
     id: 319,
@@ -33,7 +34,7 @@ export const scoreData: AppScore[] = [
     count_miss: 2,
     mode: 'osu',
     mods: 'HD,SD',
-    rank: 'A',
+    rank: 'A',playedDate: '2007',
   },
   {
     id: 2348,
@@ -50,7 +51,7 @@ export const scoreData: AppScore[] = [
     count_miss: 2,
     mode: 'osu',
     mods: 'HD',
-    rank: 'A',
+    rank: 'A',playedDate: '2009',
   },
   {
     id: 1386,
@@ -67,7 +68,7 @@ export const scoreData: AppScore[] = [
     count_miss: 3,
     mode: 'osu',
     mods: 'HD,SD',
-    rank: 'A',
+    rank: 'A',playedDate: '2007',
   },
   {
     id: 583,
@@ -84,7 +85,7 @@ export const scoreData: AppScore[] = [
     count_miss: 0,
     mode: 'osu',
     mods: 'HD,SD',
-    rank: 'A',
+    rank: 'A',playedDate: '2008',
   },
   {
     id: 388,
@@ -101,7 +102,7 @@ export const scoreData: AppScore[] = [
     count_miss: 0,
     mode: 'osu',
     mods: 'HD,DT,SD',
-    rank: 'A',
+    rank: 'A',playedDate: '2008',
   },
   {
     id: 372,
@@ -118,7 +119,7 @@ export const scoreData: AppScore[] = [
     count_miss: 3,
     mode: 'osu',
     mods: 'HD,NC,SD',
-    rank: 'A',
+    rank: 'A',playedDate: '2008',
   },
   {
     id: 1809,
@@ -135,7 +136,7 @@ export const scoreData: AppScore[] = [
     count_miss: 1,
     mode: 'osu',
     mods: 'HD,NC,SD',
-    rank: 'A',
+    rank: 'A',playedDate: '2008',
   },
   {
     id: 831,
@@ -152,7 +153,7 @@ export const scoreData: AppScore[] = [
     count_miss: 0,
     mode: 'osu',
     mods: 'HD',
-    rank: 'A',
+    rank: 'A',playedDate: '2007',
   },
   {
     id: 2207,
@@ -169,7 +170,7 @@ export const scoreData: AppScore[] = [
     count_miss: 1,
     mode: 'osu',
     mods: 'HD,NC,SD',
-    rank: 'A',
+    rank: 'A',playedDate: '2007',
   },
   {
     id: 1940,
@@ -186,7 +187,7 @@ export const scoreData: AppScore[] = [
     count_miss: 0,
     mode: 'osu',
     mods: 'HD,SD',
-    rank: 'A',
+    rank: 'A',playedDate: '2009',
   },
   {
     id: 1906,
@@ -203,7 +204,7 @@ export const scoreData: AppScore[] = [
     count_miss: 2,
     mode: 'osu',
     mods: 'HD,DT,SD',
-    rank: 'A',
+    rank: 'A',playedDate: '2008',
   },
   {
     id: 1470,
@@ -220,7 +221,7 @@ export const scoreData: AppScore[] = [
     count_miss: 1,
     mode: 'osu',
     mods: 'HD,SD',
-    rank: 'A',
+    rank: 'A',playedDate: '2007',
   },
   {
     id: 1544,
@@ -237,7 +238,7 @@ export const scoreData: AppScore[] = [
     count_miss: 1,
     mode: 'osu',
     mods: 'HD,SD',
-    rank: 'A',
+    rank: 'A',playedDate: '2007',
   },
   {
     id: 2156,
@@ -254,7 +255,7 @@ export const scoreData: AppScore[] = [
     count_miss: 1,
     mode: 'osu',
     mods: 'HD,SD',
-    rank: 'A',
+    rank: 'A',playedDate: '2010',
   },
   {
     id: 2811,
@@ -271,7 +272,7 @@ export const scoreData: AppScore[] = [
     count_miss: 3,
     mode: 'osu',
     mods: 'HD,SD',
-    rank: 'A',
+    rank: 'A',playedDate: '2008',
   },
   {
     id: 2047,
@@ -288,7 +289,7 @@ export const scoreData: AppScore[] = [
     count_miss: 2,
     mode: 'osu',
     mods: 'HD,SD',
-    rank: 'A',
+    rank: 'A',playedDate: '2010',
   },
   {
     id: 1895,
@@ -305,7 +306,7 @@ export const scoreData: AppScore[] = [
     count_miss: 0,
     mode: 'osu',
     mods: 'HD,SD',
-    rank: 'SH',
+    rank: 'SH',playedDate: '2008',
   },
   {
     id: 1563,
@@ -322,7 +323,7 @@ export const scoreData: AppScore[] = [
     count_miss: 1,
     mode: 'osu',
     mods: 'HD,SD',
-    rank: 'A',
+    rank: 'A',playedDate: '2010',
   },
   {
     id: 2396,
@@ -339,6 +340,6 @@ export const scoreData: AppScore[] = [
     count_miss: 0,
     mode: 'osu',
     mods: 'HD,SD',
-    rank: 'SH',
+    rank: 'SH',playedDate: '2009',
   },
 ];

@@ -14,6 +14,7 @@ import {
   range,
   createBeatmapsetLinkFromId,
   calculateClassicScore,
+  getNormalRank,
 } from '../../src/utils';
 
 describe('utils', () => {
@@ -274,6 +275,23 @@ describe('utils', () => {
         },
       });
       expect(result).toBe(48080735);
+    });
+  });
+
+  describe('getNormalRank', () => {
+    test('returns SS rank', () => {
+      const result = getNormalRank('X');
+      expect(result).toBe('SS');
+    });
+
+    test('returns SSH rank', () => {
+      const result = getNormalRank('XH');
+      expect(result).toBe('SSH');
+    });
+
+    test('returns default rank', () => {
+      const result = getNormalRank('A');
+      expect(result).toBe('A');
     });
   });
 });

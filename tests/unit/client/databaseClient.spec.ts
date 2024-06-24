@@ -57,6 +57,7 @@ describe.sequential('database client', () => {
         mode: 'osu',
         mods: 'HD',
         rank: 'A',
+        playedDate: '2023',
       });
     });
   });
@@ -79,6 +80,7 @@ describe.sequential('database client', () => {
         mode: 'osu',
         mods: 'HD,SD',
         rank: 'XH',
+        playedDate: '2007',
       });
     });
   });
@@ -133,6 +135,7 @@ describe.sequential('database client', () => {
           count_great: 1528,
           count_meh: 0,
           count_miss: 0,
+          playedDate: '2007',
         },
       ]);
     });
@@ -174,6 +177,7 @@ describe.sequential('database client', () => {
           mode: 'osu',
           mods: 'HD,SD',
           rank: 'A',
+          playedDate: '2018',
         }),
       ).rejects.toThrowError('beatmap 10 not found in database');
     });
