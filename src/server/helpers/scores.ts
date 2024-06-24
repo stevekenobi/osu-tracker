@@ -1,5 +1,5 @@
 import type { OsuUserBeatmap, OsuScore, OsuUserScore } from '../../types';
-import { calculateClassicScore, delay, getModsString, getRulesetFromInt, isBeatmapRankedApprovedOrLoved } from '../../utils';
+import { calculateClassicScore, delay, getModsString, getNormalRank, getRulesetFromInt, isBeatmapRankedApprovedOrLoved } from '../../utils';
 import TrackerServer from '../server';
 import { createBeatmapModelsFromOsuBeatmapsets } from './beatmaps';
 
@@ -81,6 +81,7 @@ export async function updateScore(s: OsuScore): Promise<void> {
       count_great: s.statistics.great ?? 0,
       count_meh: s.statistics.meh ?? 0,
       count_miss: s.statistics.miss ?? 0,
+      playedDate: s.ended_at,
     });
   } catch (error) {
     const beatmapset = await TrackerServer.getOsuClient().getBeatmapsetById(s.beatmap.beatmapset_id);
