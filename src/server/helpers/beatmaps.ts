@@ -216,6 +216,6 @@ export function createSheetBeatmapsFromApp(beatmaps: AppBeatmap[]): SheetBeatmap
     ...(b.accuracy && { Accuracy: numeral(b.accuracy).format('0.00') }),
     ...(b.score && { Score: numeral(b.score).format('0,0') }),
     ...(b.classicScore && { 'Classic Score': numeral(b.classicScore).format('0,0') }),
-    ...(b.playedDate && { 'Played At': b.playedDate }),
+    ...(b.playedDate && { 'Played At': new Date(b.playedDate).toDateString() }),
   }));
 }
