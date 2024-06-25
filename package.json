@@ -27,7 +27,7 @@
     "@types/node-cron": "^3.0.11",
     "@types/numeral": "^2.0.5",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
-    "@typescript-eslint/parser": "^7.13.1",
+    "@typescript-eslint/parser": "^7.14.1",
     "@vitest/coverage-istanbul": "^1.6.0",
     "axios": "^1.7.2",
     "cors": "^2.8.5",
