@@ -17,4 +17,5 @@ export type SheetBeatmap = {
   Accuracy?: string;
   Score?: string;
   'Classic Score'?: string;
+  'Played At'?: string;
 };

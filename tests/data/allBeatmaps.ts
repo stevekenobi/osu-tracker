@@ -33,6 +33,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 48,
@@ -66,6 +67,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 90,
@@ -99,6 +101,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 107,
@@ -132,6 +135,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 119,
@@ -165,6 +169,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 184,
@@ -198,6 +203,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 221,
@@ -231,6 +237,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 307,
@@ -264,6 +271,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 313,
@@ -297,6 +305,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 319,
@@ -317,6 +326,7 @@ export const beatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     accuracy: 98.86,
     max_combo: 689,
@@ -363,6 +373,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 342,
@@ -396,6 +407,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 347,
@@ -429,6 +441,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 351,
@@ -462,6 +475,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 372,
@@ -482,6 +496,7 @@ export const beatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2008',
+    playedDate: '2008',
     submittedDate: '2008',
     accuracy: 98.66,
     max_combo: 802,
@@ -528,6 +543,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 388,
@@ -548,6 +564,7 @@ export const beatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2008',
+    playedDate: '2008',
     submittedDate: '2008',
     accuracy: 98.36,
     max_combo: 934,
@@ -594,6 +611,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 404,
@@ -627,6 +645,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 444,
@@ -660,6 +679,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 480,
@@ -693,6 +713,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 483,
@@ -726,6 +747,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 520,
@@ -759,6 +781,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 535,
@@ -792,6 +815,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 569,
@@ -825,6 +849,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 583,
@@ -845,6 +870,7 @@ export const beatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2008',
+    playedDate: '2008',
     submittedDate: '2008',
     accuracy: 98.51,
     max_combo: 694,
@@ -891,6 +917,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 685,
@@ -924,6 +951,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 719,
@@ -957,6 +985,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 755,
@@ -990,6 +1019,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 785,
@@ -1023,6 +1053,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 794,
@@ -1056,6 +1087,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 809,
@@ -1089,6 +1121,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 831,
@@ -1109,6 +1142,7 @@ export const beatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     accuracy: 99.57,
     max_combo: 461,
@@ -1155,6 +1189,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 900,
@@ -1188,6 +1223,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 910,
@@ -1221,6 +1257,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 936,
@@ -1254,6 +1291,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1098,
@@ -1287,6 +1325,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1099,
@@ -1320,6 +1359,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1118,
@@ -1353,6 +1393,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1144,
@@ -1386,6 +1427,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1226,
@@ -1419,6 +1461,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1254,
@@ -1452,6 +1495,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1331,
@@ -1485,6 +1529,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1333,
@@ -1518,6 +1563,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1386,
@@ -1538,6 +1584,7 @@ export const beatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     accuracy: 99.58,
     max_combo: 637,
@@ -1584,6 +1631,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1394,
@@ -1617,6 +1665,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1404,
@@ -1650,6 +1699,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1431,
@@ -1683,6 +1733,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1470,
@@ -1703,6 +1754,7 @@ export const beatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     accuracy: 98.85,
     max_combo: 856,
@@ -1749,6 +1801,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1544,
@@ -1769,6 +1822,7 @@ export const beatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     accuracy: 97.55,
     max_combo: 440,
@@ -1802,6 +1856,7 @@ export const beatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2010',
+    playedDate: '2010',
     submittedDate: '2010',
     accuracy: 97.89,
     max_combo: 620,
@@ -1848,6 +1903,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1610,
@@ -1881,6 +1937,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1712,
@@ -1914,6 +1971,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1752,
@@ -1934,6 +1992,7 @@ export const beatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2010',
+    playedDate: '2010',
     submittedDate: '2010',
     accuracy: 99.18,
     max_combo: 868,
@@ -1980,6 +2039,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1809,
@@ -2000,6 +2060,7 @@ export const beatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2008',
+    playedDate: '2008',
     submittedDate: '2008',
     accuracy: 97.13,
     max_combo: 584,
@@ -2046,6 +2107,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1892,
@@ -2079,6 +2141,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1895,
@@ -2099,6 +2162,7 @@ export const beatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2008',
+    playedDate: '2008',
     submittedDate: '2008',
     accuracy: 99.08,
     max_combo: 864,
@@ -2132,6 +2196,7 @@ export const beatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2008',
+    playedDate: '2008',
     submittedDate: '2008',
     accuracy: 99.13,
     max_combo: 427,
@@ -2165,6 +2230,7 @@ export const beatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2009',
+    playedDate: '2009',
     submittedDate: '2009',
     accuracy: 98.92,
     max_combo: 730,
@@ -2211,6 +2277,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2007,
@@ -2244,6 +2311,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2047,
@@ -2264,6 +2332,7 @@ export const beatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2010',
+    playedDate: '2010',
     submittedDate: '2010',
     accuracy: 99.58,
     max_combo: 432,
@@ -2310,6 +2379,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2156,
@@ -2330,6 +2400,7 @@ export const beatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2010',
+    playedDate: '2010',
     submittedDate: '2010',
     accuracy: 98.63,
     max_combo: 786,
@@ -2376,6 +2447,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2176,
@@ -2409,6 +2481,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2189,
@@ -2442,6 +2515,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2207,
@@ -2462,6 +2536,7 @@ export const beatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     accuracy: 98.88,
     max_combo: 658,
@@ -2508,6 +2583,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2288,
@@ -2541,6 +2617,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2291,
@@ -2574,6 +2651,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2293,
@@ -2607,6 +2685,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2328,
@@ -2640,6 +2719,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2348,
@@ -2660,6 +2740,7 @@ export const beatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2009',
+    playedDate: '2009',
     submittedDate: '2009',
     accuracy: 97.87,
     max_combo: 532,
@@ -2706,6 +2787,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2396,
@@ -2726,6 +2808,7 @@ export const beatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2009',
+    playedDate: '2009',
     submittedDate: '2009',
     accuracy: 99.44,
     max_combo: 925,
@@ -2772,6 +2855,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2503,
@@ -2805,6 +2889,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2527,
@@ -2838,6 +2923,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2559,
@@ -2871,6 +2957,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2610,
@@ -2904,6 +2991,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2686,
@@ -2937,6 +3025,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2710,
@@ -2970,6 +3059,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2811,
@@ -2990,6 +3080,7 @@ export const beatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2008',
+    playedDate: '2008',
     submittedDate: '2008',
     accuracy: 99.56,
     max_combo: 884,
@@ -3036,6 +3127,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2852,
@@ -3069,6 +3161,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2864,
@@ -3102,6 +3195,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2875,
@@ -3135,6 +3229,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2938,
@@ -3168,6 +3263,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2949,
@@ -3201,6 +3297,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2964,
@@ -3234,6 +3331,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2985,
@@ -3267,6 +3365,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 3000,
@@ -3300,6 +3399,7 @@ export const beatmapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
 ];
 
@@ -3336,6 +3436,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 119,
@@ -3369,6 +3470,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 221,
@@ -3402,6 +3504,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 313,
@@ -3435,6 +3538,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 319,
@@ -3455,6 +3559,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     accuracy: 98.86,
     max_combo: 689,
@@ -3501,6 +3606,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 480,
@@ -3534,6 +3640,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 535,
@@ -3567,6 +3674,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 685,
@@ -3600,6 +3708,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 755,
@@ -3633,6 +3742,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 831,
@@ -3653,6 +3763,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     accuracy: 99.57,
     max_combo: 461,
@@ -3699,6 +3810,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 936,
@@ -3732,6 +3844,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1098,
@@ -3765,6 +3878,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1226,
@@ -3798,6 +3912,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1331,
@@ -3831,6 +3946,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 1386,
@@ -3851,6 +3967,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     accuracy: 99.58,
     max_combo: 637,
@@ -3884,6 +4001,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     accuracy: 98.85,
     max_combo: 856,
@@ -3917,6 +4035,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     accuracy: 97.55,
     max_combo: 440,
@@ -3963,6 +4082,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2207,
@@ -3983,6 +4103,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     accuracy: 98.88,
     max_combo: 658,
@@ -4029,6 +4150,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2527,
@@ -4062,6 +4184,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2610,
@@ -4095,6 +4218,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2852,
@@ -4128,6 +4252,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2875,
@@ -4161,6 +4286,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 2985,
@@ -4194,6 +4320,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
   {
     id: 3000,
@@ -4227,6 +4354,7 @@ export const beatmapsOfYearResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
 ];
 
@@ -4263,6 +4391,7 @@ export const unfinishedBeamapsResult: AppBeatmap[] = [
     count_great: null,
     count_meh: null,
     count_miss: null,
+    playedDate: null,
   },
 ];
 
@@ -4286,6 +4415,7 @@ export const problematicBeatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     accuracy: 99.58,
     max_combo: 637,
@@ -4319,6 +4449,7 @@ export const problematicBeatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2010',
+    playedDate: '2010',
     submittedDate: '2010',
     accuracy: 99.18,
     max_combo: 868,
@@ -4352,6 +4483,7 @@ export const problematicBeatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2009',
+    playedDate: '2009',
     submittedDate: '2009',
     accuracy: 99.44,
     max_combo: 925,
@@ -4385,6 +4517,7 @@ export const problematicBeatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     accuracy: 97.55,
     max_combo: 440,
@@ -4418,6 +4551,7 @@ export const problematicBeatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2009',
+    playedDate: '2009',
     submittedDate: '2009',
     accuracy: 97.87,
     max_combo: 532,
@@ -4451,6 +4585,7 @@ export const problematicBeatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     accuracy: 98.86,
     max_combo: 689,
@@ -4484,6 +4619,7 @@ export const problematicBeatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2008',
+    playedDate: '2008',
     submittedDate: '2008',
     accuracy: 99.13,
     max_combo: 427,
@@ -4520,6 +4656,7 @@ export const nonSDBeatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     accuracy: 99.57,
     max_combo: 461,
@@ -4553,6 +4690,7 @@ export const nonSDBeatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2010',
+    playedDate: '2010',
     submittedDate: '2010',
     accuracy: 99.18,
     max_combo: 868,
@@ -4586,6 +4724,7 @@ export const nonSDBeatmapsResult: AppBeatmap[] = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2009',
+    playedDate: '2009',
     submittedDate: '2009',
     accuracy: 97.87,
     max_combo: 532,
@@ -4622,6 +4761,7 @@ export const dtBeatmapsResult = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2008',
+    playedDate: '2008',
     submittedDate: '2008',
     accuracy: 98.36,
     max_combo: 934,
@@ -4655,6 +4795,7 @@ export const dtBeatmapsResult = [
     status: 'ranked',
     mode: 'osu',
     rankedDate: '2008',
+    playedDate: '2008',
     submittedDate: '2008',
     accuracy: 99.13,
     max_combo: 427,
@@ -4698,6 +4839,7 @@ export const aRanksResult = [
     pp: 136.32,
     rank: 'A',
     rankedDate: '2009',
+    playedDate: '2009',
     submittedDate: '2009',
     score: 2571312,
     classicScore: 2571312,
@@ -4731,6 +4873,7 @@ export const aRanksResult = [
     pp: 108.46,
     rank: 'A',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     score: 329174,
     classicScore: 329174,
@@ -4764,6 +4907,7 @@ export const aRanksResult = [
     pp: 133.35,
     rank: 'A',
     rankedDate: '2008',
+    playedDate: '2008',
     submittedDate: '2008',
     score: 2014245,
     classicScore: 2014245,
@@ -4797,6 +4941,7 @@ export const aRanksResult = [
     pp: 121.54,
     rank: 'A',
     rankedDate: '2008',
+    playedDate: '2008',
     submittedDate: '2008',
     score: 9252538,
     classicScore: 9252538,
@@ -4830,6 +4975,7 @@ export const aRanksResult = [
     pp: 182.88,
     rank: 'A',
     rankedDate: '2010',
+    playedDate: '2010',
     submittedDate: '2010',
     score: 2666221,
     classicScore: 2666221,
@@ -4863,6 +5009,7 @@ export const aRanksResult = [
     pp: 162.02,
     rank: 'A',
     rankedDate: '2008',
+    playedDate: '2008',
     submittedDate: '2008',
     score: 9095845,
     classicScore: 9095845,
@@ -4896,6 +5043,7 @@ export const aRanksResult = [
     pp: 122.48,
     rank: 'A',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     score: 3176465,
     classicScore: 3176465,
@@ -4929,6 +5077,7 @@ export const aRanksResult = [
     pp: 179.68,
     rank: 'A',
     rankedDate: '2008',
+    playedDate: '2008',
     submittedDate: '2008',
     score: 2466248,
     classicScore: 2466248,
@@ -4962,6 +5111,7 @@ export const aRanksResult = [
     pp: 155.91,
     rank: 'A',
     rankedDate: '2010',
+    playedDate: '2010',
     submittedDate: '2010',
     score: 4870415,
     classicScore: 4870415,
@@ -4995,6 +5145,7 @@ export const aRanksResult = [
     pp: 187.54,
     rank: 'A',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     score: 9678990,
     classicScore: 9678990,
@@ -5028,6 +5179,7 @@ export const aRanksResult = [
     pp: 150.88,
     rank: 'A',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     score: 7650473,
     classicScore: 7650473,
@@ -5061,6 +5213,7 @@ export const aRanksResult = [
     pp: 132.91,
     rank: 'A',
     rankedDate: '2008',
+    playedDate: '2008',
     submittedDate: '2008',
     score: 769183,
     classicScore: 769183,
@@ -5094,6 +5247,7 @@ export const aRanksResult = [
     pp: 138.02,
     rank: 'A',
     rankedDate: '2010',
+    playedDate: '2010',
     submittedDate: '2010',
     score: 2946484,
     classicScore: 2946484,
@@ -5127,6 +5281,7 @@ export const aRanksResult = [
     pp: 170.96,
     rank: 'A',
     rankedDate: '2009',
+    playedDate: '2009',
     submittedDate: '2009',
     score: 6733639,
     classicScore: 6733639,
@@ -5160,6 +5315,7 @@ export const aRanksResult = [
     pp: 182.47,
     rank: 'A',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     score: 6097687,
     classicScore: 6097687,
@@ -5193,6 +5349,7 @@ export const aRanksResult = [
     pp: 193.96,
     rank: 'A',
     rankedDate: '2008',
+    playedDate: '2008',
     submittedDate: '2008',
     score: 5235980,
     classicScore: 5235980,
@@ -5226,6 +5383,7 @@ export const aRanksResult = [
     pp: 178.67,
     rank: 'A',
     rankedDate: '2010',
+    playedDate: '2010',
     submittedDate: '2010',
     score: 3510461,
     classicScore: 3510461,
@@ -5262,6 +5420,7 @@ export const suboptimalResult = [
     pp: 108.46,
     rank: 'A',
     rankedDate: '2007',
+    playedDate: '2007',
     submittedDate: '2007',
     score: 329174,
     classicScore: 329174,
@@ -5295,6 +5454,7 @@ export const suboptimalResult = [
     pp: 132.91,
     rank: 'A',
     rankedDate: '2008',
+    playedDate: '2008',
     submittedDate: '2008',
     score: 769183,
     classicScore: 769183,

@@ -46,7 +46,7 @@ export async function syncBeatmapsSheet(): Promise<void> {
       year,
       createSheetBeatmapsFromApp(
         createBeatmapsetsFromBeatmaps(beatmaps)
-          .sort((a, b) => (a.beatmaps[0]!.rankedDate > b.beatmaps[0]!.rankedDate ? 1 : -1))
+          .sort((a, b) => (a.rankedDate > b.rankedDate ? 1 : -1))
           .flatMap((s) => s.beatmaps),
       ),
     );
@@ -216,5 +216,6 @@ export function createSheetBeatmapsFromApp(beatmaps: AppBeatmap[]): SheetBeatmap
     ...(b.accuracy && { Accuracy: numeral(b.accuracy).format('0.00') }),
     ...(b.score && { Score: numeral(b.score).format('0,0') }),
     ...(b.classicScore && { 'Classic Score': numeral(b.classicScore).format('0,0') }),
+    ...(b.playedDate && { 'Played At': new Date(b.playedDate).toDateString() }),
   }));
 }
