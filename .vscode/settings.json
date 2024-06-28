@@ -1,5 +1,3 @@
 {
-  "editor.tabSize": 2,
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "eslint.experimental.useFlatConfig": true
+  "editor.tabSize": 4,
 }
