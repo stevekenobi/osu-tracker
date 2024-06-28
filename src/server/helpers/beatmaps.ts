@@ -1,7 +1,8 @@
 import type { SheetStats, OsuBeatmapset, AppBeatmap, OsuBeatmap, AppBeatmapset, SheetBeatmap } from '../../types';
-import { getYearsUntilToday, isBeatmapRankedApprovedOrLoved, delay, createBeatmapLinkFromId } from '../../utils';
+import { getYearsUntilToday, isBeatmapRankedApprovedOrLoved, delay, createBeatmapLinkFromId, calculateAverageAccuracy } from '../../utils';
 import numeral from 'numeral';
 import TrackerServer from '../server';
+import { Op } from 'sequelize';
 
 export async function importLatestBeatmaps(): Promise<void> {
   console.log('importing new beatmaps');
@@ -52,9 +53,12 @@ export async function syncBeatmapsSheet(): Promise<void> {
     );
 
     console.log(`finished ${year}`);
+
     const playedBeatmaps = beatmaps.filter((b) => b.rank);
     const totalScore = playedBeatmaps.reduce((sum, b) => sum + (b.score ? b.score : 0), 0);
     const totalClassicScore = playedBeatmaps.reduce((sum, b) => sum + (b.classicScore ? b.classicScore : 0), 0);
+    const avgAccuracy = calculateAverageAccuracy(playedBeatmaps);
+
     stats.push({
       Year: year,
       'Total Beatmaps': numeral(beatmaps.length).format('0,0'),
@@ -63,6 +67,7 @@ export async function syncBeatmapsSheet(): Promise<void> {
       'Total Score': numeral(totalScore).format('0,0'),
       'Total Classic Score': numeral(totalClassicScore).format('0,0'),
       'Average Score': numeral(totalScore / playedBeatmaps.length).format('0,0'),
+      'Average Accuracy': numeral(100 * avgAccuracy).format('0.00'),
       SSH: numeral(playedBeatmaps.filter((b) => b.rank === 'SSH').length).format('0,0'),
       SS: numeral(playedBeatmaps.filter((b) => b.rank === 'SS').length).format('0,0'),
       SH: numeral(playedBeatmaps.filter((b) => b.rank === 'SH').length).format('0,0'),
@@ -72,6 +77,11 @@ export async function syncBeatmapsSheet(): Promise<void> {
   }
 
   await TrackerServer.getSheetClient().updateStats(stats);
+
+  const allPlayedBeatmaps = await TrackerServer.getDatabaseClient().getBeatmaps({ where: { score: { [Op.gt]: 0 } } });
+  const avgAccuracy = calculateAverageAccuracy(allPlayedBeatmaps);
+
+  await TrackerServer.getSheetClient().updateOverallAccuracy(numeral(100 * avgAccuracy).format('0.00'));
 
   await TrackerServer.getSheetClient().updateProblematicBeatmaps(createSheetBeatmapsFromApp(await TrackerServer.getDatabaseClient().getUnfinishedBeatmaps('problematic')));
   await TrackerServer.getSheetClient().updateNonSDBeatmaps(createSheetBeatmapsFromApp(await TrackerServer.getDatabaseClient().getUnfinishedBeatmaps('non-sd')));

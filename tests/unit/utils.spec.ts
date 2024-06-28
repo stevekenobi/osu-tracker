@@ -15,7 +15,9 @@ import {
   createBeatmapsetLinkFromId,
   calculateClassicScore,
   getNormalRank,
+  calculateAverageAccuracy,
 } from '../../src/utils';
+import { beatmapsResult } from '../data/allBeatmaps';
 
 describe('utils', () => {
   describe('delay', () => {
@@ -292,6 +294,13 @@ describe('utils', () => {
     test('returns default rank', () => {
       const result = getNormalRank('A');
       expect(result).toBe('A');
+    });
+  });
+
+  describe('calculateAverageAccuracy', () => {
+    test('returns accuracy', () => {
+      const result = calculateAverageAccuracy(beatmapsResult);
+      expect(result).toBe(0.9874432303610774);
     });
   });
 });
