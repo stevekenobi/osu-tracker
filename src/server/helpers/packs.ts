@@ -43,7 +43,6 @@ export async function updateBeatmapPacks(): Promise<void> {
       continue;
     }
     const beatmaps = await TrackerServer.getDatabaseClient().getBeatmapsOfBeatmapsets(packFound.beatmapsets.map((s) => s.id));
-    console.log(`${packFound.tag}: ${beatmaps.length}`);
 
     const beatmapPercentage = (beatmaps.filter((b) => b.score).length / beatmaps.length) * 100;
 
