@@ -1,0 +1,9 @@
+{
+    "type": "node",
+    "request": "launch",
+    "name": "Debug Express.js Application",
+    "program": "${workspaceFolder}/src/index.ts",
+    "runtimeExecutable": "nodemon",
+    "restart": true,
+    "port": 9229
+}
