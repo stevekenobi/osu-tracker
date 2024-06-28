@@ -1,5 +1,5 @@
 import moment from 'moment';
-import type { OsuMod } from '../types';
+import type { AppBeatmap, OsuMod } from '../types';
 
 export function delay(ms: number): Promise<void> {
   return new Promise((res) => setTimeout(res, ms));
@@ -117,4 +117,20 @@ export function getNormalRank(rank: string): string {
     return 'SSH';
   }
   return rank;
+}
+
+export function calculateAverageAccuracy(scores: AppBeatmap[]): number {
+  let totalCount_ok = 0;
+  let totalCount_great = 0;
+  let totalCount_meh = 0;
+  let totalCount_miss = 0;
+
+  for (const score of scores) {
+    totalCount_ok += score.count_ok ?? 0;
+    totalCount_great += score.count_great ?? 0;
+    totalCount_meh += score.count_meh ?? 0;
+    totalCount_miss += score.count_miss ?? 0;
+  }
+
+  return (300 * totalCount_great + 100 * totalCount_ok + 50 * totalCount_meh) / (300 * (totalCount_great + totalCount_ok + totalCount_meh + totalCount_miss));
 }
