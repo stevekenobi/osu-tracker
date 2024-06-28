@@ -6,6 +6,7 @@ export type SheetStats = {
   'Total Score': string;
   'Total Classic Score': string;
   'Average Score': string;
+  'Average Accuracy': string;
   SSH: string;
   SS: string;
   SH: string;

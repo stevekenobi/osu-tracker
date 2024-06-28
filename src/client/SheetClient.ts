@@ -99,6 +99,36 @@ export default class SheetClient {
     }
   }
 
+  /* istanbul ignore next @preserve */
+  private async updateCell(docId: string, sheetTitle: string, cellByA1: string, value: string): Promise<void> {
+    try {
+      const doc = new GoogleSpreadsheet(docId, this.serviceAccountAuth);
+      await doc.loadInfo();
+
+      const sheet = doc.sheetsByTitle[sheetTitle];
+
+      if (!sheet) {
+        throw new Error(`Sheet ${sheetTitle} not found`);
+      }
+
+      await sheet.loadCells();
+
+      const cell = sheet.getCellByA1(cellByA1);
+      cell.value = value;
+
+      await sheet.saveUpdatedCells();
+    } catch (err: unknown) {
+      const error = err as AxiosError;
+      if (error.code === 'ERR_BAD_RESPONSE' || error.code === 'ERR_BAD_REQUEST') {
+        console.log(`${error.code} at updating cell ${cellByA1} in ${sheetTitle}`);
+        await delay(10000);
+        const response = await this.updateCell(docId, sheetTitle, cellByA1, value);
+        return response;
+      }
+      throw error;
+    }
+  }
+
   async updateLeaderboard(users: SheetLeaderboard[]): Promise<void> {
     await this.clearRows(this.leaderboard_sheet_id, 'GR', { start: 2 });
     await this.addRows(users, this.leaderboard_sheet_id, 'GR');
@@ -125,6 +155,10 @@ export default class SheetClient {
 
   async getStats(): Promise<SheetStats[]> {
     return this.getRows(this.beatmaps_sheet_id, 'Stats');
+  }
+
+  async updateOverallAccuracy(accuracy: string): Promise<void> {
+    await this.updateCell(this.beatmaps_sheet_id, 'Stats', 'G28', accuracy);
   }
 
   async updateNoScoreBeatmaps(beatmaps: SheetBeatmap[]): Promise<void> {

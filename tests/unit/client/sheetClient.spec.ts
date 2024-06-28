@@ -10,6 +10,7 @@ const sheetClient = new SheetClient(
 const getRows = vi.spyOn(sheetClient as any, 'getRows');
 const addRows = vi.spyOn(sheetClient as any, 'addRows');
 const clearRows = vi.spyOn(sheetClient as any, 'clearRows');
+const updateCell = vi.spyOn(sheetClient as any, 'updateCell');
 
 getRows.mockImplementation(() => {});
 addRows.mockImplementation(() => {});
@@ -111,6 +112,7 @@ describe.sequential('sheet client', () => {
           'Total Score': '213216521',
           'Total Classic Score': '213216521',
           'Average Score': '151621',
+          'Average Accuracy': '0.943',
           SSH: '1235',
           SS: '1542',
           SH: '4212',
@@ -277,6 +279,14 @@ describe.sequential('sheet client', () => {
           Length: '154',
         },
       ]);
+    });
+  });
+
+  describe('updateOverallAccuracy', () => {
+    test('updates accuracy cell', async () => {
+      await sheetClient.updateOverallAccuracy('99.43');
+
+      expect(updateCell).toHaveBeenCalledWith('1wOo20zqgC615FANXHh9JdL3I1h_S5p1lEmLFCc5XhLc', 'Stats', 'G28', '99.43');
     });
   });
 
